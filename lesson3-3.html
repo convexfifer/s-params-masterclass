@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 3-3: Time Domain Reflectometry - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 3: 4-Port S-Parameters</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html" selected>Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 3-3: Time Domain Reflectometry</h2>
+            
+            <div class="content">
+            <p>now we're going to take a look at yet a third mechanism for energy sucked out of the insertion</p>
+            <p>loss we saw the first example was when we had energy coupled over to the second line in two</p>
+            <p>coupled microstrip we saw a relatively broad dip the resonant frequency dependent on the length of</p>
+            <p>the coupling and the separation between the two lines the second root cause of that dip in the</p>
+            <p>insertion loss sometimes called the suck out in the insertion loss was due to resonant coupling</p>
+            <p>when the aggressor line happened to be in proximity to another line or piece of metal that was floating</p>
+            <p>acting as a resonant structure this third root cause for a dip in the insertion loss we're going</p>
+            <p>to see is due to another type of coupling but very strong coupling and the resonant structure is</p>
+            <p>going to be a quarter wave stub resonance let's take a look at the principles first then we'll build our</p>
+            <p>virtual twin and explore design space in our simulation environment to understand the trade-offs</p>
+            <p>and then we're going to take a look at the measured s parameters of a couple of structures here's a</p>
+            <p>really simple illustration of the principle of quarter wave stub resonance here is kind of the</p>
+            <p>top view of a transmission line with a specific topology we have a point-to-point path here's a</p>
+            <p>transmitter here's a receiver but there's also a branch and we call a short branch a stub and so</p>
+            <p>here is the signal is going to travel along and as it's traveling along it sees a uniform interconnect</p>
+            <p>no change in impedance and suddenly it steps on this branch point and a couple things are going to</p>
+            <p>happen when it steps on this branch point the signal is going to split some is going to go down the</p>
+            <p>stub and some is going to continue to the receiver we're going to have a stub that has some length</p>
+            <p>to it we can describe the length in in mills we can describe it as a time delay we're going to launch</p>
+            <p>a signal down that transmission line here's that sine wave from port one it's going to travel down</p>
+            <p>and when it hits that branch point what's it going to do some is going to continue on its way to the</p>
+            <p>receiver and some is going to split and come down the branch and when it comes down that branch it's</p>
+            <p>going to see an open at the end and what's it going to do it's going to reflect and head back up and when</p>
+            <p>it heads back up what's it going to do it's also going to split some is going to go back to the source</p>
+            <p>and some is going to continue to the receiver but think about what has what's happening at the</p>
+            <p>receiver this is port two think about what's happening we have an initial signal that's heading down</p>
+            <p>that takes the direct route and we have a second signal that's been delayed it's like one time</p>
+            <p>delay going down one time delay coming up and so they're going to be two waves that have a slightly</p>
+            <p>different phase shift and when this time lay down and back that round trip time delay is equal to a</p>
+            <p>half a cycle these two waves are going to be 180 degrees out of phase and when they hit the receiver</p>
+            <p>here they're going to cancel out and we're going to see a minimum in the received signal if this</p>
+            <p>stub is really short so going down and back is a very short time delay we're not going to see much</p>
+            <p>phase shift unless we get to a frequency high enough so the round trip time down and back is equal to half</p>
+            <p>a cycle and then we're going to see a minimum in the insertion loss and we can estimate at what</p>
+            <p>frequency are we going to see that minimum in the insertion loss and so when that round trip time is</p>
+            <p>the delay between the two waves hitting the receiver that are going to interfere together when this</p>
+            <p>round trip time is equal to half a cycle that's when we have a minimum that means that the one way time</p>
+            <p>delay is a quarter of a cycle so we have a quarter of cycle another quarter of a cycle when that is the</p>
+            <p>case when the time delay is a quarter of a cycle then we're going to have a minimum at the receiver</p>
+            <p>and because that time delay corresponds a quarter of a cycle we call that a quarter wave stub resonance</p>
+            <p>and we can estimate well what is that time delay it's going to be uh when that time delay is one</p>
+            <p>quarter of a period one over the resonant frequency and with a little bit of algebra we can calculate what</p>
+            <p>that is because that says the resonant frequency is one quarter one over the time delay and so this is</p>
+            <p>a really simple estimate for what that resonant frequency is based on the physical length of the</p>
+            <p>stub and so if the length of the sub is one inch for example the resonant frequency will be about one</p>
+            <p>and a half gigahertz and if that resonant and if that length is a half an inch we'd expect the quarter</p>
+            <p>wave sub resonant frequency where we have a minimum in the insertion loss will be</p>
+            <p>about three gigahertz we're going to take a look at our simple simulation environment to explore this</p>
+            <p>behavior and we'll see as we change the length of that stub what happens to the shape of that resonance</p>
+            <p>and that suck out in the insertion loss and we can also ask well wait a minute where did that energy go</p>
+            <p>if we have a minimum over here at the receiver where's the energy going if it's not being transmitted and</p>
+            <p>here's where the rest of the story is when we send that signal down some of it continues along some of</p>
+            <p>it goes down the end of the stub and some of it reflects because here we are with maybe a 50 ohm line</p>
+            <p>when we hit this branch point we have a low impedance and so we're going to get a reflected</p>
+            <p>signal heading back that's a 180 degrees phase shift because we go from a high to a low impedance the</p>
+            <p>reflected signal is 180 phase shift s11 from this sub discontinuity is first a wave heading back</p>
+            <p>reflecting from the front with a 180 phase shift and then that signal goes down to the end comes back</p>
+            <p>up it has another 180 phase shift and when it splits some of that signal goes to the receiver and some of</p>
+            <p>it goes back to port one and that means port one is going to see an initial reflection from the</p>
+            <p>interface here with the 180 phase shift and a second signal that goes down and back with a phase shift</p>
+            <p>corresponding to the round trip time at the stub resonant frequency and we have a 180 phase shift</p>
+            <p>between going down and coming back up these two waves at the receiver out phase we have a minimum</p>
+            <p>but the two waves that are going to port one the first wave reflecting from the front had a 180 phase</p>
+            <p>shift the second wave that hit the bottom came back up and split and went back to port one it also has a</p>
+            <p>180 phase shift there in phase we're going to see a maximum the energy that we lose in the insertion loss</p>
+            <p>we're going to gain back in the return loss and that will be one of the signatures we look for in the</p>
+            <p>pattern for a sub resonance if we have a sub resonance that says we should probably see a dip</p>
+            <p>in the insertion loss corresponding to the length where we have a quarter wave sub resonance and at</p>
+            <p>the same time we see a dip in the insertion loss we should see a peak in the reflected signal let's</p>
+            <p>come into our simulation environment build a digital twin for the structure and then we're going to look</p>
+            <p>at the measured s parameters of some structures that have stubs in them i've built a very simple structure</p>
+            <p>to illustrate this idea of a quarter wave sub resonance i've got two transmission line segments</p>
+            <p>that are connected together and these are using that physical transmission line model describes</p>
+            <p>single-ended transmission lines with a little bit of loss we define a transmission line in terms of</p>
+            <p>its characteristic impedance its physical length its dielectric constant and we add the two loss</p>
+            <p>mechanisms conductor loss and dielectric loss in this particular case i've made the two transmission</p>
+            <p>lines two inches each this is the uniform transmission line and we know exactly what to expect i've set</p>
+            <p>it for 50 ohms two inches long for each segment so four inches total so we're not going to see any return</p>
+            <p>loss and we're going to instead see the insertion loss dropping off due to the conductor and the dielectric</p>
+            <p>losses i've created a second transmission line structure that has these same two transmission lines</p>
+            <p>but now i've added that stub so here is a third transmission line segment in the topology coming</p>
+            <p>off it's a stub the far end of it i've added a resistor to make it open so it's a one meg resistor</p>
+            <p>and i'm going to use exactly the same impedance for this line but i'm going to make its length a lot</p>
+            <p>shorter and i've parameterized its length over here to be the length of a stub and here we're going to start</p>
+            <p>out with a half an inch long and remember if it's a half an inch we would expect to see with a dielectric</p>
+            <p>constant of four we would expect to see a quarter wave stub resident frequency at about three gigahertz</p>
+            <p>let's take a look at the insertion and return loss and so i've labeled them without the stub for s11</p>
+            <p>without the stub and s11 with the stub over here let's run the simulation and we're going to change</p>
+            <p>the length of the stub and we're going to look at the insertion loss and the return loss we expect to</p>
+            <p>see a dip in the insertion loss when we hit that quarter wave stub resident frequency at about three</p>
+            <p>gigahertz and at the same time where's the energy going to go it's going to go back and we'll see</p>
+            <p>that as s11 let's take a look here we've got our simulation set up right now we're plotting the</p>
+            <p>insertion and return loss for the case of no stub the uniform line and it's exactly what we would</p>
+            <p>expect to see we have very little return loss because it's a well matched to 50 ohms this little</p>
+            <p>bit that we see here is due to actually the the losses changing the the effective characteristic</p>
+            <p>impedance of the line the insertion loss we see dropping off monotonically exactly as we would</p>
+            <p>expect to see for this four inch long line now let's add the s parameters for that structure that has</p>
+            <p>the stub and what do we expect to see we've set the sub length for half an inch and so we should</p>
+            <p>see an insertion loss with a suck out or a dip at about three gigahertz so let's bring that in and</p>
+            <p>take a look at it so we're gonna get s21 with the stub and there it is and you can see here's the</p>
+            <p>insertion loss it's kind of following what we'd expect for the lossy line because we're still going</p>
+            <p>through the whole line but look what happens at about three gigahertz we're starting to get that large</p>
+            <p>suck out and we can also see another second over here at nine gigahertz this is when we have not</p>
+            <p>a quarter of a wave but three quarters of a wave resonating in this structure and we would expect to</p>
+            <p>see higher frequency resonances as well as a confirmation of a quarter wave stub resonance</p>
+            <p>let's watch what happens if we make the stub shorter we expect to see that quarter wave</p>
+            <p>sub resonance frequency push out and so as we go to a shorter length there it is going to a higher</p>
+            <p>and higher frequency and now finally as confirmation that it's a quarter wave sub resonance we would</p>
+            <p>expect to see s11 increase at the same frequency where we have the suck out in the insertion loss so</p>
+            <p>let's turn on the return loss for this structure so here is s11 with the stub</p>
+            <p>and sure enough where the insertion loss has a large dip at the quarter wave resonant frequency</p>
+            <p>we lose energy going back to the port two we gain that energy back going back to port one and so we see</p>
+            <p>that we see that transition from energy lost to port two energy gained into port one where we have the</p>
+            <p>quarter wave sub resonance and if we increase the length we'll move that dip and the peak in return</p>
+            <p>loss to lower and lower frequency and at every quarter wave sub resonance you can see the in the insertion</p>
+            <p>loss is the blue trace wherever we have that dip in the insertion loss we have a peak in the return</p>
+            <p>loss this is the behavior we expect to see now let's take a look at the measured s parameters of a couple</p>
+            <p>of structures in which we have a stub the first structure we're going to look at is a really simple t</p>
+            <p>so the interconnect is just this t branch we have a uniform interconnect going through and we have a short</p>
+            <p>stub in the way the length of this stub is about 0.35 inches and when you put in the dielectric constant</p>
+            <p>for the ptfe material that makes up that coax we would expect we would expect that quarter wave sub</p>
+            <p>resonance at about six gigahertz let's take a look at the measurements for this structure i've got the</p>
+            <p>measurements for that smat over here and now we're going to look at the s parameters from it and again we</p>
+            <p>would expect to see a suck out in the insertion loss around six gigahertz and a large s11 at six</p>
+            <p>gigahertz as well and here is the measured s parameters you can see in blue the insertion loss</p>
+            <p>we see that that suck out at about six gigahertz exactly where we expected and the energy that we</p>
+            <p>lose in going toward port two we gain back in the reflected signal from that we see in port one this</p>
+            <p>is the signature for a quarter wave sub resident structure somewhere in that interconnect here is</p>
+            <p>one last example i have examples of two measured structures of back planes one in which there's a</p>
+            <p>transition from a top layer to near the bottom layer so there's very little stub and in the second</p>
+            <p>example there's a transition from the top layer to near the top layer in which case there's going to</p>
+            <p>be a long via stub down below and so we would expect to see a large via sub let's take a look at the</p>
+            <p>insertion loss of these two examples in the first case we're looking at the insertion loss through</p>
+            <p>this channel that doesn't have a via stub in it and you can see up to the 10 gigahertz here pretty</p>
+            <p>monotonic drop off exactly as we would expect from a long lossy channel there is some ripple structure</p>
+            <p>and we would expect to see if it's due to energy loss to the return loss we would expect to see the</p>
+            <p>return loss having some peaks above that minus 10 db kind of range at the frequencies where we have</p>
+            <p>these dips let's take a look at the return loss so here is the return loss for that structure without</p>
+            <p>the via stub and sure enough we see the ripples of the return loss from discontinuities we see multiple</p>
+            <p>patterns here because it's a more complicated structure and where we have more than about minus</p>
+            <p>10 db of return loss we see the corresponding ripples in the insertion loss and so generally</p>
+            <p>if we see ripples in the insertion loss it's an indication that we might have ripples in the</p>
+            <p>return loss and the reason we see those dips in the insertion loss is probably because we have so</p>
+            <p>much energy reflecting back at those frequencies and sure enough above about uh five gigahertz here we</p>
+            <p>have quite a bit of return loss and that's due to some of the initial launch discontinuities this is</p>
+            <p>what we see in the backplane with no stub resonances now let's take a look at the measured channel that</p>
+            <p>has the via stub we're going to look at the insertion loss of the backplane with the stub in it and here</p>
+            <p>you can see that monotonic drop off of the insertion loss but superimposed on that now we have this</p>
+            <p>broad dip in the backplane and this is due to that quarter wave stub resonance in the via there's no via</p>
+            <p>in this channel there's about a 200 mil long via in this channel corresponding to quarter wave sub resonance</p>
+            <p>of about six or seven gigahertz so now we've seen a number of patterns in the s parameters we've seen</p>
+            <p>the presence of ripples in the return loss we see the monotonic drop off in the insertion loss we see</p>
+            <p>broad dips in the insertion loss due to coupling to an adjacent line in coupled microstrip or sharp</p>
+            <p>suck outs in the insertion loss due to coupling to resonant structures and broader</p>
+            <p>suck outs in the insertion loss corresponding to quarter wave sub resonances these are behaviors</p>
+            <p>that we're going to see in single ended transmission lines whether a single line or two coupled transmission</p>
+            <p>lines and now armed with these patterns we're ready to apply everything we've learned to look at two</p>
+            <p>coupled transmission lines with one differential signal which we call a differential pair we call the s</p>
+            <p>parameters when we have differential pairs mix mode s parameters let's take a look at how some of these patterns</p>
+            <p>we've explored with single unit s parameters applied directly to mix mode s parameters as well</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson3-2.html">← Previous: Crosstalk Analysis</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson4-1.html">Next: Differential vs Single-Ended →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

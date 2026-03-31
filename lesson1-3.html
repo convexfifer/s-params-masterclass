@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 1-3: S-Parameter Fundamentals - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 1: What Are S-Parameters?</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html" selected>Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 1-3: S-Parameter Fundamentals</h2>
+            
+            <div class="content">
+            <p>initially we started out talking about why we should care about s parameters and i emphasize</p>
+            <p>some of the applications of using s parameters as a way of storing information and transporting</p>
+            <p>that information about the electrical properties of the interconnects and then i introduced the</p>
+            <p>idea of what exactly are s parameters what's the information contained in there and i said yeah</p>
+            <p>there's a lot of rich mathematical formalism associated with the s parameters that connect</p>
+            <p>the the interconnect properties to the behavior of the s parameters but i said there's a simpler way</p>
+            <p>of thinking about s parameters in terms of the patterns that they make and in order to see those</p>
+            <p>patterns we're going to graph the s parameters and to do that we're going to use keysight's ads i'm</p>
+            <p>going to walk you through how we can use ads to import measured or simulated s parameter files in</p>
+            <p>that touchstone format and then plot them and look at some of the patterns in particular initially</p>
+            <p>we're going to look at just two port s parameters and i'm going to show you some of the important</p>
+            <p>patterns to pay attention to and then in the next section we're going to look at where those patterns</p>
+            <p>come from what is it about the interconnects that cause those patterns and we're going to look at</p>
+            <p>some in this case measured s parameters of various interconnect structures that illustrate these different</p>
+            <p>patterns to look for and then in the next section we're going to look at what is it about the</p>
+            <p>interconnects that cause these patterns and why do they arise so let me bring you into ads and we'll</p>
+            <p>get started we're going to start out looking at some measured s parameter data taken with the network</p>
+            <p>analyzer and i'm going to show you how we can bring that into the ads simulation environment in order</p>
+            <p>to extract the measured data and plot it up and we're going to look for some of these patterns that i</p>
+            <p>mention we're starting with a blank page the first thing we're going to do is grab a simulation engine</p>
+            <p>so we come over here to the s parameter simulation palette grab the simulation engine and place it on</p>
+            <p>the schematic page we're going to look inside of the measured data to determine what are the parameters</p>
+            <p>of the start stop and step frequency and that way when we bring it in and replicate it and open it up</p>
+            <p>in the simulation environment we're not going to have to make up any data or interpolate is the</p>
+            <p>technical term between the the frequency points we're going to just look at those values that were</p>
+            <p>actually measured the next step is we're going to set up the environment to bring in and read the</p>
+            <p>touchstone file and we do that by adding terminals these are the ports that we're going to connect to</p>
+            <p>the data file so we're going to add two ports port one and port two so we're going to look at two port data</p>
+            <p>so our s parameter files are going to be the form of some name dot s2p and now we're going to grab a</p>
+            <p>data set so we're going to come over to data items we're going to grab an s parameter data item it's</p>
+            <p>only set up as one port right now but when we open it up we can tell it okay let's use two ports and now</p>
+            <p>let's select that data file to bring in and i have a few examples of some measured data that we're going</p>
+            <p>bringing in the first one is a short length of uniform transmission line it's now been selected</p>
+            <p>and we can open up that touchstone file with any text editor my favorite text editor is notepad plus</p>
+            <p>plus but there's a text editor built into ads in this browser window so let's just look at the data and</p>
+            <p>then we can determine the start and stop frequencies here is the measured data it's literally a text file</p>
+            <p>the exclamation marks of course comment lines here's the hashtag so we know that we're measuring</p>
+            <p>frequency in in megahertz there are s parameters the format is real and imaginary and the port impedance</p>
+            <p>is 50 ohms doesn't really matter what the format is because ads and other tools that understand</p>
+            <p>touchstone format are smart enough to read that and then parse it into whatever way you want to display</p>
+            <p>the data and so we see here that let's see here's the first point is uh is dc here the s parameters</p>
+            <p>and it's kind of wrapped around so you have to kind of make note that okay here's one line here</p>
+            <p>here's the next line so it's five megahertz is the next frequency 10 megahertz 15 and so we're starting</p>
+            <p>at zero we're going five megahertz steps and let's see what the highest frequency is well we're already</p>
+            <p>down here to 40 000 megahertz that's 40 gigahertz is the high end we're only going to look at it to 20</p>
+            <p>gigahertz in this case so we can see some of those patterns so now we know how it's set up we don't</p>
+            <p>have to look at that data anymore we're done now one thing i would like to be able to do is display</p>
+            <p>what the file name is and so if we open it back up under display we're going to specify okay let's show</p>
+            <p>the file name that way we can keep track because we're going to have more than one file that we look at</p>
+            <p>and now we're going to connect these guys together so i'm going to grab a a wire we're going to connect</p>
+            <p>from here to here from here to here and just neaten it up a little bit and so before we simulate we</p>
+            <p>need to adjust the simulation engine based on the frequency values we saw we're going to start it at</p>
+            <p>five megahertz we're going to stop it at 20 gigahertz and we're going to step it at five megahertz</p>
+            <p>and there we go and so now when we run the simulation we're going to extract the s parameters</p>
+            <p>that are contained in this touchstone file format and we're going to have them available in our</p>
+            <p>simulation environment to display and we'll see it as s11 s22 s21 s12 let's run the simulation and</p>
+            <p>take a look at those measurements so the simulation is complete here's our data display window that's</p>
+            <p>opened up and now we can plot the data so we're going to plot s11 and s21 so here's our plot</p>
+            <p>getting started we're going to plot s11 and we're going to plot s21 and we're going to plot for now</p>
+            <p>we're going to look at just the magnitude of the insertion return loss in db later we'll look at the</p>
+            <p>phase all that information is contained in those s parameters and each one of those s parameter values</p>
+            <p>each element is a vector it's got the frequency it's got the magnitude it's got the phase information</p>
+            <p>we're just going to plot the magnitude in db and what do we expect remember before we push that run</p>
+            <p>button before we look at the data always want to apply rule number nine we want to anticipate what</p>
+            <p>we expect to see if we don't have a lot of experience with s parameters it's hard to know and so for now</p>
+            <p>let's just look at the results and then we'll look for patterns and then the next section we'll explore</p>
+            <p>what is it about the feature that gives it what is it about the interconnect feature that gives rise to</p>
+            <p>those patterns what's that mechanism so let's take a look at the data and here it is and you can see that</p>
+            <p>and you can see we're plotting the magnitude in db versus frequency up to 20 gigahertz</p>
+            <p>the red is the reflected signal the return loss the blue is the transmitted signal and we can see</p>
+            <p>that ads is auto scaling this force in the vertical scale now that we have an idea of what the data</p>
+            <p>looks like i'm going to adjust the scale so we start at zero and maybe we go down to minus 50 db</p>
+            <p>so we open it up we adjust the plot the x-axis that's the frequency we're going to let ads use</p>
+            <p>auto scale to adjust that so that when we change the simulation engine we'll be able to change those</p>
+            <p>values automatically but the vertical scale i'm going to use my own preference here we're going</p>
+            <p>to go down to minus 50 and up to zero and we'll keep it on that 10 db per division and now we've got</p>
+            <p>a scale adjusted just one other thing i'm going to do to make it a little easier to read i personally</p>
+            <p>like to use a text size of 14 point just makes a little easier to see the results so here is our</p>
+            <p>measured data and you can see some initial patterns let's see at the lowest frequency the insertion loss</p>
+            <p>that's the blue s21 starts at zero db and the return loss starts at a large negative value of the return</p>
+            <p>loss this is very typical of all interconnects where we're looking at a through path and we'll see why that</p>
+            <p>is built into the properties of the s parameters the second thing we notice is we have ripples</p>
+            <p>periodicity in the return loss this is ultimately due to the interference of reflections from the front</p>
+            <p>interface and the back interface of the interconnect interfering back in the receiver at port one and</p>
+            <p>we'll see the details of this in the next section so the ripples in the return loss is an indication of</p>
+            <p>having the interconnect slightly different impedance than the port impedance we're having two different</p>
+            <p>discontinuities some distance apart inside the interconnect so we get reflections from two</p>
+            <p>different surfaces separated some distance and we see those ripples we also see this kind of</p>
+            <p>monotonic drop off in the insertion loss it's dropping off at a pretty constant steady regular rate</p>
+            <p>and we'll see that's due to the link the frequency dependence of the losses so this is just an</p>
+            <p>example of being able to look at some of the measured data of a real transmission i want to bring</p>
+            <p>in two other examples and show those and to introduce the other examples i'm going to just literally copy</p>
+            <p>this circuit paste it in and then all i have to do is go ahead and change the file that's linked to</p>
+            <p>this data set we're going to browse and we're going to pick a data set b and there it is b this is</p>
+            <p>similar interconnect but a lot longer and so we'll be able to do that comparison now if i simulate this</p>
+            <p>i'm going to get s parameters that are s33 and s43 and as long as i know that those are the s parameters</p>
+            <p>that correspond to the return and insertion loss i can use those values and plot those up another simple</p>
+            <p>way of modifying this is to add an equation that turns those s parameters from each of the measurements</p>
+            <p>into variables and we can manipulate those variables and we're going to do that after the simulation so</p>
+            <p>we're going to use measurement equations and to grab a measurement equation i just have to access any</p>
+            <p>simulation palette so here's the ac simulation for example and let's see where is here's my measurement</p>
+            <p>equation so i'm going to bring that in and i'm going to assign the s11 and s21 vector from this simulation</p>
+            <p>to a couple of variable names so i'm going to open this up i'm going to create the variable name of</p>
+            <p>s11 for sample a and that is literally going to be s of 1 comma 1 i'm going to apply that and i'm going</p>
+            <p>to add a second one of s21 and that's going to be s21 i'm going to add that in and so now i've</p>
+            <p>assigned these variables and i can use the variables that have that have more meaning to me than just</p>
+            <p>an s11 or s21 or in this case an s31 and s or s33 and s43 and so let me replicate this for this guy</p>
+            <p>so i'm going to copy this measurement equation and we can edit this a little bit this is going to be</p>
+            <p>for sample b and this is going to be let's see he is port three over here so this is going to be three</p>
+            <p>three and the second one we're going to make this of sample b</p>
+            <p>and this is let's see what is s21 here it's going to be four three based on these port identifications</p>
+            <p>so this is going to be four three now when we simulate we're going to be able to use these</p>
+            <p>variables in order to plot the s parameters they contain all the information about those s parameters</p>
+            <p>so let's run the simulation it'll automatically bring up the display window and then we'll be able</p>
+            <p>to re-display these two vectors now i don't need i don't need these two anymore i'm going to delete</p>
+            <p>these instead i'm going to add the vectors that i created here is s11 of the the first sample here's</p>
+            <p>s1 of the second sample and the insertion losses so i'm going to take all four of these we're going to</p>
+            <p>add them in and again we're going only going to look at the magnitude and here we are and so we</p>
+            <p>can compare very quickly the s parameters on the same plot we see that for uh the sample b it's a</p>
+            <p>longer sample and you can see oh my gosh that period is really tightly spaced very tight but it's of the</p>
+            <p>same magnitude coming back that's the indication of the similar kind of characteristic impedance for</p>
+            <p>those interconnects and we'll see when we look at the origin of s11 this is about the impedance of</p>
+            <p>the lines and the separation between those ripples is related to the length of the line the longer the</p>
+            <p>line the tighter the spacing of those ripples when we look at the insertion loss we see that here it is</p>
+            <p>the pink color is for sample a that we looked at before that's the short line and for the long line</p>
+            <p>we see it's all it's more attenuation this is a longer line let's do one more example to look for</p>
+            <p>some of these patterns and so again we're going to replicate everything we've done here select sample c</p>
+            <p>in our set of data and this is a short transmission line that has some large discontinuities at the</p>
+            <p>ends of those launch discontinuities and we're going to also change this let's see this is going to be</p>
+            <p>for sample c and it is s five five and the insertion loss is going to be six five coming out on port six</p>
+            <p>going in on port five and so this is going to be six five and now all we have to do is run this</p>
+            <p>simulation and we'll be able to see the measured results and let's add to the previous results these</p>
+            <p>do s parameters and compare them so we double click we're going to add this is going to be s</p>
+            <p>one one c and if i control click this is going to be s two one c we add it into our list again looking</p>
+            <p>at the magnitude in db and now we see a very different kind of pattern we see the ripples that are much</p>
+            <p>higher in value above minus 10 db here the amplitude is increasing as we go up in frequency</p>
+            <p>and look we don't have that monotonic drop-off anymore in the insertion loss of this structure instead</p>
+            <p>we see a an opposite kind of pattern between the ripples in the insertion loss and the ripples in the</p>
+            <p>return loss and so all we've done here is look at how we can bring measured or simulated s parameter</p>
+            <p>data into the ads environment and replicate it so that we can display it and look at those patterns</p>
+            <p>and we see some distinctive patterns in the s parameters and the next section we're going to explore</p>
+            <p>what is it about the interconnect features that cause those patterns and what are the and when we look</p>
+            <p>at those patterns what does that then tell us about features in the interconnects</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson1-2.html">← Previous: Understanding S-Parameters</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson1-4.html">Next: Practical Applications →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

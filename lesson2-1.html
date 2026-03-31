@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 2-1: Return Loss Patterns - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 2: Patterns and Meaning</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html" selected>Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 2-1: Return Loss Patterns</h2>
+            
+            <div class="content">
+            <p>so far we've looked at why do we care about s parameters and we saw how valuable they were</p>
+            <p>as a medium of carrying information about the electrical properties of an interconnect and then</p>
+            <p>we looked at what are s parameters and we saw that they are fundamentally about how an interconnect</p>
+            <p>distorts a sine wave going in compared to what's coming out and if it's going in and coming out</p>
+            <p>the same port that was really the reflection coefficient it was going in one port and coming</p>
+            <p>out the other side of the interconnect that was a transmission coefficient and then we looked at</p>
+            <p>some measured s parameters of real structures and we saw that they have certain patterns associated</p>
+            <p>with them there were ripples in the reflective signal and there are certain behavior in the</p>
+            <p>transmitted signal in this section of our master class we're going to look at what the root cause</p>
+            <p>of those behaviors are why do certain features in the interconnect create certain patterns in the</p>
+            <p>s parameters and if we can understand that connection when we see those patterns we'll immediately think</p>
+            <p>of the physical structures in the interconnect that cause them so let's take a look first at the</p>
+            <p>reflection coefficient and here's where we have to reveal a little bit of dirty laundry in the signal</p>
+            <p>integrity world the origin of s parameters really came from communications on rf applications and so</p>
+            <p>a lot of the terminology stems from those rf applications and in the early days of developing</p>
+            <p>s parameters and formalism the labels that we use and the terms that we use were based on what we</p>
+            <p>measured and so in the early days when we measured the reflected signal instead of measuring the reflected</p>
+            <p>signal we measured power and and in measuring the reflected power we would send a signal out from</p>
+            <p>some source and we would look at how much came back as our reference and of course all of it would come</p>
+            <p>back it was an open that was our reference and then we would connect a device to it and we would look</p>
+            <p>to see how much signal comes back with the device connected if it was a really good match to 50 ohms</p>
+            <p>how much is going to come back we lost a lot of that reflected signal that reflected from an open we</p>
+            <p>lost a lot of that when we connected our device to the front end and so we had a large loss in the</p>
+            <p>returned signal and so we refer to that as a large return loss and so the better the match the less</p>
+            <p>energy we get coming back compared to the open the larger the return loss and so from an rf's</p>
+            <p>engineer's perspective return loss is really not s11 but it's the absolute magnitude of s11</p>
+            <p>s11 is still that reflection coefficient it's still the ratio of the sine wave coming out compared to</p>
+            <p>the sine wave going in but from a rf engineer's perspective talking about the power it's the ratio</p>
+            <p>of the power reflected compared to the power going in well that's going to be a small fraction it's</p>
+            <p>the better the match the smaller the fraction you take the log of s a large negative number but when</p>
+            <p>you take the absolute value it's a large positive number and so return loss to an rf engineer means</p>
+            <p>the better the match the larger the return loss that's the exact opposite of what it is to a signal</p>
+            <p>integrity engineer because to a signal integrity engineer when we use that term return loss we're</p>
+            <p>really describing s11 we're describing the reflection coefficient and the reflection coefficient</p>
+            <p>it's always going to be a negative number in db because we're always going to get less coming</p>
+            <p>back than what goes in that fraction is always going to be less than one we take the log of that</p>
+            <p>it's a negative number and so for an si engineer when we talk about return loss we're thinking</p>
+            <p>synonymously with reflection coefficient and so when you hear return loss think reflection coefficient</p>
+            <p>the larger the reflection coefficient the larger the value the more reflected signal the bigger the</p>
+            <p>impedance mismatch the smaller the return loss the smaller the reflection coefficient the less comes</p>
+            <p>back the better the match that means there's a larger and larger more negative db value could it get</p>
+            <p>any more confusing and so when you talk to an rf engineer if you're a signal integrity engineer</p>
+            <p>you're using that return loss really is as reflection coefficient you can never go wrong calling s11</p>
+            <p>reflection coefficient or s11 but we get into the habit of calling it return loss and that's where the</p>
+            <p>confusion arises with how rf engineers return loss could it get any more confusing oh unfortunately yes it</p>
+            <p>can because we make the same mistake when we talk about the insertion loss here's the basic definition of</p>
+            <p>insertion loss for an rf from an rf engineer's perspective in the early days of measuring</p>
+            <p>insertion loss we would take a power source for rf signals we would send it through to a receiver</p>
+            <p>and we'd make a really good connection between them and we would measure how much gets through</p>
+            <p>this became the reference the transmitted signal that transmitted power was the reference and then we</p>
+            <p>would split the connection we would insert our device under test and we would measure how much did</p>
+            <p>we lose in inserting that device in the transmitted signal and so we would describe the insertion loss</p>
+            <p>as how much we lost when we inserted the device from a through connection and in the same way we would use</p>
+            <p>the power received without the device in there that's our reference and then the power received</p>
+            <p>with the device as the numerator this is always going to be less than the power received without</p>
+            <p>the device this is always going to be less than one we take the log of that it's always going to be a</p>
+            <p>negative number but we take the absolute value when we get the insertion loss because we're looking at</p>
+            <p>how much we lost in inserting that device compared to the through path and so the worse the interconnect</p>
+            <p>the more it's blocking that signal the more we're losing when we're inserting there's the larger the</p>
+            <p>insertion loss that's the world of the rf engineer the insertion loss is always a positive db value</p>
+            <p>the worse the interconnect the more insertion loss we have the larger insertions it's the exact opposite</p>
+            <p>for a signal integrity engineer because from a signal integrity engineer's perspective</p>
+            <p>we're we're using that term insertion loss but we're thinking s21 we're thinking transmission</p>
+            <p>coefficient and if you use the term transmission coefficient or s21 you'll never go wrong that's</p>
+            <p>what we're thinking when we think of s21 it's the transmitted signal it's always going to be less</p>
+            <p>than one and in db that means it's a negative db value and the the worse the interconnect the more</p>
+            <p>we're losing in the signal getting through there the smaller the transmission coefficient the smaller</p>
+            <p>s21 and the words we use are the smaller the insertion loss the more negative the larger more</p>
+            <p>negative value insertion loss is in db so there's this natural collision of the two worlds of rf world</p>
+            <p>and signal integral i've written about it others have written about it it's a confusion in the industry</p>
+            <p>you have to pay attention to it you can never go wrong if you use the term s21 or if you use the</p>
+            <p>word transmission coefficient they are unambiguous terms when we use the term insertion loss and return</p>
+            <p>loss and i am guilty as everybody else i get lazy and i just talk about return loss when i mean s11</p>
+            <p>and i talk about insertion loss when i talk about s21 and so you just have to ask yourself which domain</p>
+            <p>is this person in and in what context do they mean it now with that confusion out of the way now we're</p>
+            <p>ready to look at the origin of some of those patterns in particular we're going to start looking at the</p>
+            <p>pattern of the ripples in return loss and look at how does return loss get its ripples and here's the</p>
+            <p>simplest way of thinking about it so we're going to take a really simple system and analyze that to see</p>
+            <p>those ripples we're going to start with a uniform transmission line that's something other than 50 ohms</p>
+            <p>if it's 50 ohms it's a really dull and boring situation because there's no reflections</p>
+            <p>so we're going to start with something maybe it's 30 ohms some other than 50 ohms and we're going to</p>
+            <p>put 50 ohm ports on the ends and so now we're going to look at what happens when we send a sine wave</p>
+            <p>into this interconnect so we send a sine wave in and we're going to start with a frequency this a</p>
+            <p>really low frequency so low that the wavelength of that sine wave is really large so large it's much</p>
+            <p>much larger than the length in fact it's so large that a quarter of the wavelength of that signal</p>
+            <p>is still huge compared to the length of the inner so it's a really low frequency now we're going to</p>
+            <p>send that sine wave in and we're going to watch it as it propagates we're getting a reflection from the</p>
+            <p>front interface so we go from 50 ohms to a low impedance we go from a high to a low impedance</p>
+            <p>we're going to get that reflection coefficient is negative we're going to get a 180 phase change</p>
+            <p>that means we're going to the reflected signal that goes back is going to have a half a cycle</p>
+            <p>phase shift on it and some of that signal is going to continue and now we're in that 30 ohm environment</p>
+            <p>it's going to propagate along and if it's really short compared to the wavelength there's no effective</p>
+            <p>phase change and propagating through there and now it enters the output medium it goes from 30 ohms to</p>
+            <p>50 ohms into the 50 ohm port when we go from a low impedance to a high impedance we're going to get a</p>
+            <p>reflection but there's no phase change and likewise when we go through the interconnect from 30 ohms to</p>
+            <p>50 ohms there's no change in the phase when we get that second reflection from the interface</p>
+            <p>there's no phase change and we propagate back again we reflect back it's so short a path compared to</p>
+            <p>the wavelength no phase change and when we go from the 30 ohm to the 50 ohm environment there's no</p>
+            <p>phase change and so over here at the source when i send that sine wave in i'm going to get a signal</p>
+            <p>coming back to me as the reflective signal of a half a cycle phase change from the first reflection</p>
+            <p>no change in the second reflection these two waves are of comparable amplitude they're going to both</p>
+            <p>interfere with each other when they hit the receiver they're both in the same direction they're both</p>
+            <p>going to hit the receiver one is 180 degrees out of phase from the other what are they going to do</p>
+            <p>they're going to subtract and if they're the same magnitude as they will be for the reflection</p>
+            <p>coefficient going in from 50 to 30 and from 30 to 50 if they're roughly the same reflection coefficient</p>
+            <p>then we're going to have complete cancellation nothing is going to reflect back but we're not quite</p>
+            <p>done because we have another reflection from this first interface again we go from 30 ohms to 50 ohms</p>
+            <p>no change in the phase and so right at this interface we have no change in the phase it propagates to</p>
+            <p>the output again short path compared to the wavelength no phase change coming out and so</p>
+            <p>transmitted we have two waves the incident wave plus the one two bounces reflected wave no phase change</p>
+            <p>between them they're going to add they're going to be in phase and so here's what's happened when we have</p>
+            <p>an interconnect that's really short compared to the wavelength really low frequency yeah we get a reflection</p>
+            <p>from the front interface but we also get a reflection from the back interface those two cancel out and</p>
+            <p>we're going to have a minimum reflected signal in fact that reflected signal is going to be zero</p>
+            <p>nothing reflects and the transmitted signal is going to be a maximum all of it's going to get through</p>
+            <p>wait a minute isn't that the definition of a transparent interconnect nothing reflects and everything gets</p>
+            <p>through and that is the first pattern that we will see in s parameters so for any interconnect if we</p>
+            <p>look at a low enough frequency so the wavelength is really large compared to the physical length of the</p>
+            <p>interconnect we will always find that the transmitted signal s21 is close to zero db and the reflected</p>
+            <p>signal s11 because there's nothing that reflects because the reflections cancel out and we see no net</p>
+            <p>reflective signal that reflection coefficient should be zero and in db it's a large negative db value</p>
+            <p>this will be the case for all interconnects they will look transparent at low enough frequency</p>
+            <p>so that's the first property now let's increase the frequency and if we increase the frequency that means</p>
+            <p>the wavelength gets shorter and shorter and pretty soon we're going to get a wavelength that has a quarter of</p>
+            <p>that is the physical length of the interconnect and let's see what happens right at that length so</p>
+            <p>we've increased the frequency the wavelength has gotten shorter and shorter and we hit that point</p>
+            <p>where the frequency is such a quarter of the wavelength is exactly the length of the interconnect now let's see</p>
+            <p>what happens so again we're going to send in our signal we get a reflection from the front interface</p>
+            <p>that's a half a cycle phase change the signal propagates through but now in propagating through</p>
+            <p>it's a quarter of a wave of phase change and propagating through and so what comes out is going to be a quarter</p>
+            <p>of a cycle phase shifted compared to what's going in we get a reflection over here no phase change on reflection</p>
+            <p>but we get another quarter of a cycle phase change so in going through reflecting coming back</p>
+            <p>we've gone through a quarter and a quarter that's a half a cycle now the reflected signal is a half a cycle</p>
+            <p>phase change coming out compared to what's going in well wait a minute the signal that our receiver sees</p>
+            <p>we send a sine wave in we see the reflection from the front we see the reflection from the back</p>
+            <p>and what our receiver sees is the combination of these two waves they're both in phase they're going</p>
+            <p>to add and so we're going to have a maximum in the reflected signal what about the transmitted signal</p>
+            <p>we're not quite done let's see we have a quarter of a cycle change a quarter of a cycle change and now</p>
+            <p>we reflect off of here we get another quarter of a cycle change that means in going one two three</p>
+            <p>coming out we have three quarters of a cycle phase change and so now our transmitted signal</p>
+            <p>we have two waves one that's a quarter of a cycle phase shift compared to what's going in</p>
+            <p>and one that's three quarters that means these two are half a cycle out of phase when they combine</p>
+            <p>together they're going to subtract and so when our frequency is such that the a quarter of the</p>
+            <p>wavelength is exactly the physical the physical length of the interconnect when that is the case</p>
+            <p>we're going to see a maximum in the reflected signal and we're going to see a minimum in the</p>
+            <p>transmitted signal so that means that as we've increased the frequency we went from a really</p>
+            <p>large negative dv value to something that's a little higher value depending on what the impedance</p>
+            <p>difference is we're going to see a drop in the insertion loss now let's continue to increase the</p>
+            <p>frequency so we're making the frequency higher and higher that means the wavelength is getting</p>
+            <p>shorter and shorter we're going to freeze it when half the wavelength is equal to the physical length</p>
+            <p>of the interconnect and let's see what we've got so now again we get that half a cycle phase shift</p>
+            <p>from the beginning the signal is going to propagate down but when it propagates down we have a half a</p>
+            <p>cycle phase change that wave that comes out is a half a cycle phase change compared to what's going in</p>
+            <p>we get a reflection it propagates another half a cycle and so going in and coming out reflecting is a</p>
+            <p>whole cycle that means the wave that gets transmitted is a whole cycle phase shift between these two waves</p>
+            <p>that combine at the receiver they're going to be 180 degrees a half a cycle out of phase they're going</p>
+            <p>to subtract and so again we're going to see a minimum in the return loss in s11 and we get another</p>
+            <p>reflection off the front interface it's going to propagate another half a cycle so we're going to have</p>
+            <p>a half a whole three halves of a cycle reflecting through so one and a half cycles so these are</p>
+            <p>exactly a whole cycle apart that means they're in phase and we're going to get a maximum they're going</p>
+            <p>to add together we're going to get a max and so now we see the origin of this period of c it's about the</p>
+            <p>reflections as we de as we increase the frequency we make the wavelength shorter and shorter we go through</p>
+            <p>periods of when the length is a quarter or half or three quarters or three halves of a wavelength and</p>
+            <p>as we go through the cycles the reflections are going to be we always have that half a cycle reflecting</p>
+            <p>the half a cycle phase change on reflecting and we're going to go through a whole or one and a half</p>
+            <p>or three halves or five halves of a cycle change and these waves that are reflecting are going to go</p>
+            <p>through interference increasing adding together decreasing subtracting and we're going to go</p>
+            <p>through those cycles there interference patterns as we increase frequency and we're going to see the</p>
+            <p>opposite in the transmitted signal and so when we look at the return and insertion loss we're going to</p>
+            <p>see the patterns we're going to see constructive interference when the reflection from the front face</p>
+            <p>and reflection from the back that comes out that we see at the receiver are are adding together</p>
+            <p>we'll see a positive value and when they're subtracting we'll see a large negative db value</p>
+            <p>and likewise the opposite when we look at the insertion loss and that's why we have the ripples</p>
+            <p>the shorter the physical length of the interconnect the larger the frequency span we have to change</p>
+            <p>in order to see the ripples and we have this inverse relationship between the physical length</p>
+            <p>of the interconnect or the electrical length and the frequency between the ripples and we see this</p>
+            <p>opposite between the ripples in the return loss and the ripples in the insertion loss so now we see</p>
+            <p>the first fundamental root cause of one of the patterns the ripples due to the spatial separation</p>
+            <p>between the reflections from the interconnect and we see that as the frequency increases the insertion loss</p>
+            <p>is going to go through cycles of increasing decreasing return loss is going to go through cycles of</p>
+            <p>increasing and decreasing now the last part of this is the magnitude the larger the impedance difference</p>
+            <p>the larger the reflected signal the larger the impact on the transmitted signal the smaller the impedance</p>
+            <p>difference the smaller the reflected signal the smaller the peak value of the return loss and we see that</p>
+            <p>it doesn't matter how far down we go that's about how good the match is to 50 ohms what matters is</p>
+            <p>how high we go in the return loss because that's going to be about the impedance difference a small</p>
+            <p>impedance difference between the ports and the and the interconnect the smaller that impedance</p>
+            <p>there was the less the reflection the less impact on the insertion loss and so it kind of begs the</p>
+            <p>question how much reflected signal do we need how much s11 do we need in order to see an impact on</p>
+            <p>the insertion loss so let's take a look at the relationship between the reflected signal and</p>
+            <p>the transmitted signal so here is a nice uniform transmission line we send a we get ports one and</p>
+            <p>port two we're going to send a signal in we look at what reflects and we're going to get something</p>
+            <p>transmitted as well and of course we now know to describe that reflected signal that's going to be</p>
+            <p>s11 and to describe the transmitted signal is going to be s21 question is how is that transmitted signal</p>
+            <p>related to the incident signal and the reflected signal in other words if we have the special case</p>
+            <p>where there's no loss so that we're not losing any of the signal in the interconnect to heat or to or to</p>
+            <p>radiation when we send a signal in and we know how much reflects can we figure out how much gets</p>
+            <p>transmitted well the reflected signals described by s11 the transmitted signals described by s21 and so</p>
+            <p>you might think well maybe one going in is going to be s11 plus s21 this would be the case if there</p>
+            <p>were such a thing as conservation of voltage because remember those reflection and transmission</p>
+            <p>coefficients are about ratios of voltages it's the ratio of the voltage that reflects compared to the</p>
+            <p>voltage going in versus the voltage transmitted compared to the voltage going in there is no such</p>
+            <p>thing as conservation of voltage and so this isn't quite correct but we're on the right track</p>
+            <p>because there is such a thing as conservation of energy and the energy in a wave isn't proportional to</p>
+            <p>the amplitude is proportional to the amplitude squared and so if we look at the power going in compared</p>
+            <p>to the power going out then we can use conservation of energy as long as there are no other sources of</p>
+            <p>power loss the energy that wave is related to the voltage squared that means it's related to the</p>
+            <p>s parameter squared and so it will be the case that one going in all that going in is s11 squared plus</p>
+            <p>s21 squared plus the losses and those losses can come from a lot of different places the conductor</p>
+            <p>the dielectric loss energy loss to other conductors radiation loss as long as those losses are really</p>
+            <p>small compared to either the other terms then it is going to be the case that there's a connection</p>
+            <p>now between s11 and s21 the reason we don't see that signal coming out is because where did it go it got</p>
+            <p>reflected back and so when we do energy balance when we look at the energy going in compared to the</p>
+            <p>energy coming out we can now look at the connection between how much is going to come out compared to</p>
+            <p>knowing how much goes in and how much reflects and so this is that connection between the transmitted</p>
+            <p>signal s21 and the signal going in now comes the challenge and this is the tricky part because we're going</p>
+            <p>to be measuring the insertion the return loss in terms of db and so the question is how much reflected</p>
+            <p>signal in db is enough to start affecting the transmitted signal in db because after all if the</p>
+            <p>reflected signal is a small amount if we only get a small fraction of the signal reflecting then this is</p>
+            <p>going to be really small compared to one we take the square root of this this is going to be pretty darn</p>
+            <p>close to one so we're not going to see much impact on s21 how many db of reflected signal how large does</p>
+            <p>s11 have to be before we start seeing a noticeable impact on the transmitted signal the insertion loss</p>
+            <p>in db that's the question that we're going to take a look at and to do that we're going to do a really</p>
+            <p>simple analysis we're going to take a value of s11 in db we're going to convert that back to that</p>
+            <p>fraction we're going to do one minus the square of that fraction we're going to take the square root</p>
+            <p>of that we're going to calculate what s21 is as a fraction and then we're going to convert that into</p>
+            <p>db and we're going to look at as we change the value of the reflection coefficient in db</p>
+            <p>how much does that affect the transmitted signal s21 in db and here's the result of that simple</p>
+            <p>calculation here is the value of s21 in db as we change s11 in db and so here's a really large</p>
+            <p>negative db value of the reflection coefficient and when it's a really large negative value that</p>
+            <p>means not much is coming back that's a really good match not much is reflecting so we're way down here</p>
+            <p>at minus 40 db minus 30 db with not much reflecting that means all of it's getting through</p>
+            <p>and look when we take the value of how much is this fraction for example minus 40 db that means</p>
+            <p>s11 is 0.01 we square that that's 10 to the minus 4 1 minus 10 minus 4 pretty darn close to 1 that's</p>
+            <p>pretty darn close to 0 db and so as we increase the value of s11 in db that means a little bit more</p>
+            <p>and more reflecting we calculate how much are we losing in the transmitted signal not much not</p>
+            <p>much not much look on this scale of half a db per division look at that there's hardly anything we</p>
+            <p>don't even see it we begin to see the tiniest hint of an impact on s21 by the time we're at minus 20 db</p>
+            <p>but that's on look it's per division is a half a db if we use just arbitrarily half a db is significant</p>
+            <p>okay i can start paying attention to a half a db of of loss or change in the insertion loss</p>
+            <p>how much reflected signal do we need for half a db oh my gosh we have to go up to minus 10 db</p>
+            <p>we can have as much as minus 15 db of reflected signal and still have a tiny fraction of a db</p>
+            <p>impact on the insertion loss we have to go up to minus 10 db in order to see a half a db impact on</p>
+            <p>the insertion loss this is a really important observation because this says that wow we need</p>
+            <p>a lot of reflected signal before we see its impact on the transmitted signal and that's why you'll</p>
+            <p>often see in specs that you know typically the value is about minus 13 or minus 15 db that the spec for</p>
+            <p>the return loss for an interconnect is minus 13 minus 15 db because at that point you're just beginning</p>
+            <p>to see a tiny fraction of an of a db impact on the insertion loss but keep this number in mind</p>
+            <p>minus 10 db of reflected signal before we're going to see an impact on the insertion loss so in this</p>
+            <p>section we've looked at a couple patterns we've seen the ripples in the return loss from that</p>
+            <p>interference between two discontinuities spatially separated the farther apart the closer in frequency</p>
+            <p>space those ripples are going to be the closer the discontinuities in space the higher a frequency</p>
+            <p>separation those ripples are going to be the larger that impedance difference that causes the reflections</p>
+            <p>the larger the impedance difference the larger the magnitude of the peak of s11 that smaller the</p>
+            <p>impedance discontinuity the smaller the amount of reflected signal and then you could imagine that if</p>
+            <p>we have multiple discontinuities with different spatial separations we're going to see multiple</p>
+            <p>patterns in the return loss and we just saw that if the return loss is a large negative db value if</p>
+            <p>it's below that minus 20 db range we're never going to see its impact on the insertion loss that we have</p>
+            <p>to have an amount of reflected signal on the order about minus 10 minus 15 db in order for us to see its</p>
+            <p>impact on the insertion loss and that's minus 10 db that's a pretty large reflected signal</p>
+            <p>it's going to be a relatively large impedance discontinuity to cause an impact on the insertion</p>
+            <p>loss these are the principles we've identified based on just looking at kind of the physics of the behavior</p>
+            <p>of interconnects now that we have a rough idea of where these behaviors come from now we can play around</p>
+            <p>with some simulations we can explore some virtual prototypes and we can look at how physical</p>
+            <p>features in those interconnects give rise to these patterns there's no better tool to explore how the</p>
+            <p>structure of the interconnect affects the s parameters than ads so let's return now to our ads simulation</p>
+            <p>environment and look at the origin of some of these patterns</p>
+            <p>you</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson1-4.html">← Previous: Practical Applications</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson2-2.html">Next: Insertion Loss Analysis →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

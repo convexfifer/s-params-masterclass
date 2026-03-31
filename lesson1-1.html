@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 1-1: Introduction and Overview - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 1: What Are S-Parameters?</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html" selected>Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 1-1: Introduction and Overview</h2>
+            
+            <div class="content">
+            <p>Hi, and welcome to this masterclass on reading S-parameters like a book. My name is Eric Boguton,</p>
+            <p>and I'm going to walk you through what I think is most important for busy signal integrity</p>
+            <p>engineers in order to understand the information locked inside of S-parameters. First, a little</p>
+            <p>bit about me. I'm actually a physicist. I've been in the industry for more than 40 years,</p>
+            <p>working in various large companies, small companies, and tool vendors. About 30 years ago,</p>
+            <p>I started a company with my wife to offer training and education services in the field of signal</p>
+            <p>integrity. One of the topics that we spend a lot of time teaching engineers about is S-parameters</p>
+            <p>because they are so important for all signal integrity engineers. Currently, I'm on the</p>
+            <p>faculty at the University of Colorado in Boulder, where I teach undergraduate courses, and I also</p>
+            <p>teach graduate courses in signal integrity, and I'm the technical editor of the Signal Integrity</p>
+            <p>Journal. In this brief masterclass, I want to walk you through what I think are the most important</p>
+            <p>principles we need to understand about S-parameters. I'm going to start out just giving you a little</p>
+            <p>bit of perspective on why should we care? What is the value that's locked inside S-parameters,</p>
+            <p>and how do we make sense of it? There's a lot of rich mathematical formalism behind S-parameters,</p>
+            <p>but instead of spending time on the math, we're going to look at what the math tells us. We're</p>
+            <p>going to look at what are the patterns in the S-parameters, and how by looking at those patterns,</p>
+            <p>we're going to be able to read the story they tell us about the behavior of interconnects. We're</p>
+            <p>going to look at some of those patterns using virtual prototypes, as well as looking at the S-parameters</p>
+            <p>from real prototypes, and we're going to look at those specific patterns that arise from different</p>
+            <p>structures in high-performance systems. We're initially going to look at return loss and</p>
+            <p>insertion loss, understand what the patterns are we see there, then we're going to expand that to</p>
+            <p>look at four-port S-parameters, and look not only at the insertion return loss, but also crosstalk,</p>
+            <p>and how do we interpret the information in the S-parameters, not only in the frequency domain,</p>
+            <p>but also in the time domain. And we'll see that the information is the same, it's just displayed</p>
+            <p>slightly differently, and each domain gives us another part of the story. And then finally,</p>
+            <p>we'll pull it all together, and we'll look at what are sometimes referred to as mixed mode,</p>
+            <p>S-parameters, where we deal with differential interconnects, and we can look at the differential</p>
+            <p>and common properties of the interconnects as described by the S-parameters.</p>
+            <p>So let's get started, and let's take a look at so what? Why should we care about S-parameters?</p>
+            <p>I'm going to walk you through a couple of quick examples of applying the use of S-parameters to</p>
+            <p>solving real problems. In this first case, I've got a selection of different interconnects here.</p>
+            <p>Some of them are real, some of them are virtual. When we have an interconnect that we're designing or</p>
+            <p>have built, there are a lot of questions that we have oftentimes related to, is it going to work?</p>
+            <p>Is it going to meet the performance spec that I care about? Is the model that I have for a</p>
+            <p>particular common that I'm using in my system simulation, is that model correct? In order to</p>
+            <p>perform a simulation, one of the important input parameters are the material properties of the</p>
+            <p>interconnect. Do I even have the correct material properties? And most importantly, if the product</p>
+            <p>doesn't work, why not? We'll see that we can use the S-parameters of the real or virtual prototype</p>
+            <p>in order to help us understand that forensic analysis, the root cause of a problem. All of</p>
+            <p>the electrical properties of these structures, real or virtual, can be described in terms of</p>
+            <p>the S-parameters. And if we had the S-parameters as kind of an electrical behavioral model of these</p>
+            <p>structures, if we had those S-parameters, we could answer these important questions using the S-parameters.</p>
+            <p>I want to show you a couple of examples of doing this in different interconnects. The first example</p>
+            <p>is just the requirements for a specification of does the product work or the component work.</p>
+            <p>Many specifications are defined in terms of S-parameters. So if your component or the whole</p>
+            <p>channel meets this performance requirement described by and defined by the S-parameters,</p>
+            <p>then you have high confidence it will meet the specification and it will work. Here's an example</p>
+            <p>of an insertion loss and a return loss with a specified value and comparing a measured value</p>
+            <p>to that specification to determine does it work or not. It's defined in terms of the S-parameters.</p>
+            <p>Here's another example of looking at what we call the new word today is the digital twin, but it's</p>
+            <p>really a virtual prototype. This is something that we're going to want to do before we commit to</p>
+            <p>actual fabrication. If we send a board out and there's a problem in it that we could have caught</p>
+            <p>before we send it out. We could be spending $10,000, $20,000 on that board, but more importantly,</p>
+            <p>it could take two to four weeks in order to get that board back in order to know if it's going to</p>
+            <p>work or not. Wouldn't you like to find that problem out before you send it out? And that's where post</p>
+            <p>layout verification comes in. We effectively build a digital twin of that real system and evaluate</p>
+            <p>that virtual prototype. And the way we do that is we take our layout information, that geometry,</p>
+            <p>material properties. We use an electromagnetic solver in order to translate that geometry into</p>
+            <p>electrical properties. And guess what? Those properties are described and contained within</p>
+            <p>S-parameters. It's the S-parameters that are the output of the simulation tool. That's the medium</p>
+            <p>carrying the information about the behavior, the electrical properties of the interconnect. And given those</p>
+            <p>behavioral models of the interconnects described by the S-parameters, we can bring those S-parameters</p>
+            <p>into a circuit simulation environment that has the transmitters and the receivers with the S-parameter</p>
+            <p>model between them. And we can now simulate what the performance is going to be. We can look at how</p>
+            <p>digital signals will travel through the interconnects and what a resulting I will look like. And when we look</p>
+            <p>at those eyes and we can now determine, are they acceptable? Do they meet the performance requirements?</p>
+            <p>Do they have acceptable bit error ratio? Or are there some of these eyes that are collapsed or will give</p>
+            <p>us too many errors? And then we can identify what is the root cause? Where are the problems? And here's an</p>
+            <p>example of a problem that was identified in the virtual prototype. There was too much crosstalk. Here's the</p>
+            <p>example of the amount of crosstalk that was observed. This is displayed in the time domain. And as we'll see,</p>
+            <p>we can take those same S-parameters that are typically described in the frequency domain and with a</p>
+            <p>little bit of algebra, convert them into the time domain. They're still the same information that is</p>
+            <p>in the S-parameters just displayed in the time domain. The value of the time domain oftentimes is it gives us</p>
+            <p>spatial information. It tells us where the problems occur. And that is really important in forensic</p>
+            <p>analysis. And in this case, we see, oh my gosh, there are two peaks of crosstalk. Where are they coming</p>
+            <p>from? One is at the far end of the victim line. And what's happening at the far end? Well, here is the far end.</p>
+            <p>Here's the aggressor signal. Here are the three victim lines. And we find that one of them is sharing a return via with the</p>
+            <p>aggressor. And that's the one that has the large far end crosstalk over here. Whereas the other two victim lines, they don't have any</p>
+            <p>crosstalk in this region because they have their own return vias. We see the importance of the location of the return vias.</p>
+            <p>And these peaks over here happening at the beginning of the trace are all due to the location of a single shared return via among all these four</p>
+            <p>four signal lines. And we see the large amount of crosstalk in this region where they have the shared return vias.</p>
+            <p>If that is the root cause of the problem, then we can fix that problem by adding additional return vias. And when we do that</p>
+            <p>and add two additional return vias for these four aggressor lines, we find that sure enough, we've completely eliminated</p>
+            <p>that near end crosstalk. And now we'll be opening up the eye. So this is where the behavior of the interconnects,</p>
+            <p>as described in the S parameters, if we can only read that information, give us insight into their performance</p>
+            <p>and how to minimize the problems. Here is another example of the opposite case, where in this design,</p>
+            <p>there was a concern about, oh my gosh, we've got these large via stubs. When we have transitions that go</p>
+            <p>from a top layer to near the top, we have large via stubs. Whereas if we go from the top layer to near</p>
+            <p>the bottom, we have really small via stubs. And the first thought that should come to mind if you're</p>
+            <p>a signal integrity engineer and you hear the word via stubs is, oh my gosh, got to watch out because</p>
+            <p>they're going to have resonances. They're going to screw up the signal. The question is, is it screwed up so</p>
+            <p>much that we have to worry about it? And this is another example of doing an electromagnetic simulation of the</p>
+            <p>digital twin and looking at the behavior in terms of the S parameters. In this particular application,</p>
+            <p>the signal bandwidth for the DDR interconnect system was about 10 gigahertz. And so what we care about is</p>
+            <p>what's the behavior at the 10 gigahertz and below kind of bandwidth. When we perform the simulation</p>
+            <p>and we get the S parameters to look at the electrical behavior of small stubs or big stubs, what we find is</p>
+            <p>is the behavior below 10 gigahertz is virtually identical. Yeah, the stubs play an important role,</p>
+            <p>but they play a role in the 20 gigahertz range and above. That's where the stubs start affecting</p>
+            <p>performance. But in the 10 gigahertz regime, those stubs don't play any role at all, move on to more</p>
+            <p>important problems that will exist in this system. And here is one last example of using S parameters as a</p>
+            <p>as a as a representation of the behavior of the electrical system as an output of simulation and</p>
+            <p>measurement. Here's a case where we're going to investigate the impact of having copper pour between</p>
+            <p>two signal vias. We look at the crosstalk on the victim line from the aggressor with copper pour between</p>
+            <p>them. We know what the answer is because we understand the electromagnetics. We know that there's potentially</p>
+            <p>going to be a problem. And so we build a prototype to do a measurement and we take that same structure.</p>
+            <p>We bring it into our electromagnetic simulation tool to start digital twin and we perform a simulation.</p>
+            <p>And the first step is how well will the digital twin match the real behavior? How much confidence</p>
+            <p>do we have that we can actually use this virtual prototype in order to help us understand the behavior</p>
+            <p>of the real physical system? And so we build the system, we build its digital twin, we do a measurement,</p>
+            <p>we do a simulation, and the output of each are S parameters. The S parameters is that medium of</p>
+            <p>exchange of information that we're going to use to compare the two. And here's the result. In the top</p>
+            <p>case, we're looking at the return loss, one of the S parameters. At the bottom case, we're looking at</p>
+            <p>foreign crosstalk. Again, one of the S parameters. And the important thing to keep in mind is the red</p>
+            <p>is what's measured with the network analyzer. The blue is what's simulated in our electromagnetic solver.</p>
+            <p>And what we find is, oh my gosh, look, that agreement is so good up to the 10 gigahertz bandwidth of the</p>
+            <p>measurement. This gives us confidence that our digital twin is a accurate representation of the real</p>
+            <p>physical system. And now we can play the what-if games. We can use our virtual prototype to explore</p>
+            <p>design space to evaluate, so what? Is this a problem? When can I use the copper pour? When is it</p>
+            <p>going to cause a problem? And here's a simple example of it. We model the case of an aggressor with a victim</p>
+            <p>and copper pour in between. And we look at the crosstalk on the pour victim line. And we pull the</p>
+            <p>signal and the, and we pull the aggressor and the victim far apart. And we look at what is the behavior</p>
+            <p>if we put copper pour in there or not. And you can say, well, wait a minute, just can't put floating</p>
+            <p>copper. You have to add a lot of return vias. So we'll add a bunch of return vias in our virtual</p>
+            <p>prototype and evaluate the performance, again, as represented by the S parameters. And here is the result.</p>
+            <p>This is looking at the far end crosstalk on this pour victim line when we send an aggressor</p>
+            <p>signal down. And we have three cases. The first case in red here is no copper pour. We just pulled</p>
+            <p>the traces far apart. And you can see, here's what that crosstalk is, the far end crosstalk. We're in the</p>
+            <p>minus 40 dB kind of range. Now we throw in the copper pour and we let it float. We just flood that</p>
+            <p>region between the two lines with copper on the surface. And here's what we see, a dramatic increase.</p>
+            <p>Look at this. We're talking about 20, 30 dB increase in crosstalk between the aggressor and the victim</p>
+            <p>by adding the copper pour. And now we say, well, okay, you don't want to leave copper pour floating.</p>
+            <p>Let's add return vias. Let's add enough so that we have all we possibly could use.</p>
+            <p>And so now in green is the copper flood, the same geometry, now with return vias. And again, we're using our</p>
+            <p>electromagnetic field solver to calculate the properties, outputting the S parameters, and we're</p>
+            <p>comparing the S parameters. And you can see in green that there's virtually no difference whether we have</p>
+            <p>the copper pour with the return vias or no copper pour at all. And look, above the four or five</p>
+            <p>gigahertz range, the copper pour, even with all the return vias, is worse performance than not having</p>
+            <p>the copper there at all. These are some of the questions that we can explore by interpreting the</p>
+            <p>information contained in the S parameters. These have just been a couple of examples of how valuable</p>
+            <p>S parameters are at describing the electrical performance of interconnects. They are the medium</p>
+            <p>of exchange of information from simulator to measurement to system performance that describe</p>
+            <p>everything important that we care about, about the electrical performance of interconnects. As you can see,</p>
+            <p>there's a lot of valuable information locked inside of those S parameters, if only we could read it.</p>
+            <p>And that's what this master class is all about. How do we look at those S parameters and read it like a book?</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <span class="disabled">← Previous</span>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson1-2.html">Next: Understanding S-Parameters →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

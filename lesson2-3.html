@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 2-3: Frequency Domain Interpretation - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 2: Patterns and Meaning</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html" selected>Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 2-3: Frequency Domain Interpretation</h2>
+            
+            <div class="content">
+            <p>we're going to continue our exploration of the patterns that we see in s parameters by adding</p>
+            <p>yet another effect previously we've looked at some real measured data and we saw some of those</p>
+            <p>patterns and then we introduced the idea of looking in that virtual design space the</p>
+            <p>simulation world in order to replicate a simplified version of the real world so we</p>
+            <p>could kind of separate each of these patterns to see how the particular features of the interconnect</p>
+            <p>affected the pattern that we saw in the s parameters and we saw that the source of the</p>
+            <p>ripples that we see in the return loss is due to two or more discontinuities with reflections between</p>
+            <p>them so that we get reflections from the first and the second back to the source that interfere</p>
+            <p>together and what we see when we look at the ripples is really that interference pattern as we</p>
+            <p>increase frequency of the reflection from the front and the back interfaces back to the source now</p>
+            <p>we're going to add to our properties of interconnects losses and in particular these are going to be</p>
+            <p>frequency dependent losses and again we're going to start with our simulation our virtual world</p>
+            <p>where we can synthesize ideal circuit models even though we're going to include losses in the</p>
+            <p>transmission line model it is still an ideal model in the sense that the losses that we're going to</p>
+            <p>introduce behave according to very very precise mathematical properties generally we're going to</p>
+            <p>find that these simple models that we're going to create of ideal lossy transmission lines match the</p>
+            <p>behavior of real interconnects surprisingly well in this brief section i just don't have a lot of time</p>
+            <p>to go into a lot of the physical basis of loss and how specific features in the geometry and material</p>
+            <p>properties affect the loss and why is it frequency dependent if you're interested in some of that</p>
+            <p>background i invite you to check out my textbook chapter nine is all about the physical basis of loss</p>
+            <p>how do we estimate it how do we calculate it and why is it frequency dependent instead we're going to</p>
+            <p>take a slightly different approach i'm just going to tell you those properties and we're going to</p>
+            <p>explore their impact on the behavior of transmission lines looking at the s parameters that result</p>
+            <p>the key feature of these losses is their frequency dependent and we'll see they come from two</p>
+            <p>different sources dielectric loss and conductor loss the way we describe the dielectric loss is with the</p>
+            <p>term dissipation factor it is an intrinsic material property and if we have a good model for that lossy</p>
+            <p>transmission line that includes the dissipation factor property we'll be able to take into account</p>
+            <p>the impact for example of making the line longer the second important material property that affects the</p>
+            <p>loss is the conductor loss and this is related to features like the line width of the line or the</p>
+            <p>thickness of it and also the impedance of the line to describe the losses in this particular model that</p>
+            <p>i'm going to introduce you to we're going to use a specialized term it's designated in the model as</p>
+            <p>the a term the key feature of the conductor loss and what gives it its frequency dependence is due to the</p>
+            <p>skin depth effect and basically that just means as we go up in frequency the current is going to</p>
+            <p>redistribute in the conductor and it's going to move to the outer surfaces that means effectively the</p>
+            <p>cross-sectional area available for current to travel through the conductor is going to decrease</p>
+            <p>it's going to shrink depending on the geometry may shrink on both the top and the bottom surface</p>
+            <p>that means that if the cross-section decreases the series resistance increases and that skin depth is</p>
+            <p>going to decrease it's going to shrink proportional to the square root of frequency at frequencies above</p>
+            <p>about the 10 20 megahertz depending on the structure the series resistance of the transmission line</p>
+            <p>is going to be frequency dependent increasing with the square root of frequency that means that the</p>
+            <p>attenuation in the transmission line is going to increase with the square root of frequency and that's</p>
+            <p>what's part of this lossy transmission line model i'm going to introduce you and the term that</p>
+            <p>characterizes the amount of conductor loss that increases with the square root of frequency is this a</p>
+            <p>term and roughly to capture this property of the wider the line the lower the resistance and the less</p>
+            <p>attenuation attenuation and surprisingly the higher the characteristic impedance the lower the amount</p>
+            <p>of attenuation per length to capture those two terms i am going to parameterize this a term as the value is</p>
+            <p>about 900 and the units are db per meter divided by the line width and the characteristic impedance in</p>
+            <p>mils and in ohms this is a rough approximation to allow us to take into account a little bit of the</p>
+            <p>geometry information and the impedance information in order to account for the impact on the conductor</p>
+            <p>loss and we'll see how we use this in the model that we're going to introduce in ads we'll see that</p>
+            <p>these two features the frequency dependent dielectric loss the frequency dependent conductor loss</p>
+            <p>contribute to a couple of really important behaviors that we're going to see in the s parameters we're</p>
+            <p>going to see a monotonic drop or decrease in the insertion loss and we'll see that if we have losses</p>
+            <p>in the interconnect and we have return loss from reflections from the front and the back interface</p>
+            <p>the front interface we're going to see that reflecting all the time but for that back interface that signal</p>
+            <p>to come back to us that means that we're going to have to go down the interconnect and back again</p>
+            <p>for these two waves to interfere at the source that means that some of that signal going down and back</p>
+            <p>is going to be attenuated it's not going to be there we're going to have less interference and</p>
+            <p>we're going to see that when we look at the s parameters so let's enter our simulation world</p>
+            <p>we're going to build a digital twin of a real lossy transmission line using our ideal lossy transmission</p>
+            <p>line model and we're going to explore some of its s parameters we are in our simulation environment</p>
+            <p>we're going to start out just like we have in the other examples we're going to add a s parameter</p>
+            <p>simulation engine and so we come over here to simulation s parameters here it is and we're</p>
+            <p>going to use a similar kind of range that we've been using we'll go from 5 megahertz to 20 gigahertz</p>
+            <p>at 5 megahertz steps i'm going through all these details again just to show you how simple it is</p>
+            <p>to create the schematics right from scratch we're going to add a couple of terminals on the ends</p>
+            <p>one and two and now we're going to grab an ideal lossy transmission line now previously when we</p>
+            <p>went to ideal transmission lines we used just the simple lossless transmission line model that was</p>
+            <p>defined by a characteristic impedance and a time delay that is an ideal transmission line model there's</p>
+            <p>another transmission line model that is similar but it adds the losses to it and that is the physical</p>
+            <p>transmission line model so it's the transmission line p of the physical model it's defined by</p>
+            <p>these terms there's a characteristic impedance now instead of a time delay it's a length and a</p>
+            <p>dielectric constant this is the effective dielectric constant the signal sees in the interconnect here's</p>
+            <p>that a term that is related to the attenuation from the conductor loss that increases proportion</p>
+            <p>with the square root of frequency and this is the value in db per meter at one gigahertz this reference</p>
+            <p>frequency and then this is the dissipation factor of the dielectric material that makes up that medium</p>
+            <p>and here it is these terms relate to other properties related to magnetic properties this is the permeability</p>
+            <p>of the material medium around the that the current is traveling in this is the dielectric loss if for</p>
+            <p>example when it model ferrite and this is related to the conductivity of the dielectric which is zero</p>
+            <p>it's an insulator in this case so it's really just these one two three four five terms that are now going</p>
+            <p>to describe this ideal transmission line model let's add it into our circuit we'll connect it in and now</p>
+            <p>we're going to parameterize these just like we've done before in order to be able to vary them and see</p>
+            <p>their impact we already know what's going to happen if we vary the characteristic impedance so i'm going to</p>
+            <p>give that a variable name and because this is that physical model i'm going to call this the p model</p>
+            <p>sometimes especially if we want to change the units i find it more convenient to do the editing</p>
+            <p>when we open up the menu for that element for example the length personally my preference is talking</p>
+            <p>about transmission and it's using inches just a personal preference i'm going to label that length</p>
+            <p>an len of the p transmission line in inches my personal preference is i like to use len for length</p>
+            <p>so it doesn't get confused with l for an inductor for example and i like to end the variable name i use with</p>
+            <p>the units just to remind myself what the units are because the units matter in any physical design and i find</p>
+            <p>that the number one biggest source of confusion is type in a number that you're thinking oh this is in</p>
+            <p>picofarads when it's actually in nanofarads or farads and so to minimize that risk making that mistake</p>
+            <p>i find it a really valuable habit to write the units of that of that variable in the name of the variable and</p>
+            <p>i'm going to use that as a variable now because this is inside of the transmission line we also have to say</p>
+            <p>okay this is going to be in units of inches the dielectric constant material is dimensionless we're</p>
+            <p>going to call it the decay of the p model a and remember how we described it we said it was about</p>
+            <p>900 divided by the line width which we're going to use in mils i find that convenient times the</p>
+            <p>characteristic impedance and we've already defined that term that's going to be p in ohms and the value</p>
+            <p>of a is really dimensionless there's no choice it's always db per meter at this frequency of one</p>
+            <p>gigahertz and the dissipation factor the df for the p the physical transmission line everything else we're</p>
+            <p>going to keep default these other features are really interesting they're about the model of the</p>
+            <p>dielectric properties of the transmission line we sometimes refer to them as the causal model of the</p>
+            <p>dielectric properties that's the topic that is for a future master class it's outside the range what</p>
+            <p>we're going to do but for now we're just going to use the default case of the svensson-devorzschebeck</p>
+            <p>model and we're done now what we have to do is create the list of variables so we can define these terms</p>
+            <p>so we're going to grab the variable icon we'll create one over here i remember the equations that we</p>
+            <p>write in this variable element are executed before the simulation so we have a characteristic impedance</p>
+            <p>that we called p its value we'll start out with um instead of 50 ohms we'll do 45 ohms just so we see</p>
+            <p>some some change the next variable that we have on the list is the link very typical of many laminate</p>
+            <p>materials and then the next term is we have a as a calculation in here and we have we need the line</p>
+            <p>width in mils so we'll add a line width in mils and as a starting place typical value is 5 mils this</p>
+            <p>value of 900 depends a little bit on is it microstrip is it strip line where what is the geometry of it</p>
+            <p>and so we have to recognize that this is only a rough approximation but it's a pretty good approximation</p>
+            <p>we'll see within about 20 percent in order to get a better approximation for what the conductor</p>
+            <p>losses are in interconnect we have to use a 2d field solver and that's what we're going to introduce</p>
+            <p>as the next generation model in one of the the next lessons in this series and then lastly is the</p>
+            <p>dissipation factor i'm going to use df and that's for this physical transmission line and a good value</p>
+            <p>for fr4 is 0.02 a low loss material might be 0.005 for example a ptfe teflon based material might be</p>
+            <p>0.001 that's why we made it a variable so we can change some of those terms to see the impact and so</p>
+            <p>those are our five terms the w the line width is the term that influences the attenuation and as we</p>
+            <p>change the characteristic impedance we'll see the impact as well on the attenuation now we're ready</p>
+            <p>to do the simulation and because we might have a couple of different simulations i'm going to use</p>
+            <p>an equation to store the output of these s parameters in another variable and because that's going to</p>
+            <p>happen after the simulation we're going to grab a measurement equations we're going to come to any</p>
+            <p>simulation engine at all and we'll find measure equation and i also like to just remind myself about</p>
+            <p>okay variables are calculated before the simulation and measure equations are calculated after the</p>
+            <p>simulation i like to place them on the other side of the simulation just so it kind of reminds me of</p>
+            <p>of the order in which they're calculating we're going to create a variable for s111 and this is</p>
+            <p>s of 1 comma 1 apply that and now we're going to do s21 and that's going to be s21 and this is of</p>
+            <p>transmission line one and we're done now we can explore design space a little bit now one of the</p>
+            <p>other things that we're going to do is we've got two loss mechanisms and so i think it might be useful</p>
+            <p>in order to kind of separate out here are the properties of the lossless transmission line here</p>
+            <p>are the properties of just dielectric loss here are the properties of just conductor loss and then</p>
+            <p>here's the properties of all of them together so it's four different simulations and now that we've</p>
+            <p>got this first one set up i'm going to show you how quick and easy it is to do four different</p>
+            <p>simulations to show them at the same time and so literally all we're going to do is copy that first</p>
+            <p>model paste it and now let's do one that is lossless and how do we do a lossless model a lossless</p>
+            <p>model is going to have a equal to zero and df equal to zero so we're going to hard code</p>
+            <p>in the model for that transmission line a equals zero and the dissipation factor equal to zero</p>
+            <p>this becomes a lossless model and so we're going to define this as lossless and this is s3 and this</p>
+            <p>is going to be and now you get the idea this is how we can explore design space very quickly by using a</p>
+            <p>variety of example simulations running them simultaneously each with a different parameter</p>
+            <p>that has changed so that we can explore the impact of those design features in the final performance</p>
+            <p>so let's do two more one of which will have um the uh just the dissipation factor turn on one that</p>
+            <p>will just have the conductor loss and we'll use this one as the total so we're going to re-label this as</p>
+            <p>total that's in total attenuation with both the dielectric and conductor loss and now let's build</p>
+            <p>uh two more seven and we're done and so now you can see that we have four different simulations that</p>
+            <p>we're going to run simultaneously they're all using these parameter values that's why we parameterize</p>
+            <p>them so that we change the value here and they ripple through for all four of these and we're going to</p>
+            <p>save and now we're going to simulate so let's take a look at what we've got and so now before we push</p>
+            <p>that simulation button it's always important to apply rule number nine we're going to anticipate</p>
+            <p>what we expect to see and what should we see for the case of lossless we're going to see just like we</p>
+            <p>saw before we're going to have no change in the insertion loss and the return loss we're going to see</p>
+            <p>the ripples based on the space between the front and the back we're going to see the impact of</p>
+            <p>the losses and we'll see that contributes to a decrease in the insertion loss and there will</p>
+            <p>be an impact on the reflections let's run the simulation and take a look so we're going to take</p>
+            <p>a look at the s parameters here are the simulations that we've run just so we have an idea of those</p>
+            <p>labels we're going to grab a graph and now we're going to look at and this is where it's convenient</p>
+            <p>how we labeled them let's look at the return losses first and we're going to look at the lossless case</p>
+            <p>so we're going to add that in we're going to look at in db and here it is just like we expect remember</p>
+            <p>it's a 45 ohm line so we see some ripples now most of this stuff here i don't really care about i'm</p>
+            <p>going to start it up here at 0 db so we're going to change the vertical scale instead of auto scale</p>
+            <p>it'll be minus 50 db remember minus 50 is very little signal coming back we'll start at 0 and we'll do a step</p>
+            <p>of 10 and the other thing that we're going to do of course is i'm going to change this to 14 so here</p>
+            <p>we have exactly what we expected to see and let's add the second plot which is the attenuation and</p>
+            <p>this is going to be s uh 2 1 and we're going to have the lossless now of course it's 0 db and so when</p>
+            <p>ads auto scales it's going to look pretty funny</p>
+            <p>and so here is auto scaled now wait a minute it should be 0 db right it should be up here but</p>
+            <p>but it's not in fact this is 0.05 db on the bottom scale and look we see some real modulation that</p>
+            <p>happens to be tied to the same modulation in the return loss how is that possible we have a lossless</p>
+            <p>interconnect that's because this is minus 20 db and at minus 20 db there's a little bit of signal</p>
+            <p>reflecting back a tiny tiny tiny amount of signal that is taken away from the transmitted signal</p>
+            <p>because it's reflected back remember i said hey it's at minus 10 db that we're going to see a noticeable</p>
+            <p>amount but a noticeable amount was like a half a db this is five hundredths of a db and so that's</p>
+            <p>because of the magic of auto scale it's not really what we expect to see because we're thinking about</p>
+            <p>minus uh we're thinking about a scale maybe like 10 db so let's change this scale we'll go to</p>
+            <p>minus 10 db with a step of one now on this scale and we're going to make it a 14 point</p>
+            <p>on this scale you can just see the barest hint of an impact on the insertion loss because of that 20</p>
+            <p>db of course if we made it not 45 but 47 ohms or 48 ohms closer match we ought to see this drop down</p>
+            <p>and we ought to see this tiny tiny impact disappear so let's try that let's make this</p>
+            <p>we've got our geometry set so that we're going to look at roughly a five mil wide line and a</p>
+            <p>dissipation factor of 0.02 let's take a look at what the attenuation is in that case and i'll give you</p>
+            <p>a rough rule of thumb to think about attenuation transmission lines due to just the dielectric loss</p>
+            <p>rule of thumb is about 0.1 db per inch per gigahertz and so in this case we have 10 inches so 0.1 times</p>
+            <p>10 inches is 1 db per gigahertz and so we should see we're up to 20 gigahertz so we should see about</p>
+            <p>20 db attenuation and at about 10 gigahertz we ought to see about 10 db of attenuation let's take a look</p>
+            <p>and see how close we are if all we do is include the dielectric loss and so let's see which one is s</p>
+            <p>s21 of the dissipation factor so here it is so let's take a look at that one</p>
+            <p>and let's see here it is monotonic decrease proportional frequency and we expected at</p>
+            <p>10 gigahertz about 10 db and darned if it isn't pretty darn close to 10 db remember it's a rule</p>
+            <p>of thumb and as a rule of thumb wow it's a pretty good estimate because remember we've got a 10 inch</p>
+            <p>long interconnect and here it is at 10 gigahertz pretty close to 10 db so it is that 0.1 db per inch</p>
+            <p>per gigahertz now let's take a look at the impact of the dielectric loss rough rule of thumb five</p>
+            <p>mil wide line in fr4 the conductor loss is roughly equal to the dielectric loss at one gigahertz so</p>
+            <p>we're going to see them cross at about one gigahertz but as we go up in frequency the dielectric loss is</p>
+            <p>going to increase proportion of the frequency conductor loss is going to increase proportion of</p>
+            <p>the square root of frequency and so dielectric loss is always going to dominate above about one</p>
+            <p>gigahertz now let's turn on just the conductor loss and so here is just the conductor loss and sure</p>
+            <p>enough here's that conductor loss it's dropping off with the square root of frequency dielectric loss</p>
+            <p>drops off proportional frequency and darned if they don't cross at about one gigahertz exactly as we</p>
+            <p>would expect based on simple rules of thumb now we can combine both of them into the total loss</p>
+            <p>and and here is the total loss and you can see that above a couple of gigahertz the total loss is</p>
+            <p>really dominated by the dielectric loss a little bit increase due to the conductor loss but it's it's</p>
+            <p>predominantly this linear drop off with frequency this is for a transmission line that's pretty close to</p>
+            <p>50 ohms it's 48 ohms let's see what happens as we increase that mismatch and let's take a look at the</p>
+            <p>reflections from let's take a look at the return loss in the case when we have the lossy lines and in</p>
+            <p>particular we're going to pay attention to the reflections from just the total loss which is the teal color and</p>
+            <p>just to be consistent i'm going to change that color and i'm going to make it a green</p>
+            <p>and just to be consistent and just to make it easier to see i'm going to i'm going to make that a green color</p>
+            <p>and we're going to add the return loss just from the case of all the losses to see the impact of that</p>
+            <p>and so that's going to be s11 that is total</p>
+            <p>in db and i'm also going to come along here and i'm going to change the color of that to make it that</p>
+            <p>olive green and now we have the return loss from the transmission line that has losses in it that is also</p>
+            <p>48 ohms and you notice two things right off the first is we have a slightly less reflection from this case of the</p>
+            <p>lossy line and the lossless line and that's related to the fact that this lossy line has a little bit of</p>
+            <p>series resistance in it because of the conductor loss whereas the lossless ideal transmission line</p>
+            <p>doesn't have that series resistance and that series resistance has kind of increased the impedance of the</p>
+            <p>line a little bit so it's closer to 50 ohms and so the reflective signal is a little bit less</p>
+            <p>this is part of the behavior of ideal lossy transmission it's very very minor tiny effect</p>
+            <p>that you'll only see when you're close to a 50 ohm match in addition though you also see that the</p>
+            <p>magnitudes of the ripples have decreased and in fact comparing the ideal lossless line with the ideal</p>
+            <p>lossy line when we go up high enough in frequency where our attenuation is significantly above 3db you'll</p>
+            <p>notice that we don't have very much ripples the ripples have dropped off because we're still getting</p>
+            <p>the reflection from the front interface but the reflection from the back interface coming back</p>
+            <p>has had to travel through 10 inches down 10 inches back of this lossy line there's very little of the</p>
+            <p>signal left in order to interfere and so we don't see interference lines anymore we don't see the</p>
+            <p>ripples the ripples have decreased and by the time they've decreased our amplitude of s11 has also</p>
+            <p>decreased about 6db that's a factor of 2 because after all we only see the magnitude of the reflections</p>
+            <p>from the front interface there's no ripple no interference it's just the flat reflections from</p>
+            <p>the front interface of that impedance mismatch between the 50 ohm port and the impedance of the line</p>
+            <p>and so we just have a constant amount of reflected signal no more ripples and that corresponds to</p>
+            <p>half of the reflections that we saw when we had the two interfaces that were coming from the front and</p>
+            <p>the back because we don't have the back anymore and so we only have half the magnitude and so we see</p>
+            <p>a drop in the reflected signal by 6db that's 50 voltage and we see the decrease in the ripples and so the</p>
+            <p>magnitude of that insertion loss we see is decreasing as we go up in frequency as a consequence of the</p>
+            <p>losses we see these two important features we see the monotonic drop off in the insertion loss due to</p>
+            <p>the frequency dependent loss and we see the impact it has on the ripples and remember before we make a</p>
+            <p>change we're going to apply rule number nine and we're going to anticipate what we expect to see so we're</p>
+            <p>going to make the length of the line shorter and in doing that we're going to do two things we're</p>
+            <p>going to spread the ripples farther apart and we're going to decrease the attenuation it's not going to</p>
+            <p>be quite as steep an attenuation versus frequency so let's we'll go down to as low as one inch and we'll</p>
+            <p>move down make it a shorter and shorter line we're going to keep the same impedance so it's flat but</p>
+            <p>you'll notice the ripples are moving farther and farther apart let's go down to and you'll notice that the</p>
+            <p>attenuation is decreasing as well we have the same frequency dependence but the magnitude of the</p>
+            <p>attenuation is less let's move it down to two inches</p>
+            <p>so now we have a convenient amount of ripple in there it's only two inches long total attenuation at</p>
+            <p>20 gigahertz is just a little bit more than is only about minus five db of total attenuation and we see</p>
+            <p>there's not that much difference in the ripples although we begin to see a little bit of the</p>
+            <p>decrease in the modulation depth of those ripples now let's make it a larger line width we'll keep</p>
+            <p>the impedance the same so we have to have increased the dielectric thickness somewhere but we're going</p>
+            <p>to make the line wider and we'll go up to 10 mils and if we do that we're going to see less</p>
+            <p>conductor loss as we make the line wider and wider we see that yep sure enough we're decreasing the</p>
+            <p>conductor loss we'll go back to the 5 mils and now let's change the dissipation factor if we decrease</p>
+            <p>it again we're going to decrease the dielectric loss and we're going to decrease the total loss</p>
+            <p>and let's decrease that total loss and there it is that's why the dissipation factor is a really</p>
+            <p>important term influencing the attenuation in the interconnect and let's try the impedance and</p>
+            <p>remember we have 50 ohms in the s in the ports for the s parameters so if we use a uh an impedance</p>
+            <p>that's lower we're going to see more return loss and pretty soon we're going to see the impact of</p>
+            <p>the ripples when we're in that minus 10 db kind of range so let's decrease the impedance of the line</p>
+            <p>and we get more and more reflected signal and look we're beginning to see remember this is a</p>
+            <p>one db per division scale so this is a half a db so we expect about minus 10 db to see a half a db</p>
+            <p>we're seeing a tiny fraction of a half db but we're in the minus 18 db kind of range and if we go to the</p>
+            <p>minus 15 we begin to see a little bit more impact on the ripples here is the total attenuation and</p>
+            <p>you can see in addition to the monotonic drop off we see that a little hint of ripples in there</p>
+            <p>because our return loss is greater than minus 20 db it's almost minus 15 db and if we give ourselves</p>
+            <p>a little bit more reflection here we are at minus 10 db and now we're starting to see a little more</p>
+            <p>impact on the ripples in the insertion loss generally if you see ripples in the insertion loss generally</p>
+            <p>that's usually an indication of reflections in the return loss and the reflections are generally in that</p>
+            <p>minus 13 minus 10 db or higher kind of range and if we have kind of an extreme case we have a large</p>
+            <p>impedance discontinuity so we have much more than minus 10 db we're going to see a lot of ripples in</p>
+            <p>the insertion loss so now we have an idea of how the properties of the interconnect influence three of</p>
+            <p>these patterns that we see in the s parameters we see the ripples in the return loss sometimes in the</p>
+            <p>insertion loss we see the monotonic drop off in the insertion loss due to the frequency dependent</p>
+            <p>loss let's take a look at two interconnects in this example all i'm going to do is bring up two measured</p>
+            <p>s parameter files these are of two different interconnects they're both single transmission</p>
+            <p>lines one is a relatively short transmission that's four inches long and one is relatively long</p>
+            <p>about 20 inches long and we're going to look at the patterns in those s parameters and so i'm just</p>
+            <p>going to show the plots and then we'll see how we can interpret those patterns based on what we know</p>
+            <p>about the behavior of interconnects so let's add the first one and this is port one and two and here's</p>
+            <p>the first example so the first thing that we see is the return loss starts at a large negative db value</p>
+            <p>here as it should the insertion loss starts at zero db always the first thing that we want to check</p>
+            <p>it's a good consistency test just to verify that we've got the s parameters as we expect we don't</p>
+            <p>see that there's something off either in the measurement the simulation or the way the file is</p>
+            <p>stored the second thing we notice is we have ripples in the return loss and that corresponds to</p>
+            <p>that some spacing between the front and the back it could be due to difference and impedance between the</p>
+            <p>line and the ports or could be due to the launches and we see that the ripples are evenly spaced but</p>
+            <p>they're also increasing as we go up in frequency that's an indication of short discontinuities at</p>
+            <p>the launch and we see that they start out in the minus 30 minus 20 db range we would not expect to see</p>
+            <p>an impact on the insertion loss and here's that insertion loss and we see it kind of dropping off</p>
+            <p>kind of monotonically pretty uniform here until we get to around the minus 13 minus 10 db sort of</p>
+            <p>return loss and at the minus 13 db return loss we begin to see the barest impact of the insertion</p>
+            <p>loss on the ripples and as we get more and more reflected signal we're going to lose more and more</p>
+            <p>in the transmitted signal and we see the ripples increase in the insertion loss so we see that monotonic</p>
+            <p>drop off and we see the impact of the ripples when the return loss is greater than about minus</p>
+            <p>13 minus 10 db now of course you don't need me to tell you which is which because we start at a</p>
+            <p>large negative db value for the return loss we start at zero db for the insertion loss this one is</p>
+            <p>clearly the insertion loss this is clearly the return loss now we're going to look at the second</p>
+            <p>interconnect and that is 33 and 43 so we're going to add it in and this is a longer line so what do we</p>
+            <p>expect to see the ripples are going to be closer together and we're going to see more attenuation</p>
+            <p>in the insertion loss we see initially that it starts at a large negative db for the return loss</p>
+            <p>and it starts at zero db for the insertion loss we see the ripples closely spaced in the return loss</p>
+            <p>that says it's a long line large distance between the ripples we see the ripple amplitude increasing</p>
+            <p>as we go up in frequency that says large launch discontinuity at the ends of the line that short</p>
+            <p>launch discontinuity gives us a broad space between the reflections within that ripple and this is the</p>
+            <p>beginning of one of those reflections from within that uh that launch discontinuity and we see that</p>
+            <p>the attenuation is much larger because of the longer line they're both made of comparable kind of</p>
+            <p>materials roughly fr4 but the longer line means we're attenuating much more for the same frequency</p>
+            <p>so now we can look at the measured s parameters of real interconnects and identify some of those</p>
+            <p>features in the s parameters and how they relate to features in the transmission line and now we're</p>
+            <p>ready to add the next step and we're going to look at coupling between transmission lines and to do that</p>
+            <p>we have to introduce a new ideal transmission line model</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson2-2.html">← Previous: Insertion Loss Analysis</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson3-1.html">Next: Introduction to 4-Port Systems →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

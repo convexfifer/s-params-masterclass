@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 4-3: Mixed-Mode Applications - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 4: Mixed-Mode S-Parameters</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html" selected>Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 4-3: Mixed-Mode Applications</h2>
+            
+            <div class="content">
+            <p>In this last session, I wanted to give you a quick overview of all the patterns that</p>
+            <p>we've encountered when we've looked at the different S parameters, either single-ended</p>
+            <p>or mixed mode S parameters. And I've taken all of those patterns that we've looked at</p>
+            <p>and combined them into one simple checklist. Whenever we're looking at the patterns in</p>
+            <p>the S parameters, we're trying to read the story they're telling us about the interconnects.</p>
+            <p>The patterns we see give us an indication of some of the physical features we expect to</p>
+            <p>see in the structures where the S parameters came from. And I've listed all those different</p>
+            <p>patterns that we've identified along our way. This is a convenient checklist to keep handy.</p>
+            <p>And I'm going to walk you through just to remind us all of what those different patterns were.</p>
+            <p>Let's start with the first few. So we said at low frequency, \(S_{21}\) is always going to start</p>
+            <p>at 0 dB and \(S_{11}\) start at large negative dB. Here are a couple of examples of that. You don't need</p>
+            <p>me to tell you that this is clearly an insertion loss and this is a return loss because we start</p>
+            <p>at 0 dB. If you encounter S parameters where you're not sure what the pin identification is,</p>
+            <p>look at all of the S parameters in one column. And the one that starts at 0 dB at low frequency</p>
+            <p>that is the insertion loss. We saw that the ripples are created by interference patterns</p>
+            <p>between a reflection from the front and the back of the transmission line. So the longer</p>
+            <p>they interconnect, the shorter the frequency interval between the ripples. If you compare</p>
+            <p>the short distance between the ripples here and here, you could say this is a longer interconnect</p>
+            <p>than this structure. We saw that the peak value of those ripples depends on roughly that line</p>
+            <p>and impedance. And so this peak value compared to this peak value says this transmission line</p>
+            <p>is a little closer to 50 ohms than this transmission line. The larger and more negative the dB value is,</p>
+            <p>the closer it is to a 50 ohm impedance. We saw before that when the reflected signal</p>
+            <p>becomes larger than about minus 10 dB, we're going to see a significant impact that greater than a half</p>
+            <p>a dB impact on the insertion loss. Here we are at minus 13, 14 dB. We don't expect to see much impact</p>
+            <p>on the insertion loss. Here we are at about minus 8, minus 7 dB. We expect to see a large impact,</p>
+            <p>and we see the impact of the ripples over here. We saw the return loss creeping upward with frequency,</p>
+            <p>usually due to short length launch discontinuities. So we would expect to see a good match to 50 ohm</p>
+            <p>impedance of the line, but we're going to see launch discontinuities that are giving rise to this</p>
+            <p>increase in the return loss. And we see that monotonic drop off in the insertion loss as due to the losses</p>
+            <p>in the interconnect. And those losses also affect the reflective signal coming back. The more loss in the</p>
+            <p>interconnect, as the signal goes down to the end of the line, reflects and comes back, we have less reflected</p>
+            <p>signal to interfere. And we see a decrease in the peak value for the reflected signal. And we see a decrease</p>
+            <p>in the modulation of the interference pattern, because there's less signal coming back to interfere with. We saw</p>
+            <p>that in addition to the ripples and the monotonic drop off in the insertion loss, there were also sometimes</p>
+            <p>these dips in the insertion loss, which we sometimes refer to as suck outs in the insertion loss.</p>
+            <p>And we identified four different unique root causes for suck outs. The first one we looked at was this</p>
+            <p>idea of foreign coupling in microstrip, a very special case in microstrip. Here's that case. Here's,</p>
+            <p>you don't need me to tell you, of course, this is an insertion loss because we're starting at 0 dB</p>
+            <p>at low frequency. And we see this large dip here in the insertion loss. And this was due to energy</p>
+            <p>coupling over to the other line in the microstrip because of foreign cross suck. The way we confirm</p>
+            <p>that is we look at extra energy at port four as S4-1. And sure enough, S4-1 confirms, yep, this is energy</p>
+            <p>loss in transfer due to foreign cross suck in microstrip. Whereas this suck out over here, well,</p>
+            <p>we don't see extra energy coming out into port four. This is related to a resonant structure.</p>
+            <p>And we can confirm this by looking at the reflected signal in S1-1. And we can confirm this by looking</p>
+            <p>at the peak in the return loss. And here's that example of the measured return loss. And we see a</p>
+            <p>peak where we see the dip in the insertion loss. This says the energy that's not getting through is</p>
+            <p>reflected back because of a resonant structure. In this particular case, it was due to the circular</p>
+            <p>mode in the SMA connector at 18 gigahertz. It can also be caused by a sub resonance and giving us a</p>
+            <p>reflected signal and very little transmitted signal at the sub resonance. When we have a very narrow dip,</p>
+            <p>that's an indication of coupling to a high Q resonator. And we saw a couple of examples of that. If you see a</p>
+            <p>narrow sharp dip that says there is some structure nearby that the signal is coupling to and that</p>
+            <p>where that structure is acting like a high Q resonance. It could be another signal line that's</p>
+            <p>floating. It could be a piece of metal that's floating. It could be some structure in the return path</p>
+            <p>that the return current is coupling to giving us a high Q resonance. And then the fourth different</p>
+            <p>root cause that we saw for a suck out in the insertion loss was very specific to differential return</p>
+            <p>loss. And that was due to mode conversion. And we saw the example of changing the asymmetry between the</p>
+            <p>two lines make up a differential pair. Anything that produces an asymmetry will convert some of the</p>
+            <p>differential signal into common signal. And if there's a length asymmetry, then some of the differential</p>
+            <p>signal going in will be converted to common signal. And we'll see that being stolen, robbed from the</p>
+            <p>differential signal. And where is that signal going? If it's not coming through as differential signal,</p>
+            <p>it's going into common signal at the far end as well. And we confirm this behavior as due to mode</p>
+            <p>conversion by looking at the mode conversion term, SCD21. And then we saw some other important features</p>
+            <p>in the S parameters that indicated physical features in the interconnects. We saw this trick to use if we</p>
+            <p>have four port S parameters and we want to verify that we have the right pin connectivity, the right</p>
+            <p>index numbers, we always want to look at all the different S parameters and we want to identify which</p>
+            <p>one looks like an insertion loss. And that tells us the pin identification. Here's an example of some</p>
+            <p>measured S parameters where \(S_{31}\) is in blue and \(S_{21}\) is in red. And the question is, which pin configuration</p>
+            <p>is it? Is it one to two, three to four, or is it one to three, two to four? If you get an S parameter</p>
+            <p>file and you're not sure, you look at the \(S_{31}\) and \(S_{21}\) terms, the terms that might be insertion losses,</p>
+            <p>and you look to see which one looks like an insertion loss. That means which one starts at zero</p>
+            <p>dB at low frequency. Clearly, \(S_{31}\) is the insertion loss. And that says the pin configuration is really</p>
+            <p>this one down here, one to three, two to four. Once we've identified the pin configuration,</p>
+            <p>then \(S_{31}\), for example, in this configuration, \(S_{31}\) is going to be the near end crosshawk. And that's</p>
+            <p>going to be a measure of the coupling in the differential pair. Here's an example of measured</p>
+            <p>data from two strip line transmission lines. And you can see the return loss has the ripples</p>
+            <p>corresponding to the impedance difference, the ramp upward in the peaks because of launch discontinuities.</p>
+            <p>We see \(S_{31}\) is really small. That says they're not very well coupled. And so we would expect in</p>
+            <p>strip line the differential and single-ended insertion loss to be very similar. And sure</p>
+            <p>enough, here is the \(S_{21}\) and STD21, and you can see they're nearly identical. In a differential pair</p>
+            <p>with loose coupling, the single-ended and the differential terms will be very similar.</p>
+            <p>Unfortunately, that is not the case in microstrip. And here we are in microstrip,</p>
+            <p>and we see that, of course, we have the insertion loss increasing, giving us that suck out</p>
+            <p>that we don't see in the differential insertion loss. And so one exception to watch out for in</p>
+            <p>microstrip, the behavior of the single-ended response is not an indication of what we expect</p>
+            <p>to see in the differential response. And that's why it's so important to measure</p>
+            <p>the differential response separately. And then finally, the mode conversion term,</p>
+            <p>SCD21, is a very sensitive measure of mode conversion in the transmitted signal.</p>
+            <p>Long before we see the impact on the differential insertion loss, we're going to see</p>
+            <p>a mode conversion term. And here's an example of that. Here is in strip line, for example,</p>
+            <p>this is the single-ended insertion loss. We see it monotonically decreasing because of the losses.</p>
+            <p>Here's the impact on the differential insertion loss. And we can ask the question, why is that?</p>
+            <p>Why do we have some of the energy loss in the differential insertion loss? Because it should</p>
+            <p>be very similar to the single-ended insertion loss, except that we have this large amount of mode</p>
+            <p>conversion. And it's the mode conversion that is sucking some of the energy out of the differential</p>
+            <p>insertion loss. And so we can see that by data mining the information that is contained in the</p>
+            <p>S-parameters, we can gain insight into what's going on inside of the interconnect. We want to use all the</p>
+            <p>S-parameter information we have in order to do consistency tests. That checks to verify that,</p>
+            <p>yep, we understand what's going on. And we can gain insight into some of the physical features</p>
+            <p>in the S-parameters by reading those S-parameters like a book to read the story that the interconnect</p>
+            <p>is telling us. So in this brief masterclass workshop, I walked you through some of those patterns that we</p>
+            <p>expect to see in the S-parameters and what that tells us about the physical interconnects themselves.</p>
+            <p>We use the S-parameters as much as we can to do consistency tests to make sure that the data makes</p>
+            <p>sense, whether it's from measurement or simulation. And we look for the patterns in the S-parameters to</p>
+            <p>read the story the interconnects are telling us through their S-parameters. Keep this checklist handy</p>
+            <p>and use this the next time you look at either single-ended or mixed-mode S-parameters. Now, before I leave</p>
+            <p>you, there's one last teaser, a little cliffhanger that I want to leave you with. In the story that</p>
+            <p>we've been reading that the interconnects leave in their S-parameters, we've only looked at half the</p>
+            <p>information in the S-parameters. We've looked in the frequency domain. We can also take those very</p>
+            <p>same S-parameters as single-ended or as mixed-mode and we can convert them and display them in the time</p>
+            <p>domain. And there is additional information that the interconnect tells us when we look at their S-parameters</p>
+            <p>in the time domain. And I want to leave you just with a little teaser of some of that information.</p>
+            <p>Here is literally how we can take the measured or simulated S-parameters in the frequency domain</p>
+            <p>that represents that behavioral model of the interconnect and prove it with a time domain signal,</p>
+            <p>a step edge signal. Look at what comes back, what reflects back. That is literally the TDR response.</p>
+            <p>Or we can look at that signal, we can look at that step signal going in and the signal coming out</p>
+            <p>on the other ports. For example, near-end crosshack or far-end crosshack or transmitted signal. And here's</p>
+            <p>just one little teaser of an example. We can take that reflected signal coming back to us from the</p>
+            <p>interconnect. We can take the reflected signal and take the ratio reflected to the incident, multiply</p>
+            <p>that by the 50 ohms of the source. And we can literally plot with just a little bit of algebra</p>
+            <p>and plot the instantaneous impedance profile of that interconnect. And so we can see that for this</p>
+            <p>single-ended line, it's roughly 60 ohms. There's a discontinuity here corresponding to one of the Vs</p>
+            <p>and the daughter card. There's the connector over here. There's a back plane. There's a connector on the</p>
+            <p>other side. So we can literally read the spatial distribution of impedances in that interconnect by</p>
+            <p>taking those same S-parameters we saw in the frequency domain and redisplaying them in the time</p>
+            <p>domain. And while we have that spatial distribution of features in the interconnect and we see how it's</p>
+            <p>displayed over time, we can now look at the near-end crosshack and we can look to see where down that</p>
+            <p>interconnect, do we have coupling between the aggressor that we're driving and the adjacent</p>
+            <p>signal on the victim. And so we send that signal down the aggressor. We look at when that signal</p>
+            <p>comes back to us compared to those structures and we can identify this is the amount of signal that</p>
+            <p>comes back, the coupled signal. We have a little bit of crosstalk over in this region of the board</p>
+            <p>where the daughter card is. We have a lot of crosstalk over here where the connector is, a little bit of</p>
+            <p>coupling where the back plane is and a little bit more crosstalk where the other connector is.</p>
+            <p>This is just a quick glance at the additional information that we can gain from the time domain</p>
+            <p>looking at those same single-ended S-parameters. And we can look at the S-parameters as single-ended</p>
+            <p>or mixed mode in the time domain as single-ended or in the time domain as mixed mode. So as you can see,</p>
+            <p>there's a lot more information available to you locked inside those S-parameters that are that</p>
+            <p>fundamental medium of exchange of information about the electrical performance of interconnects.</p>
+            <p>And with that, thank you all very much for joining us in this Masterclass Workshop.</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson4-2.html">← Previous: Common Mode Analysis</a>
+            <a href="index.html">📚 All Modules</a>
+            <span class="disabled">Next →</span>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

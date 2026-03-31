@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 1-2: Understanding S-Parameters - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 1: What Are S-Parameters?</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html" selected>Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 1-2: Understanding S-Parameters</h2>
+            
+            <div class="content">
+            <p>In the last section, we looked at, so what? Why do we care about S-parameters? And what we</p>
+            <p>discovered was that S-parameters are the medium of exchange of information about the electrical</p>
+            <p>properties of an interconnect. Everything we ever wanted to know about the electrical</p>
+            <p>properties of an interconnect are contained inside the S-parameters. And that's why they're</p>
+            <p>so valuable because we can use them as a behavioral model of that physical interconnect.</p>
+            <p>Now let's talk about, okay, so what are S-parameters? That S in S-parameters stands for scattering</p>
+            <p>because that's really how we get the S-parameters from an interconnect. The formalism for S-parameters</p>
+            <p>was originally developed using sine waves as a very well-characterized signal. We send</p>
+            <p>that signal incident into our interconnect, and we look at how that signal scatters off</p>
+            <p>of the interconnect. Either it scatters back at us or scatters through the interconnect to</p>
+            <p>some other entrance or exit of the device. When we talk about S-parameters, then, it's</p>
+            <p>really about how does that interconnect treat sine waves. And all of the formulas that we're</p>
+            <p>going to talk about applies to interconnects which are linear, passive, and time-invariant.</p>
+            <p>The linear part means that if we send a signal in at one volt, we get a certain response coming</p>
+            <p>up. If we send a signal in at two volts, we're going to get double that response, not three-halves,</p>
+            <p>not 67%, but it's going to be exactly double. That means that if we send one sine wave in</p>
+            <p>at a frequency of a gigahertz, for example, we're only going to get one sine wave out at</p>
+            <p>one gigahertz. A non-linear device, on the other hand, would be a device that you send in</p>
+            <p>gigahertz. And you're going to get one gigahertz and maybe two or three or four or five gigahertz</p>
+            <p>harmonics of that signal. So for the interconnect structures that we're going to be dealing with,</p>
+            <p>we're going to assume that they are linear devices. And for 99% of all the interconnect</p>
+            <p>structures out there, they're all linear structures. The second term of passive means that we don't have</p>
+            <p>gain. That just means that we send a signal in, the maximum voltage we're going to get out</p>
+            <p>is going to be that input input. We're never going to get more than we put in. And the third property</p>
+            <p>of time invariant means that during the time we're doing the measurement of simulation,</p>
+            <p>the interconnect physically is not changing. That means that it doesn't matter whether we take a minute</p>
+            <p>or a microsecond in order to do the measurement of simulation. During that time, the interconnect</p>
+            <p>is constant. That means that every time we do the measurement, we're going to get the same values</p>
+            <p>for the S parameters. While the formalism was developed in the frequency domain,</p>
+            <p>because we're dealing with linear passive time invariant structures, we can actually apply</p>
+            <p>those sine wave behaviors to any kind of waveform going in. And one of the common transforms that</p>
+            <p>we're going to do is look at the behavior of the S parameters in the time domain with a step edge.</p>
+            <p>We sometimes refer to that as TDR, time domain reflectometry. And it's not just about the</p>
+            <p>reflected signals, it's also about the transmitted signal. So sometimes we refer to it as TDT,</p>
+            <p>time domain transmitted signal. But the behaviors are identical. We're going to send a well-characterized</p>
+            <p>signal in, we're going to look at how it scatters off of the device. Whether it is sine waves,</p>
+            <p>or it is a step edge, if we know one, we can figure out what the other is, just with a little bit</p>
+            <p>of algebra, as long as we have linear passive time invariant structures. Now we can look at,</p>
+            <p>well, how are we going to actually go about getting the S parameters from a device? And there are two</p>
+            <p>general ways. The first is by measurement, the second is by simulation. The typical instrument</p>
+            <p>used to measure the S parameters device is a vector network analyzer, or VNA. That vector part just means</p>
+            <p>that we're going to be paying attention to not just the magnitude of the sine wave that reflects,</p>
+            <p>but also the impact on the phase of that sine wave that goes in. And so we're going to pay attention</p>
+            <p>to that vector, the amplitude change and the phase change of the sine wave from what goes into what</p>
+            <p>comes out. This is an example of a couple of network analyzers, and I show them for particular</p>
+            <p>reasons. The very first network analyzer was the 8410 introduced by HP back in 1967. This sent sine waves</p>
+            <p>in measured the amplitude and phase change, and this first one went up to about the 12 gigahertz</p>
+            <p>kind of range. The 8510 was introduced in 1985, and the reason I show this is because this is what I</p>
+            <p>learned S parameters on. This was the very first network analyzer that I had a chance to have hands-on</p>
+            <p>experience with, and I learned everything I know about S parameters from Tony Wade, who was the application</p>
+            <p>engineer at the time that sat me in front of an 8510 and taught me about S parameters. So a lot of what I'm</p>
+            <p>telling you today is what I learned from Tony back in 1985. And this is an example of a more modern</p>
+            <p>network analyzer. Again, very similar. It's going to do exactly the same thing. It's going to send a</p>
+            <p>sine wave in. It's going to measure the change in that sine wave's amplitude and phase because of</p>
+            <p>its scattering off the device under test. This is an example of using measurements as that medium of</p>
+            <p>exchange of information about the electrical properties of the interconnect. In addition, we can also</p>
+            <p>use simulation, and there are generally two categories of simulation tools. There are circuit simulators</p>
+            <p>that use ideal circuit elements like transmission line elements or R's and L's and C's, and we can use</p>
+            <p>circuit simulators in order to simulate the behavior of those circuits and how sine waves are treated by</p>
+            <p>those circuits, and that's one way of getting S parameters. Another way is using an electromagnetic field</p>
+            <p>solver. And in a field solver, we're looking at the boundary conditions of the geometry, the materials,</p>
+            <p>and the dielectrics, and we're solving maps of those equations. And again, we're sending sine waves in</p>
+            <p>as electromagnetic fields entering into the device. We're calculating all those fields and how those</p>
+            <p>fields going in, the propagating fields going in, are changed by the interconnect and give us a change in</p>
+            <p>the input and phase of the signals coming out. So even though it is a field solver, it's calculated</p>
+            <p>the electric and magnetic fields dynamically in the device under test due to the interaction with all</p>
+            <p>the conductors and the dielectrics. Even though it's doing all that, it's still calculating for us</p>
+            <p>the behavior of sine waves and giving us the S parameters. Inside, under the hood, are all the</p>
+            <p>electromagnetic field calculations, but externally the output of the field solver are going to be</p>
+            <p>S parameters. And whether they come from a measurement or simulation, they're still the S parameters.</p>
+            <p>And sometimes we call the simulation environment a virtual twin or a virtual prototype of the real</p>
+            <p>thing. And we use the network analyzer to measure the S parameters of the real thing. In order to</p>
+            <p>think about the S parameters and understand them, there are a couple of important principles to pay</p>
+            <p>attention to in the definition of the S parameters. The first is this idea of a port. Any device under test</p>
+            <p>that we're going to look at, in order to send sine waves in, we have to have a connection to it.</p>
+            <p>And because they are signals, we need a connection between the signal and return path of the</p>
+            <p>conductor. There are no exceptions. There is always a signal and a return path to the device under test.</p>
+            <p>And a simple way of thinking about that connection we call a port to the device under test is think of</p>
+            <p>it as a little coax cable. Think of it that way because a coax cable has a signal and a return path</p>
+            <p>on it. And in a coax, you can have two waves propagating, one going in, one coming out, one</p>
+            <p>going to the right, one going to the left. And that's exactly what happens when we either do a</p>
+            <p>measurement or simulation of the S parameters of the device under test. We're going to send a sine wave</p>
+            <p>in and we're going to look at what reflects back. And so in that one interconnect path, we're going to</p>
+            <p>have two waves, one traveling to the right, one traveling to the left. And how we either do the</p>
+            <p>simulation of the measurement, we have to have a way of separating what is the wave propagating in,</p>
+            <p>so we know the incident wave, and what is the wave propagating out, so we know the, in this case,</p>
+            <p>it would be the reflected wave. Every connection to the device under test in which we're going to want</p>
+            <p>to see how does that wave scatter, either going in and coming back or scattering through, every</p>
+            <p>connection of the device is going to be a port. And here's an example of a real device. This is a</p>
+            <p>breakout board for, this is an HDMI cable. It's got a number of ports on it. Each of them are</p>
+            <p>literally little coax cables. There's going to be a signal and a return connection to each of these.</p>
+            <p>We're going to send a signal in. We're going to look at what comes back. And if we send a signal to</p>
+            <p>one of these, we can look at the signal that comes out of some of the others. There are a couple of</p>
+            <p>other important features of the port based on this idea of thinking of as a coax cable. We've got the</p>
+            <p>signal return path connection. We're going to have both the incident and the transmitted signal,</p>
+            <p>the reflected signal, that are both propagating in that cable at the same time. They don't interfere</p>
+            <p>with each other. And there's also a port impedance. In other words, this signal that's traveling into</p>
+            <p>this coax cable, before it hits the device under test, it is in a particular impedance environment.</p>
+            <p>There's a characteristic impedance to this coax cable connection. That signal that's propagating</p>
+            <p>down that coax to get into the device, where it enters the device where that port is. It is in a</p>
+            <p>particular impedance environment. We call that the port impedance. The value of the port impedance</p>
+            <p>is just as important as the impedance of the device under test, because that's going to influence us.</p>
+            <p>That impedance change that influences the reflected signal, for example, is going to be the difference</p>
+            <p>in impedance between the port impedance and the device under test. And generally, unless it's</p>
+            <p>otherwise specified, that port impedance is going to be 50 ohms. When we do a measurement or simulation,</p>
+            <p>we're generally going to use a 50 ohm port impedance, so we know what that input impedance is</p>
+            <p>that the signal sees right before it enters the device under test. And likewise, if we have another port</p>
+            <p>somewhere else, one of these other ports, and a signal is coming out of the device under test,</p>
+            <p>the port impedance of that connection to the device between its signal and return, its output,</p>
+            <p>signal return, that impedance is also going to be 50 ohms. Now comes the confusing part of if we have</p>
+            <p>one port on the device under test, keeping track of the going in and coming out, that's easy. It's one port.</p>
+            <p>But as soon as we have multiple ports connecting to the device, we need to keep track of all those</p>
+            <p>combinations of a going in and a coming out. Which port do we have the signal going into? Which port do we have the</p>
+            <p>signal coming out of? And we're going to look at all combinations. And each S parameter is really going</p>
+            <p>to be one of those combinations. It is literally going to be the ratio of the sine wave that comes</p>
+            <p>out of some port compared to the sine wave going in. And of course, when we take the ratio of two sine</p>
+            <p>waves, we have to pay attention to the ratio of the amplitudes. That's going to be a magnitude. And we</p>
+            <p>have to pay attention to the phase change between the coming out and the going in. And that means that</p>
+            <p>each S parameter is going to be a complex number. It's going to have a magnitude and phase or a real</p>
+            <p>and imaginary part. And it's going to vary with frequency. That is a lot of information to keep</p>
+            <p>track of. And that's part of where the formalism comes in. It's keeping track of all of that</p>
+            <p>information. And we do that using port numbers or index numbers. And here's how to think about the</p>
+            <p>index number. So I've got a kind of a device under test here that's got four ports. We</p>
+            <p>label the port identifications in terms of just numbers, starting with one and going up for however</p>
+            <p>many ports that we have. We're going to send signals in because after all, S parameters are</p>
+            <p>about the behavior of signals, in particular, sine waves. What are the properties of a sine wave? A</p>
+            <p>sine wave has a frequency, it has an amplitude, and it has a phase. Those are the three properties of</p>
+            <p>the sine wave that goes in. We want to keep track of what port did it go into, what port does it come</p>
+            <p>out of, and what is the change in the amplitude and the phase and the frequency? Well, because we're</p>
+            <p>dealing with linear passive time invariant devices, the frequency is not going to change. One gigahertz</p>
+            <p>goes in, one gigahertz comes out. And so we really only have to keep track of the change in amplitude</p>
+            <p>and the change in phase of those sine waves. And to keep track of which port is going in and which</p>
+            <p>is coming out, that's where the index numbers come in. And so when we describe a sine wave going in on</p>
+            <p>port one and the sine wave coming back on port one, that's the reflective signal, we're going to refer</p>
+            <p>to that particular combination of sine waves in terms of the port going in as one and the port coming</p>
+            <p>out as one, and that we label as \(S_{11}\). Another term for \(S_{11}\) we'll talk about in the next section</p>
+            <p>is return loss. So \(S_{11}\) is a measure of the reflected signal. Similarly, it's called the</p>
+            <p>reflection coefficient. If we send a signal into port one and we want to look at what happens to</p>
+            <p>that signal in scattering through the device to port two, then we refer to that as \(S_{21}\). But wait a</p>
+            <p>minute, wouldn't it make a lot more sense? It went from one to two, so wouldn't it make more sense if we</p>
+            <p>call that \(S_{12}\)? Because it goes from port one to port two. Yeah, it would, but it screws up the</p>
+            <p>mathematical formalism, because the basis of S parameters is a lot of matrix math. And in using</p>
+            <p>that matrix math, we have to adopt the formalism of the labeling scheme of the S parameters,</p>
+            <p>consistent with the matrix math. And part of that matrix math says, okay, when we label the S</p>
+            <p>parameters, we're going to do it in the exact opposite way. The first number is the coming out</p>
+            <p>port. The second number is the going in port. And so we go in on port one, we come out on port two.</p>
+            <p>So the two is the first, the one is the second. And this is one of the most confusing parts about S</p>
+            <p>parameters, is that the labeling scheme is the exact opposite of what our intuition would tell us.</p>
+            <p>Instead of an \(S_{12}\), going from one to two, it's the opposite. It's an S coming out to one going in.</p>
+            <p>And that's going to be the case for all the S parameters. And so for the transmitted signal going</p>
+            <p>through the device under test, that's going to be \(S_{21}\). And we sometimes refer to that through path</p>
+            <p>S parameters that direct through, through an interconnect, we sometimes refer to that as insertion</p>
+            <p>and then we've got the other S parameters depending on how many ports we have. Looking at all the</p>
+            <p>different ports that we have, we're going to have going ins and coming out every combination.</p>
+            <p>And so if we send a signal into port one and we look at what comes out of port three,</p>
+            <p>we would label that as \(S_{31}\). And we had a signal going into port one and coming out port four,</p>
+            <p>we would label that as \(S_{41}\). And so now you begin to see that labeling scheme. This way we can keep</p>
+            <p>track of absolutely every combination of a going in and a coming out. And if we have four ports,</p>
+            <p>how many combinations are there? They're going to be, you can go in on port one, you can come out on</p>
+            <p>port one, come out on port two, port three, port four. So for every port, n number of outputs. And so</p>
+            <p>for n ports, they're going to be n squared different S parameters. So we have four ports, that means we</p>
+            <p>have 16 different S parameters. Each one is going to be the ratio of the coming out to the going in,</p>
+            <p>based on the port number. And each one of these ratios is going to be the ratio of two sine waves,</p>
+            <p>the sine wave coming out compared to going in. And it's going to be frequency dependent. It's going</p>
+            <p>to change as we change the frequency. And to keep track of that ratio of sine wave coming out compared</p>
+            <p>to the sine wave going in, that ratio, the way we take the ratio to sine waves is as a complex number.</p>
+            <p>It's going to be the ratio of the amplitudes of what comes out compared to what goes in,</p>
+            <p>and the phase difference between what comes out compared to what goes in. And we can describe</p>
+            <p>each of the S parameters as a complex number. That complex number has magnitude and phase,</p>
+            <p>or it's real and imaginary, and it's going to vary with frequency. And it's going to depend on which</p>
+            <p>is the input and which is the output port. You can see there's a huge amount of information we have</p>
+            <p>to keep track of. And that's where the formalism and the labeling scheme is so important. So we can</p>
+            <p>refer to each S parameter absolutely unambiguously. So what are the S parameters?</p>
+            <p>They're a collection of numbers. They're going to be the reflected waves that send a wave in and what</p>
+            <p>comes back, or they're going to be the transmitted waves of what goes in on one port and comes out</p>
+            <p>some other port. And we're going to pay attention at every frequency. And at every frequency,</p>
+            <p>each one of these S parameter terms is going to have a different value. It's going to be a complex</p>
+            <p>number. Keeping track of all that information, we use a special file format. And that format is</p>
+            <p>sometimes referred to as the touchstone format. The touchstone is a, it used to be an informal</p>
+            <p>industry spec. And now the touchstone spec has been taken over by the IBIS committee. It's in a</p>
+            <p>couple of different revs, but the basic format is the same for all touchstone files. And as long as</p>
+            <p>we all agree that when we create an S parameter file, we use this file format, then all the</p>
+            <p>different tools can read the S parameters. So whether it comes from a network analyzer, a measurement of</p>
+            <p>device, or it comes from a circuit simulator or an electromagnetic field solver, if the output is</p>
+            <p>in a touchstone format, all the tools can read them. And we interpret the S parameters exactly the same</p>
+            <p>way. When we open up the touchstone file, what we're going to see is, it's just a bunch of numbers.</p>
+            <p>The name of the touchstone file, the extension of the, of the touchstone file tells us how many</p>
+            <p>ports are we talking about. And that identifies how many different S parameter terms there are going</p>
+            <p>to be. If we have one port, that means we only have one in and one out, and that means there's only</p>
+            <p>one term of S parameters. The extension is going to be an S1P. The S says, stored in this file are S</p>
+            <p>parameters. There's one port, and the P just means how many ports that are there. This is going to be</p>
+            <p>the extension for the touchstone file. If there are two ports, that means we have a one, port one and</p>
+            <p>port two. So we have four combinations of going in and coming outs. Each one of those is going to be</p>
+            <p>frequency dependent. We're going to have four different terms. They're going to be complex</p>
+            <p>numbers. When we open up that touchstone file and look at it, it is literally just a text file. When</p>
+            <p>we open it up, we see that it has a special format to it. That's a comment line. It's just there for</p>
+            <p>reference. When we have a hashtag, that means contained in this line is special information.</p>
+            <p>And that's part of the touchstone format. If you open up a touchstone file, you'll see when you have a</p>
+            <p>hashtag. The first alphanumeric in there tells us the units for the frequency. All of the touchstone</p>
+            <p>file formats are the same. The first column is the frequency value. The second two columns are either</p>
+            <p>real and imaginary or magnitude and phase. And then each successive column, those pairs are the complex</p>
+            <p>numbers corresponding to each of the different S-parameter values. The first characters</p>
+            <p>in the hashtag tell us the units for frequency. The next character tells us what kind of information</p>
+            <p>is stored there because this is a generic format to store any frequency dependent complex number.</p>
+            <p>And so impedance, for example, frequency dependent complex numbers, especially as we have different</p>
+            <p>ports, we can use the touchstone format. And so if we were storing impedance information,</p>
+            <p>this would be a Z instead of an S. The second set of characters tells us what are the units for the</p>
+            <p>two different columns for that complex number. We can use, if it's dB, these are standard codes in</p>
+            <p>touchstone format. dB means the first magnitude is in units of dB. The second is the phase in degrees.</p>
+            <p>If this were RI, it would be, oh, we have real and imaginary as the two different column values. And there are a few other</p>
+            <p>different formats that we can use. The next term R means, okay, pay attention, this is the port impedance</p>
+            <p>from which these S-parameters were obtained. We can change that port impedance. And as long as we have a</p>
+            <p>tool that understands touchstone file formats, we can convert that port impedance from whatever it was</p>
+            <p>measured or simulated into any other port impedance using a little bit of algebra. So it's not critical</p>
+            <p>that we use a particular port impedance when we do the simulation or measurement, as long as we know</p>
+            <p>what it was, because then we can translate later into other port impedances. And so that's the decodering</p>
+            <p>to how to interpret the information containing it. But fundamentally, S-parameters are just a collection</p>
+            <p>of numbers. Well, based on the physics of what's going on and the behavior of the interactions of sine waves</p>
+            <p>with these devices, there is a rich formalism to understand how do the electrical properties of the</p>
+            <p>interconnect affect the S-parameters. And if you take a look at some of the books out there, and I grabbed a couple of</p>
+            <p>selections. The first one is the Theory of Waveguise and Transmission Lines by Ed Kuster. So Ed Kuster is a</p>
+            <p>professor emeritus at University of Colorado in Boulder, where I teach. And I had the privilege of</p>
+            <p>actually being his office mate for the first couple of years that I was at CU. So I got to know Ed pretty</p>
+            <p>well. One of the sharpest guys I've ever met is a professor emeritus. He's been doing this stuff for</p>
+            <p>years, world expert on transmission lines and S-parameters and properties of interconnects. He wrote this</p>
+            <p>wonderful textbook, which is used in one of his courses. The notes are available. But if you open</p>
+            <p>it up, I just pulled one of the pages almost at random, and you can see that there's a lot of math</p>
+            <p>formalism. This is very common in a lot of books you'll find on S-parameters. Here's a more modern</p>
+            <p>version from Pete Poupolakis. And again, I had the privilege of working with Pete when we were both</p>
+            <p>at Telda and LaCroix. And Pete is, again, one of the sharpest guys I know. He thinks in mathematical</p>
+            <p>representation. He just intuits the equations. And he wrote this wonderful book about the mathematical</p>
+            <p>properties of S-parameters. And he also has a lot of Python code that implements a lot of these</p>
+            <p>mathematical principles. But again, this is a page from his book I pulled kind of at random. A lot of</p>
+            <p>mathematical formalism that is at the heart of the behavior of S-parameters. If you really want to</p>
+            <p>understand S-parameters, this is the place to go to. But if you don't want to be that power user of</p>
+            <p>S-parameters, if we just want to be able to look at S-parameters and understand what are they telling</p>
+            <p>us about the interconnect, then this is going to be a bit overkill. And that's why I like Sidney Harris's</p>
+            <p>cartoon here of, but this is the simplified version of the general public. It's hard to find content out</p>
+            <p>there that takes the rich formalism, the mathematical basis of S-parameters, and brings</p>
+            <p>it down to a level that doesn't hide the principles behind a lot of math. And so we're going to take</p>
+            <p>another approach in this master class looking at S-parameters. We're going to take that black box</p>
+            <p>of S-parameters, and we're going to open it up in order to see the gems that are inside of those S-parameters.</p>
+            <p>And we're going to not look at the mathematical formalism, but we're going to look at some of the</p>
+            <p>principles behind why we see the patterns in the S-parameters. So we're going to look at the</p>
+            <p>patterns the S-parameters create when we plot them up. And in that way, by looking at the patterns</p>
+            <p>and understanding what the origin of those patterns are and look for specific patterns, we'll be able</p>
+            <p>to read those S-parameters like a book. And if you'd like to get some more supplemental information</p>
+            <p>about this, I'm going to recommend you take a look at two other sources that I've written. I wrote a</p>
+            <p>general review paper for the IEEE EMC magazine. This was in the first quarter of 2023. It's available</p>
+            <p>on this link through the IEEE. And in one of my textbooks on Signal and Power Integrity to Simplify,</p>
+            <p>the last chapter is about S-parameters. And again, it's looking at those patterns, trying to minimize</p>
+            <p>the mathematical formalism so that we can get to the heart of reading those S-parameters like a book</p>
+            <p>to hear the story they're telling us about the behavior of the interconnects.</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson1-1.html">← Previous: Introduction and Overview</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson1-3.html">Next: S-Parameter Fundamentals →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

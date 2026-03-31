@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 4-1: Differential vs Single-Ended - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 4: Mixed-Mode S-Parameters</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html" selected>Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 4-1: Differential vs Single-Ended</h2>
+            
+            <div class="content">
+            <p>so far in this masterclass workshop we've introduced the idea of s parameters as the</p>
+            <p>medium of exchange of information about the electrical properties of interconnects we can</p>
+            <p>use them as a black box behavioral model to evaluate the behavior of a system and do a system</p>
+            <p>level simulation but if we do that we leave a lot of valuable information on the table we said that</p>
+            <p>if you really want to understand s parameters we want to be able to look at them and look for the</p>
+            <p>patterns in the s parameters and what they reveal about the structure of interconnects that create</p>
+            <p>those patterns we started out looking at two port s parameters which is basically a transmission line</p>
+            <p>or through connection and we saw a few patterns that were characteristic of all the structures we</p>
+            <p>would look at we saw the ripples and the return loss is due to a separation of two discontinuities</p>
+            <p>usually at the ends we saw an increase in the ripple amplitude is due to discontinuities at the</p>
+            <p>launches in particular we saw the monotonic drop in the insertion loss as due to the losses in the</p>
+            <p>interconnect and then we looked at some of the structures that contributed to some of the dips</p>
+            <p>we looked at stub resonances we looked at high q and then we looked at the behavior of two transmission</p>
+            <p>lines and we saw that in microstrip we have another source of a dip in the insertion loss and that was</p>
+            <p>due to foreign coupling to the adjacent line we explored a lot of these properties by looking at</p>
+            <p>ideal transmission line circuits that we synthesize and by looking at some measured s parameters</p>
+            <p>in this last section we're going to explore another way of looking at two transmission lines</p>
+            <p>instead of as two single-ended transmission lines with crosstalk or coupling we're going to look at</p>
+            <p>them as one differential pair we're going to use exactly the same s parameters in fact in almost all</p>
+            <p>cases measurements are done as single-ended s parameters and then using a little bit of math</p>
+            <p>or tools that i'm going to show you in this section we convert the single-ended s parameters into what</p>
+            <p>we refer to as mixed mode s parameters and we'll data mine some of the information in the mixed mode</p>
+            <p>s parameters to look at the differential properties of transmission lines let's take a look at a really</p>
+            <p>simple system that i've measured with a four-port network analyzer which is basically just two coupled</p>
+            <p>transmission lines in this case there are two micro strip transmission lines so i have an s4p file</p>
+            <p>let's bring that into the ads simulation environment and explore first the single-ended properties and</p>
+            <p>then i'm going to show you how we can quickly get the mixed mode properties and we'll look at how do we</p>
+            <p>interpret those s parameters here we are in ads and i've already set up the circuit in order to import an</p>
+            <p>s parameter file this is a four-port file and i've put terminals on the ends so we can extract each of</p>
+            <p>the different s parameter elements from the four-port s parameter measurement here and i've also done this</p>
+            <p>little trick that i like to do in translating each of the s parameter values as a variable that is uniquely</p>
+            <p>identified and this way we don't have to remember which port is connected where we just recognize that</p>
+            <p>okay this is the s11 for example of the micro strip structure from the measured file and likewise</p>
+            <p>most of the information we're looking for is contained in the first column of measurements</p>
+            <p>it's going to be the s11 the return loss the s21 the insertion loss and we saw that s31 represented</p>
+            <p>the near-end crosstalk we send a signal down the transmission line we look at what comes back to us</p>
+            <p>on port three and the foreign crosstalk is s41 we send a signal down port one and we look at what</p>
+            <p>comes out port four now that we've got the s parameters in a simulation environment when we run</p>
+            <p>the simulation we'll put that information about the s parameters in each one of these vectors and we have</p>
+            <p>an idea of what to expect let's take a look at those s parameters for the single-ended measurements</p>
+            <p>and then we'll convert them into mix mode we run the simulation and we open up a display window</p>
+            <p>and let's just look at each of these terms first we're going to look at s11 the return loss we expect</p>
+            <p>to see the ripples depending on the impedance of that single-ended line it may be in the minus 20</p>
+            <p>minus 30 db kind of range depending on the impedance match we'll see the ripples corresponding to the</p>
+            <p>length of the line and as we go up in frequency the ripple amplitude might increase because of launch</p>
+            <p>discontinuities let's take a look at s11 so here is s11 of the measured and sure enough it's kind of</p>
+            <p>what we expect to see we start out at a large negative db value we see the ripples corresponding</p>
+            <p>to the reflections back and forth from the ends and we see a little bit of structure here a couple of</p>
+            <p>higher frequency humps that's due to launch discontinuities at the end that are electrically</p>
+            <p>short and as we go up in frequency here we're at 12 gigahertz and as we up to 18 gigahertz oh my gosh</p>
+            <p>there's a huge amount reflected back and if we have a large amount reflected back we're not going to</p>
+            <p>have much transmitted whereas up to roughly about 12 gigahertz we would expect a pretty monotonic</p>
+            <p>decrease in the insertion loss but this is also a microstrip and so we know in a microstrip if it's</p>
+            <p>tightly coupled we might have additional coupling over to the second line and that's going to give us</p>
+            <p>a dip in the insertion loss let's take a look at the insertion loss for this coupled microstrip pair</p>
+            <p>so we open it up and now we're going to add s21</p>
+            <p>and sure enough we see starting at 0 db exactly what we expect we see that monotonic drop off</p>
+            <p>and in addition because this is microstrip we saw this large dip in addition to the dip we also see</p>
+            <p>another behavior here's that return loss at around the 18 gigahertz we have a huge amount of return</p>
+            <p>loss a lot of that signal is coming back in fact here it is at at minus 1 db minus 2 db that's most</p>
+            <p>of the signal reflects back that means we have less that goes through and sure enough where we have</p>
+            <p>everything coming back we have virtually nothing coming through we have a resonant dip and this</p>
+            <p>corresponds to at 18 gigahertz the circular resonant mode of the sma connector exactly what we expect</p>
+            <p>to see we see two dips here but two completely different mechanisms this dip is due to coupling</p>
+            <p>to port 4 foreign or losing energy in the transmitted signal through energy going to port 4 this is due to</p>
+            <p>a large amount of reflected signal at this frequency because of the circular mode in the sma connector</p>
+            <p>if that's the case if we look at the s41 that'll tell us about the far end crosstalk how much energy</p>
+            <p>comes through and what we lose in the insertion loss over here we ought to see coming back to us</p>
+            <p>in the s41 of course also attenuated because of the losses going down and back through the line</p>
+            <p>let's take a look at s41 and sure enough here is s41 we see that as we go up in frequency we're getting</p>
+            <p>more and more the energy going from port 1 into port 4 coupling through far end crosstalk and where we</p>
+            <p>have a dip in the insertion loss we have a peak in the coupled energy into port 4 so we see this</p>
+            <p>behavior is very characteristic of far end crosstalk in coupled microstrope and we have very little far</p>
+            <p>end crosstalk where we see all the energy reflecting back because there's very little energy going from</p>
+            <p>port 1 either to port 2 or to port 4 because so much of it is reflecting back at the circular mode</p>
+            <p>resonance of the sma connector and then lastly we can look at the s31 which is the near end crosstalk</p>
+            <p>and depending on what the coupling between the two lines is we're going to see something that</p>
+            <p>may be minus 20 minus 30 db let's take a look at the near end crosstalk here is s31</p>
+            <p>and we see here it is it's about minus 22 23 db relatively flat across the whole frequency range</p>
+            <p>and of course when we get energy that's reflecting back very little of it is going through for us to</p>
+            <p>see coupled over to port 3 and sure enough we have very little of it coupling over as near end crosstalk</p>
+            <p>so these measurements are really consistent with what we expect to see for a couple of microstrip</p>
+            <p>transmission lines we're going to take these same single-ended s parameters and we're going to</p>
+            <p>convert them to the mixed mode s parameters there are a couple of ways that we can do that</p>
+            <p>one of the simple ways is we can literally take each one of the s parameters we can write an</p>
+            <p>equation that describes how much of each of the single-ended s parameter vectors contributes to each</p>
+            <p>of the mixed mode s parameters and so we'd end up writing 16 different equations for converting each of</p>
+            <p>the single-ended s parameters into the mixed mode that's one way of doing it an alternative way is</p>
+            <p>we can use a circuit element that's built into ads that will do that conversion force automatically and</p>
+            <p>that's called a ballon and that's what we're going to introduce i'm going to show you really quickly</p>
+            <p>how we can take the same measured file using a ballon convert these single-ended s parameters</p>
+            <p>into the mixed mode s parameters and here's how we do that the circuit element we're going to use is a ballon</p>
+            <p>so we can come over here either to we can find it in the palette under passive components or we can</p>
+            <p>literally just type in the search bar for a ballon and we're going to use a four-port ballon double</p>
+            <p>click and here it is and so what we're going to do is we're going to use this to convert a differential</p>
+            <p>signal going in into the plus and the minus the p and the n signals into our single-ended s parameters</p>
+            <p>and likewise we're going to take another one of these copy and paste it put it to the other side</p>
+            <p>so we're going to mirror it about the y axis and now we're going to do the same thing on the other</p>
+            <p>side we're going to take the measured single-ended s parameters and we're going to convert the the p and</p>
+            <p>the n signals into differential and common signals so now that i have the balance set up i'm going to</p>
+            <p>grab my s parameter data set copy and paste it we're going to insert it in between and we're</p>
+            <p>going to connect it up and now we're going to drive the input the differential and common signals</p>
+            <p>with ports i'm going to grab one of the ports copy and paste let's see we're going to have a port for</p>
+            <p>the differential and again i like using that format of one to two three to four and so port one over on</p>
+            <p>this side grab port two over on this side and then we'll have port three and port four</p>
+            <p>let's connect them in and then i'm going to show you the very important trick that we have to pay</p>
+            <p>attention to when we drive single-ended s parameter files with a ballon where we want to drive</p>
+            <p>differential and common signals going in now we've got everything hooked up and now comes the very</p>
+            <p>important step when we drive a differential signal into the ballon that source is coming from a 100</p>
+            <p>ohm differential impedance i need to make the differential impedance of that terminal 100 ohms</p>
+            <p>and likewise when we drive a common signal into the ballon it has to come from a port impedance of 25 ohms</p>
+            <p>so i need to make this impedance 25 ohms and likewise on the other side there's the other differential</p>
+            <p>port this has to be 100 ohms and this common port has to be 25 ohms now we're all set to look at the</p>
+            <p>differential s parameters and you can imagine we're going to send a signal into the differential port</p>
+            <p>it's going to split it into however much we need into the p and the n line we're going to get that</p>
+            <p>signal coming out the p and the n line into the p and the n ports and that's going to be converted we're</p>
+            <p>going to look at the differential component and that's what's going to be supplied to the d</p>
+            <p>terminal and we're going to read it over here and likewise if there's a common component we'll read</p>
+            <p>it over on the common port and if we want to drive a common signal we'll drive port 7 in this case</p>
+            <p>into the common port it will split it into the p and the n recombine them on the other side and we'll</p>
+            <p>get the common signal coming out or if there's any differential component created it'll appear over here</p>
+            <p>we call the s parameters that we end up with when we deal with differential and common signals going</p>
+            <p>in and differential and common signals coming out we call those s parameters mixed mode s parameters</p>
+            <p>part of it is the behavior of the differential signal scsdd terms part of it is the behavior of</p>
+            <p>the common signals the scc terms and the rest are going to be the mode conversion terms let's take the</p>
+            <p>terminal s parameters that we have as as mixed modes and let's relabel them so they're easy to identify</p>
+            <p>and so i'm going to take the measurement equation that we created here i'm going to use that as my</p>
+            <p>template copy and paste it over here and now we're going to have the instead of s11 this is going to be</p>
+            <p>the sdd11 of the microstrip measured and let's see which s parameter is that i'm going to send a signal from</p>
+            <p>port five into the differential port and then we're going to look at what comes back port five so this</p>
+            <p>is going to be s five five and likewise we'll do an sdd21 measured from the microstrip here and let's see</p>
+            <p>i'm going to send a signal into port one of the differential that's terminal five and it's going</p>
+            <p>to come out over here on the differential side on the other side of the ballot and that's port six so this</p>
+            <p>is going to be six five now while we're here the other two mix mode s parameters i think are useful</p>
+            <p>is looking at the mode conversion we're going to send a differential signal in on this side and we're</p>
+            <p>going to look at the common signal coming out the other side we're calling this side differential port</p>
+            <p>one and this side differential port two and so sending a differential signal in port one and looking</p>
+            <p>the common signal in the common signal on port five that's really going to be in this case the s85</p>
+            <p>so the last term so this term is going to be this is going to be scd differential signal in common</p>
+            <p>signal coming out coming out on port uh one going in on port one and so this is going to be this is</p>
+            <p>going to be the s75 term</p>
+            <p>and finally we're going to send a differential signal in and we're looking at the common signal</p>
+            <p>coming out on port two and so that's going to be s cd</p>
+            <p>two one and which s parameter is that it's going to be going in on port five coming out on port eight</p>
+            <p>and so it's the coming out port is the first one the going in port is the second one now we've set</p>
+            <p>it up in order to look at the mix mode s parameters which we're interpreting in terms of the differential</p>
+            <p>in and differential out the common the differential in and the common out and now that we've got it set</p>
+            <p>up the next step is going to be looking at those measurements and interpreting the results</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson3-3.html">← Previous: Time Domain Reflectometry</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson4-2.html">Next: Common Mode Analysis →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

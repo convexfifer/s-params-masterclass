@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 2-2: Insertion Loss Analysis - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 2: Patterns and Meaning</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html" selected>Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 2-2: Insertion Loss Analysis</h2>
+            
+            <div class="content">
+            <p>Now, we're starting to delve into the patterns that S-parameters make. In the last section,</p>
+            <p>we identified a couple of the important patterns we would expect to see. Let's see, we saw that</p>
+            <p>if you have any interconnect at all that's a through path, at low frequency, nothing's going</p>
+            <p>to reflect. \(S_{11}\) is going to be a large negative dB. And so that's an important consistency test</p>
+            <p>we're going to look for in all of our S-parameters. Second is that the insertion loss, everything is</p>
+            <p>going to get through at low frequency, and so we'll see 0 dB as \(S_{21}\) for any interconnect. We also saw</p>
+            <p>what gave rise to the ripples in the return loss. It was the interference for the reflections between</p>
+            <p>two different disk countries heading back to port 1. In this section, we're going to explore these</p>
+            <p>principles through a simulation or virtual environment. We're going to build some simple</p>
+            <p>structures. And now that we know what to expect, we can apply rule number nine, anticipate before we</p>
+            <p>simulate to predict what we expect to see. And we're going to apply one of the more useful features in</p>
+            <p>ADS to help us build our engineering intuition about the behavior of S-parameters and what features</p>
+            <p>in the interconnect influence the patterns that we see. In particular, we're going to look initially</p>
+            <p>at uniform lossless transmission line models. Now, it's important to keep in mind that when we're in</p>
+            <p>the simulation environment, every model is ideal, no exception. They are defined by very precise</p>
+            <p>mathematical principles. Even though they're ideal circuit elements, we can add features to them so we</p>
+            <p>get a better approximation to the real world. We're going to start out with lossless transmission lines,</p>
+            <p>and then we're going to add to that lossy transmission lines in the next section.</p>
+            <p>So, let's enter ADS, and we'll take a look at exploring design space with virtual prototypes.</p>
+            <p>So, we've entered ADS, and now we're going to build our little simulation environment.</p>
+            <p>So, the first thing we're going to do is we're going to come over here. We're going to grab our</p>
+            <p>simulation engine. That's going to be our S-parameter engine. And we're going to do as we did before.</p>
+            <p>We're going to start at 5 MHz, stop at 20 GHz. All the principles that we want to illustrate can</p>
+            <p>easily be done in this frequency regime. And we're going to step at 5 MHz. Always a good principle</p>
+            <p>to have the step and the start the same values. Because ADS is so fast, it really doesn't matter</p>
+            <p>how many points that we include in that simulation. The next step is we're going to grab ourselves the</p>
+            <p>terminals or the ports. And now we're going to simulate the behavior of a transmission line.</p>
+            <p>So, we're going to grab an ideal transmission line. So, we come over here to transmission lines,</p>
+            <p>ideal. And I personally like this one, which describes a transmission line in terms of a</p>
+            <p>characteristic impedance and a time delay. And now we're going to connect up this transmission line.</p>
+            <p>So, we connect it on the two ends. And on principle, we're ready to go. We could simulate and go ahead</p>
+            <p>and look at \(S_{11}\) and \(S_{21}\). Now, of course, this is a pretty boring example because the impedance line</p>
+            <p>is the same as the port. There are no reflections. We're just going to see everything going through.</p>
+            <p>It's a transparent interconnect. And so, in order to make it a little more interesting, we're going to</p>
+            <p>vary the characteristic impedance. And we know what's going to happen. The height of the ripples</p>
+            <p>is going to change. And we're going to change the time delay as well. And we know what's going to</p>
+            <p>happen. The longer the time delay, the longer it is electrically, the closer spacing and frequency</p>
+            <p>those ripples are going to be. And if we get the impedance difference large enough, so the reflective</p>
+            <p>signal is close to that minus 10 dB number, then we're going to start to see the impact on the</p>
+            <p>insertion loss. Instead of just plotting \(S_{11}\) and \(S_{21}\), I'm going to do that trick that we did before.</p>
+            <p>I'm going to turn these into variables because we're going to add a couple of other examples</p>
+            <p>for comparison. And so, I'm going to add a measurement equation that's going to calculate</p>
+            <p>after the simulation and relabel those variables. And so, I need to go to a simulation palette.</p>
+            <p>And we're going to come along and we're going to label this as, this is \(S_{11}\). And this is going to be</p>
+            <p>for, this is going to be a long line. So, I'm just going to call this long. And it's going to equal</p>
+            <p>S1, 1. And then we're going to have another one that is \(S_{21}\), also long. And then we're going to</p>
+            <p>\(S_{21}\). And we're going to add that in. The other thing we're going to do is, we want to make our</p>
+            <p>impedance and the delay a variable because we're going to use this particular transmission light</p>
+            <p>in a couple different simulations. And we want to just change that variable once and kind of have</p>
+            <p>it ripple through. And so, I'm going to make this a variable. I'm going to call it, I'm going to call</p>
+            <p>Z-naught of the long. And it'll be in units of ohms. And the delay, I'm going to make this a time</p>
+            <p>delay of the long. And I'm going to put units of nanoseconds just to remind myself. I personally</p>
+            <p>like to label, use labels for the variables that are kind of self-documenting. And in particular,</p>
+            <p>if it's not obvious what the unit is, I like to put the unit in the variable name.</p>
+            <p>Now, because we've just made a couple of variables here, because we've just made a couple of variables,</p>
+            <p>we need to assign them values. And that's going to be done before the simulation happens. And to do</p>
+            <p>that, we're going to use a variable element. So, the variable is another way of writing an equation.</p>
+            <p>The difference is, an equation in the variable element is calculated before the simulation.</p>
+            <p>And an equation in a measure equation element is calculated after the simulation.</p>
+            <p>So, we want to calculate these variables and assign them before the simulation. So,</p>
+            <p>we're going to open it up. We're going to give it the name of Z-naught long. And let's start out</p>
+            <p>with a value of, oh, say, 40 ohms. And we'll say, okay, apply that. And then we're going to have our</p>
+            <p>TD of long. And remember, we put the units of nanoseconds. And how long do we want that? We'll</p>
+            <p>start with one nanosecond. So, here are our variables that we're starting with. And they're</p>
+            <p>going to be assigned here. And here are the calculations we're going to do after the simulation.</p>
+            <p>So, now, when we simulate this, we ought to be able to see the \(S_{11}\) and \(S_{21}\). And what should we see?</p>
+            <p>Well, because this is .50 ohms, we're going to see ripples in the return loss. And we're going to see</p>
+            <p>them with a spacing. Let's see. This is a one nanosecond starting out. And so, that's a gigahertz.</p>
+            <p>So, half of that is 500 megahertz. So, we'll see about every 500 megahertz is the space between</p>
+            <p>the ripples. Let's see what we've got. So, we run the simulation. And after it runs, it opens up a</p>
+            <p>display window. And we can plot in the display window. And here is our display window. And we're</p>
+            <p>going to plot \(S_{11}\) and \(S_{21}\) of the long interconnect. We're going to do just DB for now. And here we go.</p>
+            <p>And sure enough, pretty close to what we expect. Now, it's a little small. I like to, and it comes</p>
+            <p>up auto-scaled. Personally, I'm going to adjust that. So, we're going to do two things. I'm going to make</p>
+            <p>it a little bit bigger. I like to use the text at 14 point. Makes it a little easier to read.</p>
+            <p>And let's change the vertical scale on this. And let's go to minus 50 dB to zero, a step of 10.</p>
+            <p>Okay. And here we see that we're at about, here's minus 15. Here's about minus 12, minus 13 dB</p>
+            <p>as the magnitude of the return loss. No impact on this scale in the insertion loss, just like we</p>
+            <p>expected to see. And sure enough, the spacing here, we expected about 500 MHz. And darn it,</p>
+            <p>it isn't just about 500 MHz. Now, this is our starting place. Now, we're going to play a couple</p>
+            <p>of games. We're going to use one of the coolest features in ADS. And that's the ability to change</p>
+            <p>a variable value and dynamically see its impact on the simulation. That's called tuning. So,</p>
+            <p>I'm going to turn on the tuning function. And the tuning function will allow us to select which</p>
+            <p>variables we want to adjust. And so, now that I've got the cursor is a little cross, I'm going to come</p>
+            <p>in and say, I'm going to adjust. I want to change the impedance and I want to change the time delay.</p>
+            <p>Now, luckily, I can see the names of these because I have the box here clicked that says display full name.</p>
+            <p>But if that wasn't clicked, it'd be a little hard to read a long name. Now, I want to keep variable</p>
+            <p>names short anyway, but sometimes they're longer than will fit normally in the display for tuning.</p>
+            <p>And it's useful to see what those names are. So, I always like to click this box to display the full</p>
+            <p>name. So, I know exactly what it is. Now, let's open up our display window again. And now, we're going</p>
+            <p>to play this very fun game. We're going to adjust one of these parameters one at a time. We're going to</p>
+            <p>see the impact it has on the simulation. Now, let's see. Let's do the time delay first. So,</p>
+            <p>the maximum value, I want to set that for, oh, I think 5 nanoseconds. But I want the minimum value</p>
+            <p>to be 0.01 nanoseconds, really small. And we'll step it at 0.01 nanoseconds as well. Now, when I move</p>
+            <p>this slider, I change that. If I move to a longer time delay, I'm going to compress. I'm going to bring</p>
+            <p>in the frequency intervals. The longer the interconnect, the shorter the interval between</p>
+            <p>the frequencies. Let's watch that. So, I increase the time delay, and I'm bringing those intervals</p>
+            <p>closer and closer. I decrease that time delay, see how far we can move it out. I make that time</p>
+            <p>delay shorter and shorter and shorter. And look, I'm increasing that spacing, the frequency interval</p>
+            <p>between the peaks. And in fact, look, if I have a really short time delay, I don't even see the</p>
+            <p>peaks. It just looks like it's increasing as a function of frequency. But in reality, what's</p>
+            <p>happening is that's just part of one of those lumps. And if I make my time delay so short that I</p>
+            <p>don't fit one of those full cycles within the frequency range, it just looks like it's increasing</p>
+            <p>over frequency. Now, let's go back and add a few of those ripples in there. Now, let's change the</p>
+            <p>impedance. Let's go from 100 ohms down to, let's go to 2 ohms, and we'll step it at 1 ohm. Now, as I</p>
+            <p>change the impedance, I'm going to see the impact over here on the peak of the return loss. If I</p>
+            <p>increase the impedance, get closer to 50 ohms, this is going to drop down. Let's see. Hey, sure enough,</p>
+            <p>the closer you get to 50 ohms, the more it's going to drop down. And of course, if it is 50 ohms,</p>
+            <p>oh, then it's off scale. I don't see it. And if I increase the impedance, so again, we're off from</p>
+            <p>50 ohms, we see it increasing again. Now, let's explore a little bit this idea of the impact on</p>
+            <p>the insertion loss from the return loss. Remember, I said it was about that minus 10 dB before we would</p>
+            <p>see an impact over here. Well, remember, on this scale, this is 10 dB. So, this is 2 dB per division</p>
+            <p>here. Let's expand our scale so we can zoom in on this a little bit more. So, we're going to make</p>
+            <p>this scale. Maybe we'll go to minus 20 dB and we'll step it at 5. Now, we can see we have</p>
+            <p>1 dB per small division here. And you can see at minus 14 dB as the return loss, we're just</p>
+            <p>barely getting a fraction of a dB over here. Let's increase the impedance mismatch a little</p>
+            <p>bit. And here we have minus 13, minus 12. And you can see we're getting a little bit more impact</p>
+            <p>on the insertion loss as we expected to see. Remember, here is 1 dB. So, we're not even at</p>
+            <p>a half a dB yet. And if we get to, let's see if we can get it to minus 10 dB. So, there's our minus 10 dB.</p>
+            <p>Look at that, 70 ohms. We have 50 ohms to see. That's a 20 ohm difference before we have minus</p>
+            <p>10 dB return loss. And at minus 10 dB, that's where we're getting a half a dB impact on the insertion</p>
+            <p>loss. That's quite a bit of impedance mismatch before we have as much as minus 10 dB return loss and a</p>
+            <p>small impact on the insertion loss. And if we back out a little bit, so here we are at minus 13 dB,</p>
+            <p>hardly any impact at all on the insertion loss, exactly as we expected to see. And of course, if we change</p>
+            <p>the time delay, that's only going to change the frequency spacing. It doesn't change the magnitude.</p>
+            <p>And so, this is a nice feature of tuning that it allows us to look immediately at the impact on the</p>
+            <p>simulation from changing a few of the parameters. And of course, if we go the other way, so we saw about</p>
+            <p>20 ohms difference from 50 ohms, 70 ohms is when we got minus 10 dB. Let's go to the other side.</p>
+            <p>And here we are at a lower impedance. And let's see what, and here we are at, it's about 30,</p>
+            <p>it's about 36 ohms as the impedance of the line. And you can, that's giving us minus 10 dB. That's about</p>
+            <p>14 ohms different from 50 ohms. And again, the same thing. We're just at that,</p>
+            <p>just at that half a dB impact on the insertion loss, exactly as we expected to see.</p>
+            <p>Now, we're going to play one other game. So, this is, so we're going to finish our tuning.</p>
+            <p>We understand what it's doing. And now, we're going to build another transmission line that is</p>
+            <p>going to be a very short interconnect. So, I'm going to take everything that we've got here.</p>
+            <p>We're going to copy it. We're going to replicate it. And this is going to be a short line.</p>
+            <p>And this is going to be a time delay that is short.</p>
+            <p>And so, I'm just going to go ahead and I'm going to make those changes.</p>
+            <p>So, we've built two transmission lines. One transmission line that's pretty close to 50 ohms.</p>
+            <p>That's about 0.3 nanoseconds long. And one transmission line that is 10 ohms and really short.</p>
+            <p>We know what we're going to see in these two transmission lines. We're going to see</p>
+            <p>tiny ripples that are really large negative dB in the return loss, no impact on the insertion loss.</p>
+            <p>And there'll be some spacing apart. And in this one, there'll be a big impedance difference.</p>
+            <p>So, we'll see a lot of return loss. But it's such a short interconnect, we may not even see a whole</p>
+            <p>cycle within the 20 gigahertz. And we'll make that even shorter to be sure that we don't.</p>
+            <p>Now, what we're going to do is we're going to combine them together into one interconnect.</p>
+            <p>I'm going to build a composite interconnect that's composed of the long one with two of these short</p>
+            <p>ones on either end. That's just like a transmission line with two discontinuities.</p>
+            <p>at the launches. And I'm going to do it the easy way. I'm going to take this one and copy it.</p>
+            <p>And I'm going to take this one, copy it, and paste it on this end and on this end.</p>
+            <p>Now, personally, I like to space things far enough apart so that I can read the values that we have.</p>
+            <p>And I'm just going to grab one of these ports. And I'm going to put one on this end.</p>
+            <p>And so you can see, in just a matter of a few minutes, we're able to synthesize a relatively</p>
+            <p>complex structure. And I'm going to do the same thing over here that I've done before.</p>
+            <p>I'm going to turn these S-parameters into simple variable names. And I'm going to call this</p>
+            <p>launch. And this is, let's see, this is 5.5. And the other one is 6.5. Okay, now we're ready to</p>
+            <p>simulate. And what we're going to find is, we're going to see the short one, we're going to see the</p>
+            <p>long one, we're going to see the short one. And what do you think we're going to see when we look</p>
+            <p>at the composite one? We're going to see the combination of kind of the product of the,</p>
+            <p>we'll see the ripples corresponding to the long transmission line, space, pretty closely space,</p>
+            <p>because it's relatively long. But modulated on top of that is going to be the slow change</p>
+            <p>of the amplitude due to the discontinuities at the ends. Let's take a look and see that.</p>
+            <p>And of course, we don't see anything because our scale, we're looking at the long line,</p>
+            <p>and then our scale is not, it doesn't go down far. And if you see the \(S_{11}\), here, of course,</p>
+            <p>is the \(S_{21}\). And there's really no difference between that and the zero. So let's change the</p>
+            <p>scale again. And now we can see, okay, here's where the reflective signal is. On this scale,</p>
+            <p>let's also add the short. So we'll come along here. And we'll add the short. And I use control</p>
+            <p>click, and I can do multiple ones. And there we go. And now we can see the short time interval</p>
+            <p>for the 10 ohm line that's 0.1 inches long. We're going to make this line a little bit longer,</p>
+            <p>and we're going to make this one a little bit shorter. Let's use our tuning function to do that.</p>
+            <p>And so the short transmission line,</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson2-1.html">← Previous: Return Loss Patterns</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson2-3.html">Next: Frequency Domain Interpretation →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 3-2: Crosstalk Analysis - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 3: 4-Port S-Parameters</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html" selected>Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 3-2: Crosstalk Analysis</h2>
+            
+            <div class="content">
+            <p>So far, we've been looking at the patterns in the S-parameters. We started out looking at kind</p>
+            <p>of a two-port transmission line, a single-ended transmission line, and we looked at the return</p>
+            <p>and insertion loss, and we looked at the connection between the patterns in the return</p>
+            <p>loss with the ripples and the magnitude of the reflected signal and the insertion loss.</p>
+            <p>And we saw two characteristic patterns. We saw the ripples, and we saw an increase in the amplitude</p>
+            <p>of the ripples due to launch discontinuities. Then we added losses to the interconnect, and we saw the</p>
+            <p>monotonic drop-off in the insertion loss. And then we added yet another factor to the behavior of</p>
+            <p>transmission lines, and that was coupling to an adjacent line, and we introduced the ideas of</p>
+            <p>near-end and far-end crosstalk. And in that exploration of near-end and far-end crosstalk,</p>
+            <p>we saw a new kind of pattern emerge, which was a large dip in the insertion loss, and that was due</p>
+            <p>to energy coupling over to the adjacent line in the special case of coupled microstrip. Now we're</p>
+            <p>going to introduce two other sources of dips in the insertion loss, and we're going to look at the</p>
+            <p>root cause of those dips based on the behavior of ideal transmission lines. I'm going to walk you</p>
+            <p>through really briefly the idea of resonant coupling and how that's going to contribute to</p>
+            <p>narrow dips. We're going to see it in our digital twin, our simulation environment, and then we're</p>
+            <p>going to look at a couple of measured structures and see those same patterns. Here is basically the</p>
+            <p>circuit that we created when we looked at coupling in transmission lines. The way we describe the</p>
+            <p>coupling between two transmission lines is using the multilayer interconnect library element,</p>
+            <p>and we introduce the idea of a substrate that defines the stack up, and then in this case,</p>
+            <p>two transmission lines that have some coupling between them. We parameterize them in order to</p>
+            <p>look at the impact of the near-end and far-end crosstalk on the adjacent victim line. Now, I've</p>
+            <p>replaced the terminals that were on the end of the victim line with resistors so we could make their</p>
+            <p>resistance really high. This simulates the behavior of floating metal. And so we have two transmission</p>
+            <p>lines. We're going to drive the signal into the first one and look at the reflected and transmitted</p>
+            <p>signal. And we're going to get some energy coupled over to the victim line. Once we get a signal coupled</p>
+            <p>to the victim line, it's going to propagate in the victim line. It's going to hit the end of the line,</p>
+            <p>and I've added an open at the end of the line. And that signal is going to propagate back,</p>
+            <p>and it's going to bounce back and forth between the open ends of this line. This is a resonator,</p>
+            <p>and we're going to have energy that is resonating back and forth in this victim line. And of course,</p>
+            <p>as that signal bounces back and forth, it acts as an aggressor line to our first line,</p>
+            <p>and we're going to get some of this energy coupled back at the resonant frequency. And so we're going</p>
+            <p>to see behaviors in the aggressor line of energy being coupled out into the victim line at the resonant</p>
+            <p>frequency and some of the energy heading back and then heading in the source direction. And we're</p>
+            <p>going to see that as return loss. And in order to simulate that kind of behavior, we're going to use</p>
+            <p>that same structure that we had before, our coupled lines. We're going to drive that sine waves into the</p>
+            <p>line, and we're going to see that coupled energy between them. Let's get started first looking at</p>
+            <p>this setup. And you'll notice the situation that we have. This is just like we had before with two</p>
+            <p>microstrips. FR4 is sort of dielectric. We have 50 ohm lines. We adjusted the dielectric thickness</p>
+            <p>and the line widths in order to give us roughly 50 ohms. This particular line is 10 inches long.</p>
+            <p>We know exactly what we'll see in the return and insertion loss. We're not going to see very much</p>
+            <p>reflection. So \(S_{11}\) is going to be a large negative dB value. And the insertion loss, we're going to see that</p>
+            <p>drop off due to the attenuation from the dielectric and the conductor loss. Let's take a quick look at</p>
+            <p>that. And then what we're going to do is we're going to change the length of coupling. We're</p>
+            <p>going to make it a shorter interconnect. Make it about one inch long. And we're going to bring the</p>
+            <p>two lines closer together. And we're going to look at the impact of that resonant coupling. And of</p>
+            <p>course, you don't need me to say that this is the insertion loss. Here's the return loss,</p>
+            <p>just like we expect. Let's make that line really short now. And so we're going to change</p>
+            <p>that length. We're going to make it one inch long, roughly. Of course, the attenuation decreases.</p>
+            <p>The spacing between the ripples is going to increase. And we have such a good match in this</p>
+            <p>interconnect that we have nothing coming back. \(S_{11}\) is below minus 40 dB. Now we're going to bring</p>
+            <p>the lines closer together and look for a new behavior. So let's bring the lines closer and</p>
+            <p>closer together. So now here you can see the 36 mils apart. We're bringing it closer and</p>
+            <p>closer and closer. And now suddenly we see a new behavior emerge. Here we are at 13 mils. Let's</p>
+            <p>make it 10 mils apart. And at 10 mils apart, you notice two new behaviors. The first is in the</p>
+            <p>insertion loss, we see little dips appearing. And in the return loss, we see these peaks appearing.</p>
+            <p>Previously, when we looked at the return loss, we thought of return loss as due to reflections.</p>
+            <p>There's another source of signal coming back into port one that is not about reflection,</p>
+            <p>but about signal that's coupled back. Remember what is happening in our coupled line. We're</p>
+            <p>sending a signal in port one. It's traveling down to the other end. That's what we see over here.</p>
+            <p>And some of that energy, because of near end and far end crosstalk, is being coupled over to the</p>
+            <p>other line. That signal, when it gets to the other line, is going to propagate in both directions.</p>
+            <p>Some is going to hit the far end, which is open and reflect. Some is going to hit the near end,</p>
+            <p>which is open and reflect. And that signal is going to bounce back and forth. And as it propagates back</p>
+            <p>and forth, it's going to then couple back over. And the signal that's propagating in the forward</p>
+            <p>direction toward the port one is going to couple over as far end crosstalk in port one. And we're going</p>
+            <p>to see that energy coming back. And that's what these peaks are. They are at the resonant frequency</p>
+            <p>of the coupled line. And this is signal that is into port one from the pollution from the second,</p>
+            <p>the floating conductor over here. And we see some energy loss in the transmitted signal at those</p>
+            <p>same resonant frequencies. Let's bring them even closer together. And we'll bring them so they're</p>
+            <p>five mils apart. And we see the resonant frequency here at a little over three gigahertz. And here's</p>
+            <p>a second one at twice that frequency. We see these sharp dips in the insertion loss and a corresponding</p>
+            <p>large peak in the return loss. Now, keep in mind, the magnitude of the return loss here is still below</p>
+            <p>minus 15 dB. That means that it's not quite enough. If this was reflected energy, it wouldn't be enough</p>
+            <p>to really pull down the insertion loss very much. This is a brand new behavior related to resonant</p>
+            <p>coupling. And if I decrease the loss a little bit, we'll see that the sharpness of this peak increases.</p>
+            <p>So now let's turn off the dielectric loss. And if we turn off the dielectric loss, we see that we're able</p>
+            <p>to get more energy rattling around in the floating metal here before it decays away. We get a sharper dip</p>
+            <p>and we get more energy that is heading back toward the source. This dip has two features associated with</p>
+            <p>it. It has a frequency which it happens, and that's related to the resonant frequency of this line. Let's make</p>
+            <p>that line longer. And if we make the line longer, we're going to push the resonant frequency to lower</p>
+            <p>frequency. So we make the line longer, and there it is at lower frequency. And you see all the multiple</p>
+            <p>resonances in that adjacent line. If we make the line shorter, we push that resonant frequency to</p>
+            <p>higher frequency. And if we pull the lines farther apart, reduce the coupling, the frequency will stay</p>
+            <p>the same, but the amount of energy that couples and the amount of energy we lose in the insertion loss</p>
+            <p>is going to decrease. So we'll pull them farther apart, and we lose less and less energy until they're so</p>
+            <p>far apart that we can hardly see any of the energy that is being sucked out of the aggressor line.</p>
+            <p>These are the features that we would expect to see from resonant coupling that will arise whenever we</p>
+            <p>have a conductor that is floating nearby, or some other structure that the signal can couple to</p>
+            <p>that is resonating. Given these behaviors, let's take a look at two examples of measured structures that</p>
+            <p>show this resonant coupling. I've brought in two different measured S-parameter files from different</p>
+            <p>structures where there is adjacent conductors that act as resonators. In the first case here,</p>
+            <p>this is just a uniform transmission line that's got a three-inch long length of interconnect next to it</p>
+            <p>that's roughly a 50-ohm line as well, but it's just copper port. It's floating metal. And you can see very</p>
+            <p>clearly the behaviors that we've talked about so far. First, you see the little monotonic drop-off in</p>
+            <p>the insertion loss. You see, due to the losses in the line, you see the ripples in the return loss</p>
+            <p>because it's not quite a 50-ohm line, and the fact that the peak of the return loss increases indicates</p>
+            <p>that we have those launch discontinuities at the ends of the lines. And on top of all that,</p>
+            <p>you see the sharp peaks. Those sharp peaks correspond to the resonant frequency of the</p>
+            <p>adjacent conductor. And where we have a dip in the insertion loss, it's a very sharp dip. You also see</p>
+            <p>a larger peak in the return loss due to the ringing of the signal in the floating metal and some of that</p>
+            <p>energy coupling back into the port one of \(S_{11}\). And so here's a resonant frequency. Here's a resonant</p>
+            <p>frequency. Here's a resonant frequency. And in addition, you can see a few other resonances</p>
+            <p>appearing in this structure. These are kind of the fingerprints to tell us all the resonant</p>
+            <p>structures that are nearby that this signal line is coupling to. So when we see a sharp dip in the</p>
+            <p>insertion loss, look for a corresponding peak in the return loss, and that is usually due to coupling to</p>
+            <p>a resonant structure. Here is one other structure that I have. This is from a transmission line that's</p>
+            <p>passing through two layers in a board that represent a cavity. And we're going to couple energy into that</p>
+            <p>cavity at the resonant frequency of the cavity. And let's look at those S parameters. And these are</p>
+            <p>going to be in \(S_{65}\) and \(S_{55}\). And here are the measurements from this particular structure.</p>
+            <p>And again, you see that characteristic. You see the return loss increasing over frequency due to the</p>
+            <p>launch discontinuities. You see a monotonic drop-off in the insertion loss. But more importantly,</p>
+            <p>you see the sharp dips in the insertion loss. And those sharp dips are due to resonant coupling</p>
+            <p>to the cavity that the signal is passing through. And where we have the sharp dips in the insertion</p>
+            <p>loss, we also see a correspondingly large return loss. In this case, not related to reflections,</p>
+            <p>but related to energy going into that second conductor that is coupling back to port one at</p>
+            <p>the resonant frequencies. We've seen two different root causes for dips in the insertion loss. We saw</p>
+            <p>far-end crosstalk in coupled microstrip, very specialized case. And now we see resonant</p>
+            <p>coupling between the aggressor line and floating conductor nearby, commonly occurring if we have</p>
+            <p>copper pore, if we have a floating conductor, if we have some other resonant structure that the signal</p>
+            <p>will couple to. There's one additional root cause that we're going to look at that causes a dip in</p>
+            <p>the insertion loss. And that's due to a quarter wave stub.</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson3-1.html">← Previous: Introduction to 4-Port Systems</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson3-3.html">Next: Time Domain Reflectometry →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 3-1: Introduction to 4-Port Systems - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 3: 4-Port S-Parameters</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html" selected>Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html">Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 3-1: Introduction to 4-Port Systems</h2>
+            
+            <div class="content">
+            <p>So far, we've been building up the complexity of interconnects to understand the root cause</p>
+            <p>of some of the S-parameter patterns. We looked at uniform lossless transmission lines,</p>
+            <p>and we saw the origin of the ripples and the return loss, and sometimes their impact on</p>
+            <p>the insertion loss. We saw the impact of launches, short length, large discontinuities at the beginning</p>
+            <p>and end of a line, and that gave rise to that rising ripple amplitude in the return loss.</p>
+            <p>And in the last section, we added to our repertoire of behaviors the impact of losses, and in particular,</p>
+            <p>frequency-dependent losses in transmission lines. Now we're going to expand the kind of behavior we</p>
+            <p>can look at in S-parameters by including coupled transmission lines. And to describe coupled</p>
+            <p>transmission lines so that we can simulate simple examples, see what their patterns are,</p>
+            <p>and look for those patterns in measured S-parameters, we're going to use a model in ADS that we haven't</p>
+            <p>encountered before. So far, we've been dealing with single-ended transmission lines. Now we're</p>
+            <p>going to look at two coupled transmission lines, and to account for that coupling, we're going to</p>
+            <p>use a built-in 2D field solver. This is going to be a brand new type of, again, ideal transmission</p>
+            <p>line model that uses an integrated 2D field solver. It's still ideal in the sense that its properties</p>
+            <p>are very precisely mathematically defined. And this particular transmission line model called the</p>
+            <p>Multilayer Interconnect Library Transmission Line allows us to describe a transmission line based on</p>
+            <p>the stack-up. So it's geometry information and the material properties. And then, once we have the</p>
+            <p>stack-up defined, we'll be able to include however many transmission lines we would like to include that</p>
+            <p>also takes into account their coupling. And that is the most important quality that we're going to pay</p>
+            <p>attention to. We're going to use the same ideal lossy transmission line models we've used before, but integrate the</p>
+            <p>cross-talk or coupling between them. This integrated 2D field solver will take the geometry and material</p>
+            <p>information, calculate all the capacitance and inductance matrices, and use those in order to</p>
+            <p>calculate either the transient simulation or the S parameters so that they're integrated into any</p>
+            <p>circuit simulation. We're going to build a really simple model for two-coupled microstrip. We're going to</p>
+            <p>first evaluate what they look like when they're far apart and uncoupled. And then we're going to bring them</p>
+            <p>closer and see the impact of the coupling. And now that we have two transmission lines, we're going to</p>
+            <p>have four ports. We're going to look at how we use the S parameters from all four ports in order to</p>
+            <p>evaluate the behavior of the interconnect structure. Let's move into our simulation environment. We're</p>
+            <p>going to build a digital twin for a real coupled microstrip pair of transmission lines when we can change</p>
+            <p>the space in between them and look at the impact of that coupling. We're going to start out with a blank</p>
+            <p>schematic page in ADS. And I'm going to walk you through very briefly how we can build this geometry</p>
+            <p>based coupled transmission line pair. We're going to start out with microstrip, and the same techniques</p>
+            <p>can be applied to stripline that we'll look at in a later section. In addition, we're going to take</p>
+            <p>advantage of all the techniques that we've used so far. We're going to parametrize the variables when we</p>
+            <p>can, and we're going to use tuning in order to explore how geometry material changes influence the S</p>
+            <p>parameters so we can identify the features of the patterns that we see in the S parameters and how</p>
+            <p>they relate to the geometry and material features in the actual transmission line. So let's get started</p>
+            <p>grabbing this new ideal lossy coupled transmission line element, and that is the multilayer interconnect</p>
+            <p>library. And here's how we begin. So we're going to come over to the palette. We're going to select</p>
+            <p>of the transmission line types. We're going to come over here to transmission lines multilayer.</p>
+            <p>There are two elements that we have to worry about. One is the stack up. That tells us the cross-section</p>
+            <p>geometry. And the second is kind of a top view looking down on the transmission line.</p>
+            <p>What are the line widths and lengths and spacings of those transmission lines? So we're going to start</p>
+            <p>with a two layer substrate. So that's a microstrip structure. We grab the two layer substrate and here</p>
+            <p>it is. And when we add it to the schematic page, these are all the parameters. And this is basically</p>
+            <p>what that that stack up is. It defines the material properties and geometry on each layer. Top layer is</p>
+            <p>metal one, bottom layer is metal two. And the stack up, we're going to use metal layer one, layer one as</p>
+            <p>the signal. And of course, the layer two as the ground, be a wide uniform continuous ground. We have</p>
+            <p>the signal on top, we call that structure microstrip. The principles will apply to almost any other</p>
+            <p>transmission line that we want to build. We'll find that there are a couple of very special properties</p>
+            <p>microstrip transmission lines have compared to strip line. And we'll look at both of them throughout</p>
+            <p>this master class. Let's go ahead and parameterize the important parameters. In this case, there's only one</p>
+            <p>dielectric layer. We're going to call that dielectric constant of the microstrip. The conductivity, this is</p>
+            <p>infinite, so that's the case for lossless or perfect conductor. We're going to use the conductivity for</p>
+            <p>copper. Easy number to remember, 5.7e to the seven, and that's in units of Siemens per meter.</p>
+            <p>And likewise, the bottom metal thickness, the thickness of the of the return plane, we're also going to make</p>
+            <p>that one ounce copper. And the conductivity for that will also be 5.7e to the seven Siemens per meter.</p>
+            <p>Everything else is the same, so there really only is the dielectric constant, the dielectric thickness</p>
+            <p>of that one layer, and the dissipation factor that defined the stack-up. This effectively defines</p>
+            <p>the stack-up of the board if we were to have this fabricated. Let's go ahead and start our list of</p>
+            <p>variables so we can keep track of them as well. And so we grab our variables over here, and we're just</p>
+            <p>going to add the variables we created. There's the decay of the microstrip. Those are the only parameters</p>
+            <p>that define the stack-up in this particular case. So here are our variables. Now it's time to grab our</p>
+            <p>transmission line. So now we're looking at the top view for a particular transmission line. And we want</p>
+            <p>to use two coupled transmission lines. So we're going to grab the icon for two. The only difference</p>
+            <p>between the left and the right column is the fact that for the right column they're symmetric. In other</p>
+            <p>words, each of the line widths are the same for the two coupled transmission lines, whereas on the left</p>
+            <p>side we can have any arbitrary line width for any of the lines. We're going to start really simple</p>
+            <p>because we're looking for patterns. We already should have an idea of what to expect, so we're going to</p>
+            <p>start with something really simple. So we're going to use two coupled transmission lines. And here are</p>
+            <p>the two coupled transmission lines. Initially we're just going to use the S parameters and look at the</p>
+            <p>S parameters from the two transmission lines. Let's look at what the definitions are in this circuit</p>
+            <p>element. The first thing is the substrate. The substrate name that we've selected is the microstrip.</p>
+            <p>So we're going to assign it to that substrate. This structure is going to be on that substrate and</p>
+            <p>we're going to tell what layer the signal lines are on. And here it is, layer one, which is after all</p>
+            <p>the signal layer for the substrate. The length of the interconnect, again we're going to use our length,</p>
+            <p>mils, is on layer one and everything else is going to be default. And so really there's just the length of</p>
+            <p>the microstrip. There's the line width of both microstrip lines and the spacing between them.</p>
+            <p>Those are the only parameters. We're going to keep separate the parameters for the stack up and the</p>
+            <p>parameters for the transmission line. So let's grab our variable list and we'll create those parameters</p>
+            <p>in the variable list. So we've started out with the variables for the substrate, only three different</p>
+            <p>variables define it. And now we've added three different variables that define the two coupled</p>
+            <p>microstrip. And so this defines 10 inch long microstrips. Each one is 5 mil wide. And I started out</p>
+            <p>with a separation of 50 mils. So they're pretty far apart compared to the line width and the dielectric</p>
+            <p>thickness in this case is 5 mils. Given the geometry, I'm not really sure what the impedance is.</p>
+            <p>Well, we're going to find out because we know how to measure the impedance by looking at the S</p>
+            <p>parameters. Now that we have our transmission lines set up in the circuit schematic, we're going to add</p>
+            <p>the terminals to them so we can look at the S parameters. So we find S parameter simulation.</p>
+            <p>We're going to grab our simulation engine. We're going to use the same conditions that we've used before</p>
+            <p>of a 5 megahertz start to 20 gigahertz with a 5 megahertz step. And we're going to grab our</p>
+            <p>and we're going to grab the terminals. Now that we have four different ports, we need four different</p>
+            <p>terminals to add. Now comes that question about the labeling scheme. So clearly the first one is going</p>
+            <p>to be port 1. But we have three options. We could make this one port 2 or this port 2 or this port 2.</p>
+            <p>All of those options are perfectly legal. It's a question of which one is going to make our life</p>
+            <p>easier interpreting the results. They're really two different approaches for labeling the index numbers</p>
+            <p>for the ports in multiple transmission lines. One approach is we use port 1 to 2 and 3 to 4. That way,</p>
+            <p>\(S_{21}\) is still an insertion loss. And 4, 3 becomes the insertion loss of the other line. The other</p>
+            <p>approach is labeling 1 and 2 on the left-hand side and 3 and 4 on the right-hand side. Generally,</p>
+            <p>in tools that auto-number the port assignment, we'll find the port numbers are labeled 1, 2, 3, 4, 5</p>
+            <p>on the left-hand side and then continuing 7, 8, 9, 10 on the right-hand side. It makes the</p>
+            <p>identification and thinking about what is an insertion loss, what is return loss, a little more</p>
+            <p>complicated, but it's when we have very large S-parameter files when that's usually done. If you</p>
+            <p>have the opportunity, I strongly recommend to minimize the confusion, we always use the port</p>
+            <p>assignment of port 1 to 2 and 3 and 4. And if we do that, all we remember is that insertion loss is</p>
+            <p>always an \(S_{21}\). And we'll see in the next section, when we talk about differential pairs and describing</p>
+            <p>the differential impedance, that differential insertion loss is going to be an STD21. And so we're</p>
+            <p>still going to carry along this idea of a 21 is an insertion loss. So we're going to grab port 1 on</p>
+            <p>the left side, port 2 on the right side, and likewise 3 and 4. So let's go ahead and do that.</p>
+            <p>So now comes the wiring up. Now we're all set and ready to simulate. Let's just think about what we've</p>
+            <p>done here. We have two different transmission lines. I've pulled them far apart because I'm using a value of</p>
+            <p>the separation very large compared to the line width. So they're very far apart, shouldn't be</p>
+            <p>much coupling. So we have two independent transmission lines. This line is going to have</p>
+            <p>a return and insertion loss. Return of course is \(S_{11}\) on one side, \(S_{22}\) on the other side. This line has a</p>
+            <p>return loss, \(S_{33}\), \(S_{44}\). In addition, this line has an insertion loss, \(S_{21}\) and \(S_{43}\). We'll be able to see</p>
+            <p>those. In addition, there are also some new terms. There's the crosstalk between them or the coupling.</p>
+            <p>And the crosstalk, we're going to send a signal into port 1 and we're going to look at what appears</p>
+            <p>over here at port 3. That's \(S_{31}\). And so \(S_{31}\) has important information about how much crosstalk is</p>
+            <p>there from one line to the next. And likewise, there's going to be crosstalk going into port 1</p>
+            <p>and coming out port 4. And that's \(S_{41}\). And we'll see that in microstrip, they have a very</p>
+            <p>different signature when we look at the S parameters. Now we're ready to do the simulation.</p>
+            <p>And in the stack up, I just arbitrarily chose some reasonable numbers, but I don't know what a good 50</p>
+            <p>online is. But we know how to tell because we're going to look at the return loss. And if the return</p>
+            <p>loss has a lot of reflection, if the magnitude of \(S_{11}\) is large, that says it's not a very good 50</p>
+            <p>online. It's a big mismatch. And so we can adjust the height of the dielectric thickness or the line</p>
+            <p>width in order to give us close to 50 ohms, which means a very small return loss. Let's see where we're</p>
+            <p>at right now. So remember, before we push the simulation button, rule number nine, we're going to</p>
+            <p>be thinking about what to expect to see. So I think, because I've done this a lot, I know this</p>
+            <p>is going to be relatively high impedance transmission line. We're going to have to make our dielectric</p>
+            <p>thickness a little thinner in order for us to see 50 ohms. So it's going to be high impedance.</p>
+            <p>We're going to see a lot of return loss. But otherwise, it's 10 inches long. We're going to see a lot of</p>
+            <p>ripples in there that we expect to see. And it's also we turn on losses. And as we've seen before,</p>
+            <p>it's about, let's see, it's 0.1 dB per inch per gigahertz, roughly for the FR4. And that means</p>
+            <p>we have 10 inches long. So it's about 1 dB per gigahertz. We're going to up to 20. We're going</p>
+            <p>to see quite a bit of loss. We're going to see as much as minus 20 dB of \(S_{21}\) at 20 gigahertz.</p>
+            <p>So let's run the simulation. And now see how close it meets our expectations. Now we're ready to</p>
+            <p>actually look at those S parameters. So let's look at the return and insertion loss first. And we'll</p>
+            <p>keep them just labeled as they are for microstrip. So here's \(S_{11}\). That's the return loss. We expect to</p>
+            <p>see some ripples. And here is \(S_{21}\). Very close to what we expected. You don't need me to tell you</p>
+            <p>which is which, right? Because this is starting out nearly at 0 dB at low frequency. And so we know</p>
+            <p>that that is the insertion loss. And the red is starting out at a large negative dB at low frequency.</p>
+            <p>And we know that is the return loss. We see the ripples responding to the impedance mismatch</p>
+            <p>between the 50 ohms at the ends and the impedance of the line. We're at about minus 11 dB or so.</p>
+            <p>We'd expect to see a little impact, visible impact on the insertion loss. And sure enough,</p>
+            <p>here are the ripples. As we go up in frequency, because of that attenuation, which at 20 GHz is</p>
+            <p>about minus 20 dB, very close to what we expected to see. As we go up in frequency, we see the amplitude</p>
+            <p>of the ripples coming back from the transmission line decreasing. The modulation is decreasing because</p>
+            <p>we're getting more and more attenuation as the signal goes down the line, has to come back again to</p>
+            <p>come out in order to see back on the terminal 1. And so going down and back, it's being attenuated.</p>
+            <p>There's not as much to interfere with the reflection from the first interface. And we're going to be</p>
+            <p>down by 6 dB from the peak value here to the value over here. As we go to higher frequency, we're only</p>
+            <p>seeing the reflections from the front interface. Nothing survives going down and back in order to interfere.</p>
+            <p>And we see less ripples, exactly as we expect to see. Now we're going to adjust the dielectric thickness</p>
+            <p>in order to give us a really small amount of reflected signal. And that's going to tell us,</p>
+            <p>okay, we've got a 50 on line or close to it. And so we're going to use our tuning operation in order to adjust</p>
+            <p>that. And we're going to tune the dielectric thickness. That's going to be the term that we adjust.</p>
+            <p>I think we're going to have to make it smaller in order to get a good impedance match. So we'll make</p>
+            <p>the minimum of 1, the maximum of 10, and we use a step size of 0.1. And now, let's see. So I want to</p>
+            <p>make it a smaller thickness. And that means we're going to decrease the impedance because I think the</p>
+            <p>impedance is on the high side. So here we go decreasing. So here we're decreasing and sure enough,</p>
+            <p>we're getting a better match. And you notice as we get our return loss below that minus 13 level,</p>
+            <p>it's a very smooth insertion loss that we're seeing. But we're not done. Let's see how low</p>
+            <p>we can go. Wow. It's already off scale. And we're at minus 35 dB. And we could expand the scale. Now,</p>
+            <p>let's see how low we can go. Wow. Oh my gosh. Given these values, not sure we're going to get a much</p>
+            <p>better fit. And look how low it is. So I think a dielectric thickness of 2.8 mils is giving us</p>
+            <p>pretty darn close to 50 ohms. Of course, this is about the losses. If we turn off the losses,</p>
+            <p>make the conductor conductivity really high, then we won't have the impact from the losses,</p>
+            <p>and we'll have a very low and consistent return loss. So I think we've got our two transmission</p>
+            <p>lines really well matched to 50 ohms. Just to verify, we can grab the second transmission line</p>
+            <p>and look at what its S parameters are. And again, it's the return loss that we're going to care about.</p>
+            <p>So we'll look at \(S_{33}\). So let's convert the value back into the schematic. We'll close out,</p>
+            <p>we'll turn them back in. Now we've got our 50 ohm transmission lines far apart with no coupling,</p>
+            <p>and we'll turn on coupling. So let's add \(S_{33}\). And it should have just about exactly the same. Let's see.</p>
+            <p>So we're going to grab \(S_{33}\). And darn if it isn't exactly the same. Sometimes doing these kinds of</p>
+            <p>tests, even though we're very confident what the answer is, is really important because it builds</p>
+            <p>our confidence. It is a really important consistency test to do. Now we understand the properties of</p>
+            <p>the individual single-init transmission lines. Now let's look at the coupling. And that coupling is</p>
+            <p>really defined in terms of \(S_{31}\) and \(S_{41}\). So let's see what the coupling is now. And so we're going to turn on</p>
+            <p>\(S_{31}\) and \(S_{41}\). And we're going to change the scale of this instead of auto-scaling. We'll go to 0 and we'll set</p>
+            <p>it for minus 60 dB. And so it's 0 to minus 60 dB. And on this scale, look at how low \(S_{31}\) is. \(S_{31}\),</p>
+            <p>we send a signal in port 1. We look at what comes out here. We also call that near-end crosstalk.</p>
+            <p>And likewise, we send a signal in port 1 and we look at what appears over here at port 4. We call</p>
+            <p>that the far-end crosstalk. So \(S_{41}\) is also the far-end crosstalk. And you can see they have very</p>
+            <p>different signatures. The properties of crosstalk in microstrip or stripline is a whole other topic to</p>
+            <p>consider. And again, if you want to look at the details, I invite you to take a look at</p>
+            <p>my textbook. There's a whole chapter on crosstalk and understanding the origin of near and far in</p>
+            <p>crosstalk and how the geometry influences. As you might imagine, to first order, the most important</p>
+            <p>quality that influences the crosstalk is the spacing between the lines. You pull them closer together,</p>
+            <p>we're going to have more crosstalk. And that's what we're going to explore. But the important pattern</p>
+            <p>we're looking for is the signature that we see. And we see that the near-end crosstalk has the same</p>
+            <p>ripple signature as the return loss. And the far-end crosstalk we see just starts at a small value and</p>
+            <p>increases with frequency. You also notice that, gee, it kind of drops down a little bit as we go up in</p>
+            <p>frequency. And that's because as that far-end noise is coupled over, it's being attenuated and the</p>
+            <p>signal's being attenuated. And so the combination of this means we have less far-end crosstalk because</p>
+            <p>of the losses. If we turn the losses off, then we'll find the far-end crosstalk just continues to</p>
+            <p>increase as we go up in frequency. We're going to do two things. The first thing we're going to do</p>
+            <p>is we're going to bring the traces closer together. And so we're going to turn on tuning again. We're</p>
+            <p>going to add to the list of the variables that we're going to tune two parameters. We're going to</p>
+            <p>tune the separation between the two lines, and we're also going to tune the length.</p>
+            <p>Now let's take a look at how these two parameters affect the signature of the S parameters that we see</p>
+            <p>for near-end and far-end crosstalk. Of course, we're going to apply rule number nine. We're going to be</p>
+            <p>thinking, what is going to happen if we increase the separation? What's going to happen if we decrease</p>
+            <p>the separation between the two signal lines? We pull them closer together. Right now they're at 50</p>
+            <p>mils apart, and we're going to pull them really, really close together. I don't think we'll come closer</p>
+            <p>than the line width. And again, these are 50 ohm lies because we've engineered the return loss</p>
+            <p>to be really small. And so now we're going to bring them closer together. And as we move them</p>
+            <p>closer together, we're going to expect to see the near-end crosstalk increase and the far-end crosstalk</p>
+            <p>increase. And we're going to see a surprising behavior in the insertion loss. Pay attention to</p>
+            <p>the values that we have here. Here's the far-end crosstalk at minus 20 dB, peaking at minus 20 dB.</p>
+            <p>When we're really far apart, 40 mils apart. And let's bring them closer and closer and closer.</p>
+            <p>And you notice that the near-end crosstalk increases, the far-end crosstalk increases.</p>
+            <p>And remember what happened before when the return loss got into that minus 13, minus 10 dB level. It was</p>
+            <p>large enough to suck energy out of the transmitted signal, and we started to see ripples in the</p>
+            <p>insertion loss. The same thing's going to happen to the insertion loss due to far-end crosstalk.</p>
+            <p>As we suck energy out from port 1, and that energy from port 1 goes into port 4, it's not going to be</p>
+            <p>available to be seen as insertion loss, and we're going to see a decrease in the insertion loss.</p>
+            <p>We're going to see some of that insertion loss get smaller and smaller as we suck energy out into the</p>
+            <p>far-end crosstalk. And to help see that, let's add the insertion loss to this plot. That's, remember,</p>
+            <p>is \(S_{21}\). So let's add \(S_{21}\) to this plot. And here is \(S_{21}\). We've got kind of that monotonic drop-off.</p>
+            <p>And now, let's bring the traces closer together, and we'll see the impact. Uh-oh. Wow. As we bring</p>
+            <p>the two traces together, we increase the near-end crosstalk, we increase the far-end crosstalk,</p>
+            <p>and notice that we have a new emergent behavior in the insertion loss. We have a dip. This is the first</p>
+            <p>new kind of structure that we've seen in S-parameters. Why are we losing so much energy going</p>
+            <p>from port one to port two? At this frequency here of about 11 gigahertz, there's hardly anything</p>
+            <p>coming back from port one into port two. Where's it going? Well, we see it's going into the far-end</p>
+            <p>crosstalk. And if we turned off the losses, which we can do by adjusting the dissipation factor, for</p>
+            <p>example, we would find that we would have more far-end crosstalk, and we'd still have a very sharp,</p>
+            <p>this dip in the insertion loss in the microscope. We lose energy into coupling into the adjacent line,</p>
+            <p>and the frequency at which we have this dip depends on the coupling, and it depends on the length.</p>
+            <p>In a relatively complicated way that it's hard to calculate by pencil and paper, that's where we</p>
+            <p>need to take advantage of the 2D field solver built in. And we'll explore that as we increase the length,</p>
+            <p>the amount of far-end crosstalk is going to increase, that frequency of the dip is going to decrease.</p>
+            <p>Let's watch that. So we make it longer, we get more attenuation because it's longer,</p>
+            <p>we get more opportunity for far-end crosstalk, and we see this immersion behavior of not only do we have</p>
+            <p>a dip in the insertion loss, but look, we also have a dip in the far-end crosstalk.</p>
+            <p>We're going to see periodicity between energy flowing from port 1 to port 2, or port 1 to 4,</p>
+            <p>or back to 1 to 2 again. And this is one of the fundamental properties of the behavior of</p>
+            <p>propagation in microstrip. And we'll see this is different than strip line. And if we decrease the</p>
+            <p>separation, bringing them closer, we see this very periodic behavior in microstrip, as energy flows</p>
+            <p>back and forth from port 1 to, from transmission line 1 to transmission line 2, and then back again</p>
+            <p>into the other line. And if we make the length shorter, we'll pull that farther apart. And so we</p>
+            <p>see this connection between the separation between the two lines and the degree of coupling versus the</p>
+            <p>coupled length for the two lines. This is a feature of far-end crosstalk in transmission lines.</p>
+            <p>But you notice what happens to the near-end crosstalk. As we pull them farther apart,</p>
+            <p>near-end crosstalk just decreases. Bring the two lines close together, near-end crosstalk increases.</p>
+            <p>This is the signature of this new emergent behavior related to crosstalk or coupling in transmission lines.</p>
+            <p>The near-end crosstalk is going to increase. We pull them closer together. The far-end crosstalk</p>
+            <p>is also going to increase the closer we bring them and depends on the length. And there's a new</p>
+            <p>emergent behavior that as we transfer energy to the far end of the second line, we lose that energy from</p>
+            <p>the first line and we're going to see a dip in the insertion loss. And this is something that we'll see</p>
+            <p>characteristic in microstrip transmission lines. Now you might think, oh my gosh, this is a terrible</p>
+            <p>problem. We wouldn't want to have a transmission line that looked like this. If we were sending</p>
+            <p>single-ended signals through it, it would be a disaster if we had high bandwidth or if we had</p>
+            <p>long lines. And you would think they would make terrible transmission lines for high-speed signals.</p>
+            <p>Generally, for high-speed signals, we're going to use a differential pair. And in the fourth section of</p>
+            <p>this master class, when we take the principles of coupled transmission lines and apply that to</p>
+            <p>differential pairs, we'll see that in fact the single-ended performance in microstrip is not</p>
+            <p>necessarily an indication of the differential performance. So we have looked at how to build a</p>
+            <p>coupled transmission line model that's based on the geometry and the material properties. And we've</p>
+            <p>looked at the S parameters for this model and how we can explore design space. And we see this</p>
+            <p>emergent behavior that the near-end crosstalk is going to appear as \(S_{31}\) and the far-end crosstalk as \(S_{41}\).</p>
+            <p>And we see that as we increase frequency, the far-end crosstalk increases and we get this emergent</p>
+            <p>behavior kind of oscillations between energy flowing down line one to line two and then back to line</p>
+            <p>one and then back to line two, depending on the separation and depending on the length of the</p>
+            <p>lines. These are some of the patterns that we're going to look for in microstrip, in coupled microstrip</p>
+            <p>chess mission lines.</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson2-3.html">← Previous: Frequency Domain Interpretation</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson3-2.html">Next: Crosstalk Analysis →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 4-2: Common Mode Analysis - S-Parameters Masterclass</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>S-Parameters Masterclass</h1>
+        <p>Module 4: Mixed-Mode S-Parameters</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <div class="module-nav">
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Module...</option>
+                <option value="lesson1-1.html">Module 1: What Are S-Parameters?</option>
+                <option value="lesson2-1.html">Module 2: Patterns and Meaning</option>
+                <option value="lesson3-1.html">Module 3: 4-Port S-Parameters</option>
+                <option value="lesson4-1.html">Module 4: Mixed-Mode S-Parameters</option>
+            </select>
+            <select onchange="if(this.value) window.location.href=this.value">
+                <option value="">Go to Lesson...</option>
+                <option value="lesson1-1.html">Lesson 1-1: Introduction and Overview</option>
+                <option value="lesson1-2.html">Lesson 1-2: Understanding S-Parameters</option>
+                <option value="lesson1-3.html">Lesson 1-3: S-Parameter Fundamentals</option>
+                <option value="lesson1-4.html">Lesson 1-4: Practical Applications</option>
+                <option value="lesson2-1.html">Lesson 2-1: Return Loss Patterns</option>
+                <option value="lesson2-2.html">Lesson 2-2: Insertion Loss Analysis</option>
+                <option value="lesson2-3.html">Lesson 2-3: Frequency Domain Interpretation</option>
+                <option value="lesson3-1.html">Lesson 3-1: Introduction to 4-Port Systems</option>
+                <option value="lesson3-2.html">Lesson 3-2: Crosstalk Analysis</option>
+                <option value="lesson3-3.html">Lesson 3-3: Time Domain Reflectometry</option>
+                <option value="lesson4-1.html">Lesson 4-1: Differential vs Single-Ended</option>
+                <option value="lesson4-2.html" selected>Lesson 4-2: Common Mode Analysis</option>
+                <option value="lesson4-3.html">Lesson 4-3: Mixed-Mode Applications</option>
+            </select>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h2>Lesson 4-2: Common Mode Analysis</h2>
+            
+            <div class="content">
+            <p>Now we're ready to do some data mining of the MixMode S-Parameters.</p>
+            <p>The first thing we're going to do is take a look at the single-init S-Parameters and just</p>
+            <p>identify some of the important features, similar to what we saw before. So let's simulate this</p>
+            <p>circuit so we can bring our S-Parameter values from the saved measured data into the vectors</p>
+            <p>that we can display in the simulation environment. Let's take a look at the single-init S-Parameters</p>
+            <p>and first let's look at the return loss and the amount of coupling. The return loss of course is</p>
+            <p>going to tell us about how uniform is the line, what are the launch discontinuities like, and the</p>
+            <p>near-end crosshack will tell us about the degree of coupling of the differential pair. So we're</p>
+            <p>going to look at the return loss and we're going to look at S3-1. So I can control click and select</p>
+            <p>them both and now we're going to plot those.</p>
+            <p>And here is, in red, is S-1-1. That's the return loss. That tells us about the reflections.</p>
+            <p>And in blue is the near-end crosshack. We can see they're both relatively low. The return loss is less</p>
+            <p>than minus 13 dB, up to as much as 12 GHz, and then we see it steadily increasing. We get a pretty large</p>
+            <p>peak here around 18 GHz. That's a good indication of the bandwidth of the SMA connectors that were used in</p>
+            <p>this measurement. Generally, we're starting at a large negative dB value, which is exactly what we</p>
+            <p>expect to see. And we see the ripples corresponding to the relatively small impedance mismatch between</p>
+            <p>the line impedance and the ports. We see a little bit of structure to that suggesting some launch</p>
+            <p>discontinuities. Looking at the near-end crosshack, that's the S3-1, that says we're at the minus 22,</p>
+            <p>23 dB kind of range. That says, you know, there is some coupling, but it's not a relatively large</p>
+            <p>amount of coupling between these two transmission lines. Now, if we look at the insertion loss,</p>
+            <p>what we'd expect to see normally is pretty monotonic drop because of the losses in the line.</p>
+            <p>Not much impact until around the 13 GHz because of the return loss. And then, of course, a large dip</p>
+            <p>at around 18 GHz corresponding to that circular mode resonance in the SMA. Let's take a look at,</p>
+            <p>let's take a look at the insertion loss. And that, of course, is S2-1.</p>
+            <p>And it's monotonic drop-off, but oh my gosh, we have this huge dip here at 11 GHz. We also have this</p>
+            <p>huge dip here at 18 GHz. That corresponds to the large reflected signal from that circular mode</p>
+            <p>resonance. This dip is a resonance dip coupling to that strong resonance, reflecting the signals</p>
+            <p>back from the circular mode. But this has nothing at all to do with that. Where is this coming from?</p>
+            <p>We saw before that in the special case of microstrip, because of the energy being lost,</p>
+            <p>because of signal going in on port one and coupling into port four, we're going to lose energy into port</p>
+            <p>two. And this is the energy loss in port two. To confirm that, we want to check S4-1 and verify,</p>
+            <p>yep, it's going to far end crosstalk. So let's add to this S4-1 and verify we're getting a peak at S4-1.</p>
+            <p>And sure enough, here we see that large signal coming back on port four, corresponding to energy</p>
+            <p>loss in port two. This is far end crosstalk, which we'd expect to see in microstrip. So far,</p>
+            <p>everything is consistent exactly what we expect to see. Now, let's look at the mix mode S parameters.</p>
+            <p>First, we see that there's not a lot of coupling here. And we have a pretty good match to 50 ohms.</p>
+            <p>We would expect the differential signal to show a good match to 100 ohms. So we're going to launch</p>
+            <p>our differential signal in here. It's going to split between the P and the N lines. It's going</p>
+            <p>to interact. We're going to look at the signal, singlet of signals coming back. They'll be</p>
+            <p>reconverted into the differential component. And so we're going to look at SDD-1-1. And that should</p>
+            <p>tell us the return loss with 100 ohm port impedance going into our 100 ohm, going into our differential</p>
+            <p>pair with a differential impedance around 100 ohms. Let's take a look at \(S_{11}\) compared to SDD-1-1.</p>
+            <p>We'll add those in. And we see that, wow, they're very similar. The blue is the STD. So we see we get</p>
+            <p>a little better match for the differential impedance. This pair of lines was really designed</p>
+            <p>for 100 ohm differential impedance. It's a really good match, very similar behavior. This is mostly</p>
+            <p>about the launch discontinuities. And we see that because of that circular mode in the SMA that's</p>
+            <p>common of both of those, we see the differential response increasing just like the single-ended</p>
+            <p>response did. So it's very consistent with what we expected to see. Now let's compare the single-ended</p>
+            <p>insertion loss and the differential insertion loss. And what do we expect to see? We already know what</p>
+            <p>we're going to see in the single-ended insertion loss. We're going to see that dip at about the 18</p>
+            <p>gigahertz corresponding to the circular mode. And we're going to see that dip at about 11 gigahertz</p>
+            <p>corresponding to energy transfer from port 2 to port 4 because of the foreign cross out. But what will</p>
+            <p>the differential insertion loss show? Now we're treating those two microstrip lines not as two</p>
+            <p>single-ended lines but as one differential pair. We're going to send a differential signal into the</p>
+            <p>pair of the lines into that one differential pair. What will we see? We're going to see that any energy</p>
+            <p>that couples from one line to the other is going to couple back from that line to the next one. And so</p>
+            <p>we're going to expect to see pretty good behavior for that differential insertion loss. Let's take a</p>
+            <p>look. We're going to select \(S_{21}\) and SDD21. And sure enough, here again in blue is the differential</p>
+            <p>response. Pretty good monotonic response. It looks great. We're seeing the losses because of the</p>
+            <p>conductor and the dielectric losses in this transmission line. And then we see the falling off a cliff because of</p>
+            <p>the circular mode of that SMA connector. And in comparison, the single-ended insertion loss, we saw</p>
+            <p>that huge dip corresponding to energy going to the far end of the other line. And we don't see that</p>
+            <p>behavior in the differential response. This is a really good example of where we have to be careful</p>
+            <p>interpreting the single-ended response and using that to tell us what to expect in the differential</p>
+            <p>response. If the lines are loosely coupled or they're striplined, generally the single-ended</p>
+            <p>response is a good indication of the differential response. But in microstrip in particular, the</p>
+            <p>single-ended insertion loss is not a good measure of what to expect for the differential insertion loss.</p>
+            <p>That's why it's really important to also look at the mixed mode S-parameters. Now there's one</p>
+            <p>additional piece of information that we get when we look at the mixed mode S-parameters that we never</p>
+            <p>thought of when we looked at the single-ended S-parameters, and that's this idea of mode conversion.</p>
+            <p>We're going to look at sending a differential signal in and looking at the common signal coming</p>
+            <p>out. And that's a measure of how much mode conversion is there in the inner. The only</p>
+            <p>thing that causes mode conversion is asymmetry between the two lines that make up the differential</p>
+            <p>pair. That means that if there's a length difference or if there's an impedance difference</p>
+            <p>on one line and not on the other, we're going to see some mode conversion. Let's take a look and</p>
+            <p>see how much mode conversion is there in this measured structure. And that mode conversion</p>
+            <p>is described in terms of the SCD11 and SCD21. The SCD11, of course, is I send a differential</p>
+            <p>signal to port one. I look at the common signal that reflects back to me. That's going to tell me</p>
+            <p>the reflected mode conversion from asymmetries in the impedance discontinuities in our interconnect.</p>
+            <p>And then we're going to look at SCD21, which is I send a differential signal into port one,</p>
+            <p>and I look at how much common signal comes out port two. And that's going to be a measure of the asymmetry,</p>
+            <p>usually in the time delay of the two lines that make up the differential pair, sometimes a little</p>
+            <p>bit of asymmetry in the insertion loss of either line. Let's take a look at how much mode conversion</p>
+            <p>there is in this measured structure. Now, of course, ADS will auto scale for us. So let's change the scale.</p>
+            <p>So we have at the top here 0 dB, and we'll go down to minus 60 dB.</p>
+            <p>Now we have a rough idea of the amount of mode conversion. And you can see that generally,</p>
+            <p>whether we look at the reflected mode conversion, or which is in red, or we look at the transmitted</p>
+            <p>mode conversion in blue, it's pretty low. It's in the minus 30 dB kind of range. We don't expect to see</p>
+            <p>much impact from this amount of mode conversion on the insertion or the return loss. So this particular</p>
+            <p>interconnect is a pretty well-balanced interconnect. To demonstrate the impact of a length asymmetry,</p>
+            <p>I'm going to hack this circuit just a little bit and add an additional short length transmission</p>
+            <p>line that we can vary. And we're going to see the impact on the differential insertion loss</p>
+            <p>and the mode conversion term. And here's the simple way I'm going to do that. I'm going to take what we</p>
+            <p>had before, which is the measured data with the Ballen, converting it into mixed mode S-parameters.</p>
+            <p>I'm going to copy that. I'm going to paste it down here.</p>
+            <p>And then I'm going to hack this circuit a little bit. We're going to move the Ballen out of the way</p>
+            <p>a little bit. We're going to come along here and we're going to insert a transmission line. Now the</p>
+            <p>single-ended signals community are coming from a 50-ohm single-ended impedance. So I'm going to add a</p>
+            <p>50-ohm transmission line that'll be transparent, except it will add a short time delay. So we come over</p>
+            <p>here and we grab ourselves an ideal transmission line. We're going to connect it in. And initially,</p>
+            <p>I'm going to make that time delay 10 picoseconds, so 0.01 nanosecond. We'll change that and see the</p>
+            <p>impact. The other thing, of course, that we're going to change is the labeling scheme for the</p>
+            <p>S-parameters. So again, another good reason why we want to take the actual S-parameter ports and</p>
+            <p>convert them into terms that we can more easily read so that we can manipulate that information</p>
+            <p>quickly and easily. So I'm going to add to the label here, I'm going to just call it a mode,</p>
+            <p>because we're making a mode conversion here. And this, of course, is going in on port 9</p>
+            <p>and coming back on port 9. So this is going to be S-9-9. And I'm going to go ahead and make the</p>
+            <p>changes for the other variables here. Now we're done and we're ready to re-simulate,</p>
+            <p>and we'll change that time delay. And so what do we expect to see? If this time is really short,</p>
+            <p>they're going to be identical. Whether we look at STD 2.1 or the second example of STD 2.1,</p>
+            <p>we should see the same behavior. And if this time delay is really short,</p>
+            <p>we shouldn't see any mode conversion as well. Let's take a look and see what we've got.</p>
+            <p>And to set us up to make a change, we're going to tune this variable. And so we're going to set</p>
+            <p>up our tuning function, and we're going to tune this time delay. And we'll change it from a minimum</p>
+            <p>value of, let's go to one picosecond, and we'll step it at one picosecond, and we'll go up to</p>
+            <p>maximum value of 0.1 nanoseconds, 100 picoseconds. Now let's run our simulation. We're going to start</p>
+            <p>it out at one picosecond as the time delay. Now this is what we saw before. And of course there's no</p>
+            <p>impact as we change the time delay here, because this is the measurement from this example. So let's</p>
+            <p>add to this the values of the mode conversion terms for the case where we're adding the asymmetry.</p>
+            <p>So we're going to add the SCD11 and the SCD21 of the mode converted case.</p>
+            <p>And here we are at one picosecond delay difference between the two. And already you can see a difference</p>
+            <p>in the SCD21. You can see that here's what we had in dark blue with the measurement directly and</p>
+            <p>adding a one picosecond delay. You can already see an impact. We make that two picoseconds or three</p>
+            <p>or four picoseconds. You can see how incredibly sensitive the mode conversion term is to the</p>
+            <p>a small asymmetry, the length asymmetry. And that's one of the values of looking at these mode conversion</p>
+            <p>terms. They're very sensitive to the impact of an asymmetry. In this case, a time delay difference</p>
+            <p>between the two lines. Right now, we only have a four picosecond. There's a five picosecond time</p>
+            <p>delay difference between the two lines. And look, we're already more than 10 dB increase in the mode</p>
+            <p>conversion term. Let's take a look at the differential insertion loss in the original measurement. And</p>
+            <p>then as we distort it, and we'll compare that to the SCD21 term. So here is the SDD21 of the original</p>
+            <p>measurement. Here it is the mode converted case. And while we look at that, we're going to plot on the</p>
+            <p>same plot, the mode conversion, the SCD21. And so we're going to have the SCD21, the direct measurement,</p>
+            <p>and with the mode conversion. And here we go. Let's go back to just a one picosecond difference.</p>
+            <p>With a one picosecond difference, you can't see any difference at all in the insertion loss of the</p>
+            <p>original measurement or the insertion loss, where we have a little bit of asymmetry,</p>
+            <p>that one picosecond. But you can see a difference in the mode conversion. Let's start increasing</p>
+            <p>the asymmetry. We'll see the SCD term increase. And let's look to see when we can see an impact on</p>
+            <p>the insertion loss. Now generally, we would expect that when our other term, whether it's reflected,</p>
+            <p>transmitted, or converted term, when that term gets above that, roughly that minus 10 dB point,</p>
+            <p>we're going to expect to see an impact on energy being taken out from the insertion loss. So we</p>
+            <p>would expect to see an impact on the insertion loss when we start getting up to a mode conversion term</p>
+            <p>in the minus 13 minus 10 dB range. And let's see where that happens. So we're at two picoseconds,</p>
+            <p>three picoseconds, four picoseconds, five picoseconds, six picoseconds. So now we're starting to get to</p>
+            <p>roughly that minus 13. And you can just begin to see the hint of a difference between the insertion</p>
+            <p>loss, the impact of that asymmetry on the insertion loss. And now we'll go up to seven,</p>
+            <p>eight, nine, here we are at 10 picoseconds, only a 10 picosecond difference. And you can see that</p>
+            <p>we're starting to get that roughly minus 10 dB amount of mode conversion. And we begin to see the impact</p>
+            <p>on the insertion loss. That asymmetry now is stealing some of the energy, the energy that gets converted into</p>
+            <p>common signal that we see being transmitted is stolen from the differential signal, and we see</p>
+            <p>less differential signal. Of course, we also see the attenuation of that common signal as it's</p>
+            <p>propagating down. And now as we continue to increase the asymmetry, we see a larger and larger impact on</p>
+            <p>the insertion loss. But even so, this is only a 25 picosecond difference between the time delay of the</p>
+            <p>two lines that make of this differential pair. And a 25 picosecond difference makes a huge impact. Look</p>
+            <p>at the impact on that SCD21 term, easily measured. That's why it's a very sensitive term for any</p>
+            <p>asymmetry in the differential pair. And we begin to see that it will have a significant impact on the</p>
+            <p>insertion loss as well. And that's one of the most important reasons why we want to reduce the</p>
+            <p>asymmetry between the two lines and use the mode conversion term SCD21 as a really sensitive measure</p>
+            <p>of the mode conversion. So this is just a very brief tour of some of the features in the, of how we get</p>
+            <p>from the single in it to the mixed mode S parameters and what we can see in the mixed mode S parameters</p>
+            <p>and use the mode conversion terms to give us some insight into what's going on inside of the differential</p>
+            <p>pair.</p>
+            <p>So</p>
+            </div>
+        </article>
+
+        <nav class="lesson-nav">
+            <a href="lesson4-1.html">← Previous: Differential vs Single-Ended</a>
+            <a href="index.html">📚 All Modules</a>
+            <a href="lesson4-3.html">Next: Mixed-Mode Applications →</a>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 S-Parameters Masterclass. Educational resource based on lectures by Dr. Eric Bogatin.</p>
+    </footer>
+</body>
+</html>
